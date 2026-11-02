@@ -153,10 +153,12 @@
    "id": "fsis-power-outage",
    "subject": "Food",
    "number": "USDA FSIS",
-   "title": "A Consumer's Guide to Food Safety: Severe Storms, Hurricanes & Power Outages",
-   "url": "https://www.fsis.usda.gov/sites/default/files/import/Severe-Storms-5-Panel-Brochure-ENGLISH_20.pdf",
+   "title": "A Consumer's Guide to Food Safety: Severe Storms, Hurricanes, Power Outages",
+   "url": "https://www.fsis.usda.gov/sites/default/files/media_file/2021-04/Severe-Storms-5-Panel-Brochure-ENGLISH.pdf",
    "publisher": "USDA Food Safety and Inspection Service",
-   "note": "fsis.usda.gov blocks scripted downloads (HTTP 403); fetch by hand in a browser if wanted"
+   "note": "fsis.usda.gov blocks scripted downloads (HTTP 403). Saved by hand in a browser: put it at <dest>/Food/USDA-FSIS-A-Consumer-s-Guide-to-Food-Safety-Severe-Storms-Hurricanes-Power-Outages.pdf and re-run the fetch script to record it.",
+   "edition": "April 2021",
+   "manual_only": true
   },
   {
    "id": "nws-basic-spotter",

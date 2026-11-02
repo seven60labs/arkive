@@ -117,6 +117,11 @@ def main():
             if os.path.isfile(dst) and o.get("status") == "fetched" and o.get("sha256") == sha256(dst):
                 o.update({k: v for k, v in rec.items() if k not in ("source_url",)}); o["source_url"] = url
                 print(f"[{it['id']}] unchanged", flush=True); out.append(o); continue
+            if it.get("manual_only"):  # site blocks scripts: record a copy saved by hand, never download
+                if not os.path.isfile(dst): raise FileNotFoundError(f"manual_only: save {url} by hand to {dst}")
+                rec.update(status="fetched", file=os.path.relpath(dst, a.dest), sha256=sha256(dst), bytes=os.path.getsize(dst),
+                           edition=it.get("edition", ""), saved_by_hand=True, restriction_check="no restriction marking (civil-agency publication)")
+                print(f"[{it['id']}] hand-saved copy recorded", flush=True); out.append(rec); continue
             print(f"[{it['id']}] {url}", flush=True)
             data = get(url, timeout=600)
             if not data.startswith(b"%PDF"): raise ValueError("not a PDF (got %r)" % data[:40])

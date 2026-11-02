@@ -1,3 +1,5 @@
+<p align="center"><img src="docs/logo-horizontal.png" alt="ARKive — a digital ark for an offline future" width="600"></p>
+
 # ARKive
 
 **ARKive — a digital ark for an offline future.**

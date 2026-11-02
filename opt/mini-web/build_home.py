@@ -63,7 +63,7 @@ page = f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name
 <title>ARKive</title><link rel="icon" type="image/png" sizes="32x32" href="{FAV}"><link rel="apple-touch-icon" href="{TOUCH}">
 <meta name="theme-color" content="#143350"><meta name="apple-mobile-web-app-title" content="ARKive"><style>{CSS}</style>{THEME_JS}</head><body><div class="wrap">
 <div class="top"><span class="sp"></span><button class="iconbtn" onclick="tt()" title="Light/dark">{svg("sun")}</button></div>
-<div class="hero"><img class="poster" src="{LOGO}" alt="ARKive: a digital ark for an offline future" width="800" height="397"><h1 style="font-size:1.25em;margin-top:14px">Offline library</h1><p><span class="dot">●</span> {len(books)} collections · works without internet</p>
+<div class="hero"><img class="poster" src="{LOGO}" alt="ARKive: a digital ark for an offline future" width="800" height="201"><h1 style="font-size:1.25em;margin-top:14px">Offline library</h1><p><span class="dot">●</span> {len(books)} collections · works without internet</p>
 <form class="search" id="sf" action="/search" method="get"><input name="pattern" placeholder="Search everything…" aria-label="Search" autofocus required>{HIDDEN}<button class="pri">{svg("search")}<span>Search</span></button></form>
 <p class="searching" id="sw" hidden>Searching {len(search_ids)} English collections<span class="dots"></span> the first search after a restart can take a minute while indexes load.</p></div>
 <h2>Browse</h2><div class="grid">{tiles}</div>

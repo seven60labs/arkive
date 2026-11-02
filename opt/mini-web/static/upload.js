@@ -49,13 +49,13 @@ document.querySelectorAll('form[data-up]').forEach(function(form){
     for(var i=0;i<files.length;i++){
       var f=files[i];pf.innerHTML='File '+(i+1)+' of '+files.length+': <code>'+esc(f.name)+'</code> ('+mb(f.size)+')';
       var ui={bytes:function(b){var p=(doneB+b)*100/total;bar.style.width=p.toFixed(1)+'%';pp.textContent=p.toFixed(0)+'% · '+mb(doneB+b)+' / '+mb(total)},
-              saving:function(on){st.innerHTML=on?'<span class="spin"></span> Server is saving<span class="dots"></span>':''},
-              retry:function(n){st.innerHTML='<span class="spin"></span> Connection hiccup, retrying ('+n+'/8)<span class="dots"></span>'}};
+              saving:function(on){var s=on?'Server is saving…':'';if(st.textContent!==s)st.textContent=s},
+              retry:function(n){st.textContent='Connection hiccup, retrying ('+n+'/8)…'}};
       try{var r=await one(kind,dest,f,ui); if(r.skipped)skip++; else ok++; dest=r.dest||dest}
       catch(e){bad.push(f.name+': '+e.message)}
-      doneB+=f.size;ui.bytes(0);st.innerHTML='';
+      doneB+=f.size;ui.bytes(0);st.textContent='';
     }
-    busy=false;btn.disabled=false;d.querySelector('.upw').remove();
+    busy=false;btn.disabled=false;d.querySelector('.upw').hidden=true;
     d.querySelector('.uph').textContent=bad.length?'Finished with problems':'Upload complete';
     pf.innerHTML='';
     var href=kind=='photos'?'/admin/photos?a='+encodeURIComponent(dest):'/admin/music?v=folders&f='+encodeURIComponent(dest);
@@ -67,11 +67,11 @@ document.querySelectorAll('form[data-up]').forEach(function(form){
 });
 /* USB import progress */
 var im=document.getElementById('imports');
-document.querySelectorAll('form[action$="/import"]').forEach(function(f){f.addEventListener('submit',function(){var b=f.querySelector('button');b.innerHTML='<span class="spin"></span> Starting import<span class="dots"></span>';setTimeout(function(){b.disabled=true},0)})});
+document.querySelectorAll('form[action$="/import"]').forEach(function(f){f.addEventListener('submit',function(){var b=f.querySelector('button');b.textContent='Starting import…';setTimeout(function(){b.disabled=true},0)})});
 if(im){(async function poll(){
   for(;;){var j=[];try{j=await (await fetch('/admin/import/status',{cache:'no-store'})).json()}catch(_){}
     im.innerHTML=j.map(function(s){var p=s.done*100/Math.max(1,s.total);return '<div class="job"><div class="row"><b>Import '+esc(s.src)+'</b><span class="mut">'+s.done+'/'+s.total+' · '+
-      (s.state=='running'?'<span class="spin"></span> copying<span class="dots"></span>':s.state)+'</span></div><div class="bar"><i style="width:'+p.toFixed(0)+'%"></i></div></div>'}).join('');
+      (s.state=='running'?'copying…':s.state)+'</span></div><div class="bar"><i style="width:'+p.toFixed(0)+'%"></i></div></div>'}).join('');
     var run=j.some(function(s){return s.state=='running'});busy=busy||false;
     await sleep(run?1500:10000)}})()}
 })();

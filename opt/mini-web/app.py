@@ -23,12 +23,12 @@ def human(n):
         n /= 1024
 BRAND_HEAD = ('<link rel="icon" href="/favicon.ico" sizes="48x48"><link rel="icon" type="image/png" sizes="32x32" href="/static/favicon-32.png">'
               '<link rel="apple-touch-icon" href="/static/apple-touch-icon.png"><link rel="manifest" href="/static/manifest.webmanifest">'
-              '<meta name="theme-color" content="#143350"><meta name="apple-mobile-web-app-title" content="ARKive">')
+              '<meta name="theme-color" content="#0F4C4C"><meta name="apple-mobile-web-app-title" content="ARKive">')
 def page(title, body, admin=False, head=""):
     nav = (f'<a class="btn" href="/admin/">{svg("act")}Status</a><a class="btn" href="/admin/usb">{svg("tool")}USB</a><a class="btn" href="/admin/photos">{svg("img")}Photos</a><a class="btn" href="/admin/music">{svg("video")}Music</a><a class="btn" href="/admin/settings">{svg("gear")}Settings</a>' if admin else "")
     return (f'<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
             f'<title>{esc(title)} · ARKive</title><link rel="stylesheet" href="/static/style.css?v={CSS_V}">{BRAND_HEAD}{head}{THEME_JS}</head><body><div class="wrap">'
-            f'<div class="top"><a class="brand" href="{"/admin/" if admin else "/"}"><img class="gear" src="/static/gear-96.webp" alt="" width="34" height="34"><img class="wm" src="/static/wordmark-360.webp" alt="ARKive" width="128" height="40">{'<span class="adm">Admin</span>' if admin else ""}</a><span class="sp"></span>{nav}'
+            f'<div class="top"><a class="brand" href="{"/admin/" if admin else "/"}"><img class="gear" src="/static/gear-96.webp" alt="" width="34" height="34"><img class="wm" src="/static/wordmark-360.webp" alt="ARKive" width="90" height="34">{'<span class="adm">Admin</span>' if admin else ""}</a><span class="sp"></span>{nav}'
             f'<button class="iconbtn" onclick="tt()" title="Light/dark">{svg("sun")}</button></div>{body}'
             f'<div class="foot"><a id="home" href="/">Archive home</a></div>'
             "<script>document.getElementById('home').href=location.protocol+'//'+location.hostname+'/'</script></div></body></html>")
@@ -301,7 +301,7 @@ class H(BaseHTTPRequestHandler):
 
     # ---------- login ----------
     def login_form(self, msg=""):
-        body = (f'<div class="card login-card" style="max-width:420px;margin:30px auto"><img class="gear" src="/static/gear-96.webp" alt="" width="84" height="84"><h1 style="margin-top:0">Vault access</h1>'
+        body = (f'<div class="card login-card" style="max-width:420px;margin:30px auto"><img class="gear" src="/static/gear-96.webp" alt="" width="84" height="84"><h1 style="margin-top:0">Admin sign-in</h1>'
                 f'<p class="mut">Admin panel · password required</p>{f"<p class=err>{esc(msg)}</p>" if msg else ""}<form class="stack" method="post" action="/admin/login">'
                 '<label>Password<input type="password" name="pw" autocomplete="current-password" autofocus required></label>'
                 '<button class="pri">Log in</button></form></div>')

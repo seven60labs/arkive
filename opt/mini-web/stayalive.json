@@ -1,0 +1,555 @@
+{
+ "sections": [
+  {
+   "id": "first-aid",
+   "title": "First aid & trauma",
+   "blurb": "Bleeding, breathing, burns, broken bones, cold & heat injuries",
+   "links": [
+    {
+     "pdf": "atp-4-02-11",
+     "page": 57,
+     "label": "Stop massive bleeding (tourniquet, packing, pressure)"
+    },
+    {
+     "pdf": "atp-4-02-11",
+     "page": 73,
+     "label": "Open and protect the airway"
+    },
+    {
+     "pdf": "atp-4-02-11",
+     "page": 129,
+     "label": "Burns"
+    },
+    {
+     "pdf": "atp-4-02-11",
+     "page": 135,
+     "label": "Fractures and splinting"
+    },
+    {
+     "pdf": "atp-4-02-11",
+     "page": 187,
+     "label": "Heat and cold injuries"
+    },
+    {
+     "pdf": "atp-3-50-21",
+     "page": 19,
+     "label": "Survival medicine (no doctor available)"
+    },
+    {
+     "zim": "mdwiki_en_all_maxi",
+     "path": "Cardiopulmonary_resuscitation",
+     "label": "CPR"
+    },
+    {
+     "zim": "mdwiki_en_all_maxi",
+     "path": "Bleeding",
+     "label": "Bleeding"
+    },
+    {
+     "zim": "mdwiki_en_all_maxi",
+     "path": "Anaphylaxis",
+     "label": "Severe allergic reaction (anaphylaxis)"
+    },
+    {
+     "zim": "mdwiki_en_all_maxi",
+     "path": "Choking",
+     "label": "Choking"
+    },
+    {
+     "zim": "mdwiki_en_all_maxi",
+     "path": "Snakebite",
+     "label": "Snake bite"
+    },
+    {
+     "zim": "wikipedia_en_all_maxi",
+     "path": "First_aid",
+     "label": "First aid overview"
+    },
+    {
+     "pdf": "st-31-91b",
+     "label": "Special Forces Medical Handbook (ST 31-91B)"
+    }
+   ]
+  },
+  {
+   "id": "water",
+   "title": "Water",
+   "blurb": "Find it, filter it, make it safe to drink",
+   "links": [
+    {
+     "pdf": "atp-3-50-21",
+     "page": 55,
+     "label": "Finding and purifying water in the field"
+    },
+    {
+     "pdf": "epa-disinfection",
+     "label": "Emergency disinfection of drinking water (bleach, boiling)"
+    },
+    {
+     "pdf": "tc-4-02-3",
+     "page": 33,
+     "label": "Disinfecting water: methods and doses"
+    },
+    {
+     "pdf": "tb-med-577",
+     "page": 43,
+     "label": "Choosing and checking a raw water source"
+    },
+    {
+     "zim": "zimgit-water_en",
+     "path": "home",
+     "label": "Water Treatment Library"
+    },
+    {
+     "zim": "ready.gov_en_all",
+     "path": "www.ready.gov/water",
+     "label": "Storing emergency water"
+    },
+    {
+     "zim": "wikipedia_en_all_maxi",
+     "path": "Portable_water_purification",
+     "label": "Portable water purification"
+    },
+    {
+     "zim": "wikipedia_en_all_maxi",
+     "path": "Solar_water_disinfection",
+     "label": "Solar disinfection (SODIS)"
+    },
+    {
+     "zim": "appropedia_en_all_maxi",
+     "path": "Slow_sand_filter",
+     "label": "Build a slow sand filter"
+    }
+   ]
+  },
+  {
+   "id": "shelter",
+   "title": "Shelter & warmth",
+   "blurb": "Stay dry, out of the wind, and warm",
+   "links": [
+    {
+     "pdf": "atp-3-50-21",
+     "page": 135,
+     "label": "Shelters and clothing"
+    },
+    {
+     "pdf": "tc-21-3",
+     "page": 97,
+     "label": "Cold-weather survival"
+    },
+    {
+     "pdf": "atp-4-02-11",
+     "page": 103,
+     "label": "Preventing hypothermia in a casualty"
+    },
+    {
+     "zim": "mdwiki_en_all_maxi",
+     "path": "Hypothermia",
+     "label": "Hypothermia"
+    },
+    {
+     "zim": "wikipedia_en_all_maxi",
+     "path": "Snow_cave",
+     "label": "Snow cave"
+    },
+    {
+     "zim": "wikipedia_en_all_maxi",
+     "path": "Lean-to",
+     "label": "Lean-to shelter"
+    },
+    {
+     "zim": "ready.gov_en_all",
+     "path": "www.ready.gov/winter-weather",
+     "label": "Winter storms at home"
+    }
+   ]
+  },
+  {
+   "id": "fire",
+   "title": "Fire",
+   "blurb": "Start, keep and use fire safely",
+   "links": [
+    {
+     "pdf": "atp-3-50-21",
+     "page": 117,
+     "label": "Fire: building, lighting, tending"
+    },
+    {
+     "zim": "wikipedia_en_all_maxi",
+     "path": "Fire_making",
+     "label": "Fire making"
+    },
+    {
+     "zim": "wikipedia_en_all_maxi",
+     "path": "Bow_drill",
+     "label": "Bow drill"
+    },
+    {
+     "zim": "wikipedia_en_all_maxi",
+     "path": "Ferrocerium",
+     "label": "Ferro rod (ferrocerium)"
+    },
+    {
+     "zim": "mdwiki_en_all_maxi",
+     "path": "Carbon_monoxide_poisoning",
+     "label": "Carbon monoxide poisoning (indoor fires, generators)"
+    }
+   ]
+  },
+  {
+   "id": "food",
+   "title": "Food",
+   "blurb": "Forage, preserve and can safely",
+   "links": [
+    {
+     "pdf": "atp-3-50-21",
+     "page": 71,
+     "label": "Food: plants, animals, traps, cooking"
+    },
+    {
+     "pdf": "atp-3-50-21",
+     "page": 82,
+     "label": "Plant edibility test"
+    },
+    {
+     "pdf": "usda-canning",
+     "label": "USDA Complete Guide to Home Canning"
+    },
+    {
+     "pdf": "fsis-power-outage",
+     "label": "Food safety when the power goes out"
+    },
+    {
+     "zim": "zimgit-food-preparation_en",
+     "path": "home",
+     "label": "Food Preparation Library"
+    },
+    {
+     "zim": "wikipedia_en_all_maxi",
+     "path": "Home_canning",
+     "label": "Home canning"
+    },
+    {
+     "zim": "mdwiki_en_all_maxi",
+     "path": "Botulism",
+     "label": "Botulism (bad canning)"
+    },
+    {
+     "zim": "wikipedia_en_all_maxi",
+     "path": "Food_preservation",
+     "label": "Food preservation methods"
+    },
+    {
+     "zim": "ready.gov_en_all",
+     "path": "www.ready.gov/food",
+     "label": "Emergency food supply"
+    }
+   ]
+  },
+  {
+   "id": "navigation",
+   "title": "Navigation & signalling",
+   "blurb": "Know where you are, get found",
+   "links": [
+    {
+     "pdf": "atp-3-50-21",
+     "page": 153,
+     "label": "Movement and navigation without a map or compass"
+    },
+    {
+     "pdf": "fm-3-25-26",
+     "page": 110,
+     "label": "Using a compass"
+    },
+    {
+     "pdf": "fm-3-25-26",
+     "page": 17,
+     "label": "Reading map symbols and margins"
+    },
+    {
+     "pdf": "usgs-topo-symbols",
+     "label": "USGS topographic map symbols"
+    },
+    {
+     "pdf": "tc-21-3",
+     "page": 121,
+     "label": "Emergency visual signals"
+    },
+    {
+     "zim": "wikipedia_en_all_maxi",
+     "path": "Distress_signal",
+     "label": "Distress signals"
+    },
+    {
+     "zim": "wikipedia_en_all_maxi",
+     "path": "Signal_mirror",
+     "label": "Signal mirror"
+    },
+    {
+     "zim": "wikipedia_en_all_maxi",
+     "path": "Orienteering",
+     "label": "Orienteering"
+    }
+   ]
+  },
+  {
+   "id": "hazards",
+   "title": "Hazards",
+   "blurb": "Weather, wildfire, flood, power outage, heat & cold",
+   "links": [
+    {
+     "pdf": "fema-are-you-ready",
+     "label": "FEMA Are You Ready? (all hazards)"
+    },
+    {
+     "zim": "ready.gov_en_all",
+     "path": "www.ready.gov/power-outages",
+     "label": "Power outage"
+    },
+    {
+     "zim": "ready.gov_en_all",
+     "path": "www.ready.gov/wildfires",
+     "label": "Wildfire"
+    },
+    {
+     "zim": "ready.gov_en_all",
+     "path": "www.ready.gov/floods",
+     "label": "Flood"
+    },
+    {
+     "zim": "ready.gov_en_all",
+     "path": "www.ready.gov/heat",
+     "label": "Extreme heat"
+    },
+    {
+     "zim": "ready.gov_en_all",
+     "path": "www.ready.gov/winter-weather",
+     "label": "Winter storm & extreme cold"
+    },
+    {
+     "zim": "ready.gov_en_all",
+     "path": "www.ready.gov/earthquakes",
+     "label": "Earthquake"
+    },
+    {
+     "zim": "ready.gov_en_all",
+     "path": "www.ready.gov/tornadoes",
+     "label": "Tornado"
+    },
+    {
+     "pdf": "nws-basic-spotter",
+     "page": 7,
+     "label": "Thunderstorm, lightning and flash-flood safety"
+    },
+    {
+     "pdf": "tc-3-97-61",
+     "page": 83,
+     "label": "Avalanche"
+    },
+    {
+     "pdf": "fema-cert-pm",
+     "label": "CERT: fire safety, utilities, light search & rescue"
+    }
+   ]
+  },
+  {
+   "id": "sanitation",
+   "title": "Sanitation & hygiene",
+   "blurb": "Latrines, hand washing, waste, disease prevention",
+   "links": [
+    {
+     "pdf": "tc-4-02-3",
+     "page": 11,
+     "label": "Personal hygiene in the field"
+    },
+    {
+     "pdf": "tc-4-02-3",
+     "page": 23,
+     "label": "Latrines, waste and camp sanitation"
+    },
+    {
+     "pdf": "atp-4-25-12",
+     "label": "Field sanitation (full manual)"
+    },
+    {
+     "zim": "wikipedia_en_all_maxi",
+     "path": "Pit_latrine",
+     "label": "Pit latrine"
+    },
+    {
+     "zim": "wikipedia_en_all_maxi",
+     "path": "Composting_toilet",
+     "label": "Composting toilet"
+    },
+    {
+     "zim": "mdwiki_en_all_maxi",
+     "path": "Hand_washing",
+     "label": "Hand washing"
+    },
+    {
+     "zim": "mdwiki_en_all_maxi",
+     "path": "Cholera",
+     "label": "Cholera and diarrhoea (oral rehydration)"
+    },
+    {
+     "zim": "mdwiki_en_all_maxi",
+     "path": "Oral_rehydration_therapy",
+     "label": "Oral rehydration solution"
+    }
+   ]
+  }
+ ],
+ "rebuild": [
+  {
+   "id": "power",
+   "title": "Power",
+   "links": [
+    {
+     "pdf": "atp-3-34-45",
+     "page": 11,
+     "label": "Electric power generation and distribution"
+    },
+    {
+     "pdf": "atp-3-34-45",
+     "page": 77,
+     "label": "Electrical safety"
+    },
+    {
+     "zim": "energypedia_en_all_maxi",
+     "path": "Main_Page",
+     "label": "Energypedia (solar, hydro, biogas)"
+    },
+    {
+     "zim": "solar.lowtechmagazine.com_mul_all",
+     "path": "solar.lowtechmagazine.com/",
+     "label": "Low-tech Magazine"
+    },
+    {
+     "zim": "wikipedia_en_all_maxi",
+     "path": "Stand-alone_power_system",
+     "label": "Off-grid power systems"
+    }
+   ]
+  },
+  {
+   "id": "water-systems",
+   "title": "Water systems",
+   "links": [
+    {
+     "pdf": "atp-4-44",
+     "page": 107,
+     "label": "Water site reconnaissance and development"
+    },
+    {
+     "pdf": "atp-4-44",
+     "page": 127,
+     "label": "Water treatment processes"
+    },
+    {
+     "zim": "wikipedia_en_all_maxi",
+     "path": "Rainwater_harvesting",
+     "label": "Rainwater harvesting"
+    },
+    {
+     "zim": "wikipedia_en_all_maxi",
+     "path": "Water_well",
+     "label": "Water wells"
+    }
+   ]
+  },
+  {
+   "id": "construction",
+   "title": "Construction",
+   "links": [
+    {
+     "pdf": "fm-5-125",
+     "label": "Rigging: rope, knots, hoists, scaffolds"
+    },
+    {
+     "pdf": "tc-3-97-61",
+     "page": 169,
+     "label": "Knots and rope management"
+    },
+    {
+     "zim": "wikipedia_en_knots_maxi",
+     "path": "index",
+     "label": "Knots"
+    },
+    {
+     "zim": "appropedia_en_all_maxi",
+     "path": "Welcome_to_Appropedia",
+     "label": "Appropedia (appropriate technology)"
+    },
+    {
+     "zim": "cd3wdproject.org_en_all",
+     "path": "www.cd3wdproject.org/",
+     "label": "CD3WD development library"
+    }
+   ]
+  },
+  {
+   "id": "agriculture",
+   "title": "Agriculture",
+   "links": [
+    {
+     "zim": "gardenology.org_en_all",
+     "path": "Main_Page",
+     "label": "Gardenology plant encyclopedia"
+    },
+    {
+     "zim": "wikipedia_en_all_maxi",
+     "path": "Seed_saving",
+     "label": "Seed saving"
+    },
+    {
+     "zim": "wikipedia_en_all_maxi",
+     "path": "Crop_rotation",
+     "label": "Crop rotation"
+    },
+    {
+     "zim": "*_en_survivorlibrary",
+     "path": "",
+     "label": "Survivor Library (old-tech farming, crafts)"
+    }
+   ]
+  },
+  {
+   "id": "repair",
+   "title": "Repair",
+   "links": [
+    {
+     "zim": "ifixit_en_all",
+     "path": "home/home",
+     "label": "iFixit repair guides"
+    },
+    {
+     "zim": "wikipedia_en_all_maxi",
+     "path": "Small_engine",
+     "label": "Small engines"
+    }
+   ]
+  }
+ ],
+ "maps": [
+  {
+   "app": "terrain",
+   "label": "Terrain & elevation map",
+   "source": "ARKive"
+  },
+  {
+   "zim": "maps_en_all",
+   "path": "index.html",
+   "label": "World map (OpenStreetMap)"
+  },
+  {
+   "zim": "*_en_nps-maps",
+   "path": "index",
+   "label": "National Park Service maps"
+  },
+  {
+   "zim": "wikivoyage_en_all_maxi",
+   "path": "",
+   "label": "Wikivoyage travel guide"
+  }
+ ]
+}

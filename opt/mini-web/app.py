@@ -10,7 +10,7 @@ icons.P.setdefault("gear", '<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 1
 import usbui, gallery, music, common, manage
 HOST = common.arkive_host()  # ARKIVE_HOST (env or /etc/arkive/arkive.env)
 ROOT = "/srv/archive/manuals"; ALLOWED = ("/srv/archive/manuals", "/srv/archive/files")
-A = "/srv/archive"; CONF = "/etc/mini-web/admin.json"; HERE = os.path.dirname(os.path.abspath(__file__))
+A = "/srv/archive"; GEN = f"{A}/generated"; CONF = "/etc/mini-web/admin.json"; HERE = os.path.dirname(os.path.abspath(__file__))
 DRY = os.environ.get("MINI_POWER_DRY_RUN") == "1"
 CSS_V = str(int(os.path.getmtime(os.path.join(HERE, "static/style.css"))))
 SESS = {}; FAILS = {}; LOCK = threading.Lock(); TTL = 8 * 3600
@@ -152,6 +152,8 @@ class H(BaseHTTPRequestHandler):
             if path == "/admin/radios/status": return self.out(200, json.dumps(radio_status()), "application/json", [("Cache-Control", "no-store")])
             if path == "/admin/power": return self.power_confirm(s, urllib.parse.parse_qs(u.query).get("action", [""])[0])
             return self.out(404, page("Not found", "<p>Not found.</p>"))
+        if path in ("/stay-alive", "/stay-alive/"): return self.generated("stayalive.html", "Stay Alive")
+        if path == "/official/": return self.generated("official.html", "Official Manuals")
         return self.browse(path)
     def do_POST(self):
         path = urllib.parse.urlsplit(self.path).path
@@ -391,6 +393,12 @@ class H(BaseHTTPRequestHandler):
         msg = (r.stdout + r.stderr).strip() or ("Shutting down. Wait for the green light to stop before unplugging." if act == "poweroff" else "Rebooting; back in about a minute.")
         self.admin_page("Power", f'<div class="card">{esc(msg)}</div>', s)
 
+    # ---------- generated pages (build_stayalive.py) ----------
+    def generated(self, name, title):
+        try: body = open(os.path.join(GEN, name)).read()
+        except OSError: body = f'<div class="card"><h1 style="margin-top:0">{esc(title)}</h1><p class="mut">This page is being built; reload in a minute.</p></div>'
+        self.out(200, page(title, body))
+
     # ---------- public file browser ----------
     def browse(self, path):
         real = os.path.realpath(os.path.join(ROOT, path.lstrip("/")))
@@ -454,6 +462,14 @@ class Captive(BaseHTTPRequestHandler):
     def do_GET(self):
         self.send_response(302); self.send_header("Location", f"http://{HOST}/"); self.send_header("Content-Length", "0"); self.send_header("Cache-Control", "no-store"); self.end_headers()
     do_HEAD = do_POST = do_GET
+def stayalive_loop():
+    """(Re)build the Stay Alive + Official Manuals pages: as soon as kiwix answers after start-up, then every 6 h."""
+    time.sleep(15)
+    while True:
+        try: rc = subprocess.run([sys.executable, os.path.join(HERE, "build_stayalive.py")], capture_output=True, timeout=1800).returncode
+        except Exception: rc = 1
+        time.sleep(60 if rc == 75 else 6 * 3600)
 if __name__ == "__main__":
+    threading.Thread(target=stayalive_loop, daemon=True).start()
     c = ThreadingHTTPServer(("", 8081), Captive); c.daemon_threads = True; threading.Thread(target=c.serve_forever, daemon=True).start()
     s = ThreadingHTTPServer(("", int(os.environ.get("PORT", "8080"))), H); s.daemon_threads = True; s.serve_forever()

@@ -100,3 +100,22 @@ input:focus,select:focus{outline:none;border-color:var(--acc)}
 :root:not(.light) .brand .only-d{display:block!important}
 :root:not(.light) .hero .only-d{display:block!important}
 .brand .only-l,.hero .only-l{display:block}
+
+/* Stay Alive + Official Manuals (build_stayalive.py). Big tap targets, no JS needed. */
+a.sa-cta,:root.light a.sa-cta{display:flex;align-items:center;justify-content:space-between;gap:14px;max-width:640px;min-height:64px;margin:4px auto 16px;padding:16px 22px;
+  background:var(--acc);color:var(--on-acc);border-radius:14px;font-size:1.45em;font-weight:700;text-align:left;text-decoration:none}
+a.sa-cta small{display:block;font-size:.55em;font-weight:500;opacity:.92;margin-top:2px}a.sa-cta>span[aria-hidden]{font-size:1.4em;line-height:1}
+a.sa-cta:hover{filter:brightness(1.08);text-decoration:none}
+.sa h1{margin:8px 0 4px;font-size:1.8em}.sa>p.mut{margin:0 0 12px}
+.sa-nav{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 6px}
+.sa-nav a,:root.light .sa-nav a{display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border:1px solid var(--line);border-radius:999px;background:var(--card);color:var(--fg);font-weight:600}
+.sa-nav a:hover{border-color:var(--acc);text-decoration:none}
+.sa-sec{scroll-margin-top:10px}.sa-sec h2{color:var(--fg);text-transform:none;letter-spacing:0;font-size:1.3em;margin:26px 0 2px;border-left:4px solid var(--sand);padding-left:10px}
+.sa-sec>p.mut{margin:0 0 8px}.sa-sub h2{font-size:1.08em;border-left-color:var(--acc);margin-top:16px}
+.sa-list{list-style:none;margin:0;padding:0;background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.sa-list li a,:root.light .sa-list li a{display:block;min-height:52px;padding:12px 16px;border-top:1px solid var(--line);color:var(--fg)}
+.sa-list li:first-child a{border-top:0}.sa-list li a:hover{background:var(--card2);text-decoration:none}
+.sa-l{display:block;font-weight:600;font-size:1.05em}.sa-s{display:block;color:var(--mut);font-size:.88em;margin-top:2px}
+.sa-s i{font-style:normal;font-size:.8em;font-weight:700;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--sand);border-radius:6px;padding:0 6px;margin-right:6px;color:var(--fg)}
+.sa-list .sup{display:block;color:var(--warn);font-size:.85em;margin-top:2px}.sa-note{margin-top:22px;font-size:.9em}
+@media (max-width:560px){a.sa-cta{font-size:1.3em}.sa h1{font-size:1.5em}}

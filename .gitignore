@@ -17,3 +17,5 @@ venv/
 __pycache__
 *.log
 *.bak
+# manual PDFs are fetched on the device, never committed
+*.pdf

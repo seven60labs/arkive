@@ -59,12 +59,15 @@ for b in books:
         break
 tiles += f'<a class="tile" href="/nojs">{svg("lib")}<span><b>Whole library</b><small>All {len(books)} collections</small></span></a>'
 tiles += f'<a class="tile port" data-port="8080" data-path="terrain" href="http://{HOST}:8080/terrain">{svg("map")}<span><b>Terrain</b><small>Offline 3D relief map + USGS elevation downloads</small></span></a>'
+if os.path.isfile("/srv/archive/manuals/official/manifest.json"):
+    tiles += f'<a class="tile port" data-port="8080" data-path="official/" href="http://{HOST}:8080/official/">{svg("book")}<span><b>Official Manuals</b><small>US Army, FEMA, USDA, NOAA field manuals by subject</small></span></a>'
 tiles += f'<a class="tile port" data-port="8080" href="http://{HOST}:8080/">{svg("pdf")}<span><b>Manuals & PDFs</b><small>Offline manuals, maps and documents</small></span></a>'
 page = f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>ARKive</title><link rel="icon" type="image/png" sizes="32x32" href="{FAV}"><link rel="apple-touch-icon" href="{TOUCH}">
 <meta name="theme-color" content="#0F4C4C"><meta name="apple-mobile-web-app-title" content="ARKive"><style>{CSS}</style>{THEME_JS}</head><body><div class="wrap">
 <div class="top"><span class="sp"></span><button class="iconbtn" onclick="tt()" title="Light/dark">{svg("sun")}</button></div>
-<div class="hero"><img class="poster only-l" src="{LOGO}" alt="ARKive: a digital ark for an offline future" width="800" height="192"><img class="poster only-d" src="{LOGO_D}" alt="ARKive: a digital ark for an offline future" width="800" height="192"><h1 style="font-size:1.25em;margin-top:14px">Offline library</h1><p><span class="dot">●</span> {len(books)} collections · works without internet</p>
+<div class="hero"><img class="poster only-l" src="{LOGO}" alt="ARKive: a digital ark for an offline future" width="800" height="192"><img class="poster only-d" src="{LOGO_D}" alt="ARKive: a digital ark for an offline future" width="800" height="192"><a class="sa-cta port" data-port="8080" data-path="stay-alive" href="http://{HOST}:8080/stay-alive"><span>Stay Alive<small>First aid · water · shelter · fire · food · hazards</small></span><span aria-hidden="true">&rsaquo;</span></a>
+<h1 style="font-size:1.25em;margin-top:14px">Offline library</h1><p><span class="dot">●</span> {len(books)} collections · works without internet</p>
 <form class="search" id="sf" action="/search" method="get"><input name="pattern" placeholder="Search everything…" aria-label="Search" autofocus required>{HIDDEN}<button class="pri">{svg("search")}<span>Search</span></button></form>
 <p class="searching" id="sw" hidden>Searching {len(search_ids)} English collections<span class="dots"></span> the first search after a restart can take a minute while indexes load.</p></div>
 <h2>Browse</h2><div class="grid">{tiles}</div>

@@ -1,0 +1,257 @@
+{
+ "_comment": "ARKive Official Manuals source list. tools/fetch_manuals.py downloads 'fetch' entries into <dest>/<subject>/ and writes manifest.json. Only US Government works (public domain) from official sites, or archive.org copies of public-domain military manuals. Anything marked distribution-restricted / FOUO / CUI is refused.",
+ "license": "US Government work, public domain (17 U.S.C. 105)",
+ "subjects": [
+  "Survival",
+  "First aid & medical",
+  "Water & sanitation",
+  "Navigation",
+  "Food",
+  "Weather & hazards",
+  "Preparedness",
+  "Rebuild: power & engineering",
+  "Mountains & cold"
+ ],
+ "items": [
+  {
+   "id": "atp-3-50-21",
+   "subject": "Survival",
+   "number": "ATP 3-50.21",
+   "title": "Survival",
+   "apd": 1005316,
+   "supersedes": "FM 3-05.70 (2002), FM 21-76 (1992)"
+  },
+  {
+   "id": "atp-3-50-3",
+   "subject": "Survival",
+   "number": "ATP 3-50.3",
+   "title": "Multi-Service TTP for Survival, Evasion, and Recovery",
+   "apd": 1027265,
+   "note": "APD PDF is CAC-only (distribution-restricted); FM 21-76-1 (1999) in the Survival Guides library covers the same ground"
+  },
+  {
+   "id": "fm-3-05-70",
+   "subject": "Survival",
+   "number": "FM 3-05.70",
+   "title": "Survival (May 2002)",
+   "archive": "fm-3-05.70-survival-2002",
+   "superseded_by": "ATP 3-50.21 (2018)",
+   "skip": "archive.org copy carries a 'Distribution authorized to U.S. Government agencies' restriction; current ATP 3-50.21 (public release) included instead"
+  },
+  {
+   "id": "atp-4-02-11",
+   "subject": "First aid & medical",
+   "number": "ATP 4-02.11",
+   "title": "Casualty Response, Tactical Combat Casualty Care, and First Aid",
+   "apd": 1032717,
+   "supersedes": "TC 4-02.1 First Aid (2016), FM 4-25.11 (2002), FM 21-11"
+  },
+  {
+   "id": "tc-4-02-3",
+   "subject": "Water & sanitation",
+   "number": "TC 4-02.3",
+   "title": "Field Hygiene and Sanitation",
+   "apd": 105251,
+   "supersedes": "FM 21-10 (2000)"
+  },
+  {
+   "id": "atp-4-25-12",
+   "subject": "Water & sanitation",
+   "number": "ATP 4-25.12",
+   "title": "Unit Field Sanitation Teams",
+   "apd": 104111
+  },
+  {
+   "id": "tb-med-577",
+   "subject": "Water & sanitation",
+   "number": "TB MED 577",
+   "title": "Sanitary Control and Surveillance of Field Water Supplies",
+   "apd_number": "TB MED 577",
+   "apd_list": "TB"
+  },
+  {
+   "id": "atp-4-44",
+   "subject": "Water & sanitation",
+   "number": "ATP 4-44",
+   "title": "Water Support Operations",
+   "apd": 1031773
+  },
+  {
+   "id": "tc-3-25-26",
+   "subject": "Navigation",
+   "number": "TC 3-25.26",
+   "title": "Map Reading and Land Navigation",
+   "apd": 103749,
+   "supersedes": "FM 3-25.26 (2005)"
+  },
+  {
+   "id": "fm-3-25-26",
+   "subject": "Navigation",
+   "number": "FM 3-25.26",
+   "title": "Map Reading and Land Navigation (2001)",
+   "archive": "milmanual-fm-3-25.26-map-reading-and-land-navigation",
+   "superseded_by": "TC 3-25.26 (2013; APD copy is CAC-restricted)"
+  },
+  {
+   "id": "usgs-topo-symbols",
+   "subject": "Navigation",
+   "number": "USGS",
+   "title": "Topographic Map Symbols",
+   "url": "https://pubs.usgs.gov/gip/TopographicMapSymbols/topomapsymbols.pdf",
+   "publisher": "U.S. Geological Survey"
+  },
+  {
+   "id": "tc-3-97-61",
+   "subject": "Mountains & cold",
+   "number": "TC 3-97.61",
+   "title": "Military Mountaineering",
+   "apd": 1032223,
+   "supersedes": "FM 3-97.61 (2002)"
+  },
+  {
+   "id": "tc-21-3",
+   "subject": "Mountains & cold",
+   "number": "TC 21-3",
+   "title": "Soldier's Handbook for Individual Operations and Survival in Cold-Weather Areas",
+   "apd": 1032109
+  },
+  {
+   "id": "atp-3-34-45",
+   "subject": "Rebuild: power & engineering",
+   "number": "ATP 3-34.45",
+   "title": "Electric Power Generation and Distribution",
+   "apd": 1028367
+  },
+  {
+   "id": "fm-5-34",
+   "subject": "Rebuild: power & engineering",
+   "number": "FM 5-34",
+   "title": "Engineer Field Data (1999, w/ Change 3)",
+   "archive": "fm-5-34-engineer-field-data-w-change-3-1999",
+   "superseded_by": "rescinded; content moved to ATP 3-34.x / GTA series (historical edition)",
+   "skip": "archive.org copy carries 'Distribution authorized to US Government agencies only' (restricted)"
+  },
+  {
+   "id": "fm-5-125",
+   "subject": "Rebuild: power & engineering",
+   "number": "FM 5-125",
+   "title": "Rigging Techniques, Procedures, and Applications (2001)",
+   "archive": "RiggingTechniquesProceduresAndApplicationsFM51252001",
+   "superseded_by": "rescinded (historical edition); knots also in TC 3-97.61"
+  },
+  {
+   "id": "fsis-power-outage",
+   "subject": "Food",
+   "number": "USDA FSIS",
+   "title": "A Consumer's Guide to Food Safety: Severe Storms, Hurricanes & Power Outages",
+   "url": "https://www.fsis.usda.gov/sites/default/files/import/Severe-Storms-5-Panel-Brochure-ENGLISH_20.pdf",
+   "publisher": "USDA Food Safety and Inspection Service",
+   "note": "fsis.usda.gov blocks scripted downloads (HTTP 403); fetch by hand in a browser if wanted"
+  },
+  {
+   "id": "nws-basic-spotter",
+   "subject": "Weather & hazards",
+   "number": "NOAA PA 97050",
+   "title": "Basic Spotters' Field Guide",
+   "url": "https://www.weather.gov/media/grr/brochures/nwsbasicspottersfieldguide.pdf",
+   "publisher": "NOAA National Weather Service"
+  },
+  {
+   "id": "nws-advanced-spotter",
+   "subject": "Weather & hazards",
+   "number": "NOAA PA 92055",
+   "title": "Advanced Spotters' Field Guide",
+   "url": "https://www.weather.gov/media/grr/brochures/advspg.pdf",
+   "publisher": "NOAA National Weather Service"
+  },
+  {
+   "id": "fema-are-you-ready",
+   "subject": "Preparedness",
+   "number": "FEMA P-2064",
+   "title": "Are You Ready? An In-Depth Guide to Citizen Preparedness (2020)",
+   "in_library": {
+    "zim": "*_en_gov-reference",
+    "path": "FEMA-are-you-ready-guide-96e2d0.html"
+   },
+   "source": "https://www.ready.gov/sites/default/files/2021-11/are-you-ready-guide.pdf"
+  },
+  {
+   "id": "fema-cert-pm",
+   "subject": "Preparedness",
+   "number": "FEMA CERT",
+   "title": "CERT Basic Training Participant Manual (2019)",
+   "in_library": {
+    "zim": "*_en_gov-reference",
+    "path": "FEMA-2019-CERT-Basic-PM-FINAL-508c-17a5ac.html"
+   },
+   "source": "https://www.ready.gov/sites/default/files/2019.CERT_.Basic_.PM_FINAL_508c.pdf"
+  },
+  {
+   "id": "usda-canning",
+   "subject": "Food",
+   "number": "USDA AIB 539",
+   "title": "Complete Guide to Home Canning",
+   "in_library": {
+    "zim": "*_en_survival-guides",
+    "path": "Militaria-Bushcraft-Survival-Survival-Guide-PDFs-8-1-2019-Update-Food-and-Food-S-6d222a.html"
+   },
+   "source": "https://nchfp.uga.edu/resources/category/usda-guide/",
+   "note": "Library copy may predate the 2015 revision; current edition: nchfp.uga.edu (8 parts)"
+  },
+  {
+   "id": "epa-disinfection",
+   "subject": "Water & sanitation",
+   "number": "EPA 816-F-15-003",
+   "title": "Emergency Disinfection of Drinking Water",
+   "in_library": {
+    "zim": "*_en_survival-guides",
+    "path": "Militaria-Bushcraft-Survival-Survival-Guide-PDFs-8-1-2019-Update-Books-on-Water--94ef75.html"
+   },
+   "source": "https://www.epa.gov/ground-water-and-drinking-water/emergency-disinfection-drinking-water-0"
+  },
+  {
+   "id": "fm-21-76",
+   "subject": "Survival",
+   "number": "FM 21-76",
+   "title": "Survival (1992)",
+   "in_library": {
+    "zim": "*_en_survival-guides",
+    "path": "Militaria-Bushcraft-Survival-Survival-Guide-PDFs-8-1-2019-Update-Military-Combat-a83b44.html"
+   },
+   "superseded_by": "FM 3-05.70 (2002), then ATP 3-50.21 (2018)"
+  },
+  {
+   "id": "st-31-91b",
+   "subject": "First aid & medical",
+   "number": "ST 31-91B",
+   "title": "Special Forces Medical Handbook (1982)",
+   "in_library": {
+    "zim": "*_en_survival-guides",
+    "path": "Militaria-Bushcraft-Survival-Survival-Guide-PDFs-8-1-2019-Update-Military-Combat-480ebe.html"
+   },
+   "superseded_by": "obsolete medical doctrine; historical reference only"
+  },
+  {
+   "id": "fm-21-11",
+   "subject": "First aid & medical",
+   "number": "FM 21-11",
+   "title": "First Aid for Soldiers",
+   "in_library": {
+    "zim": "*_en_survival-guides",
+    "path": "Militaria-Bushcraft-Survival-Survival-Guide-PDFs-8-1-2019-Update-Best-Emergency--468aba.html"
+   },
+   "superseded_by": "FM 4-25.11, TC 4-02.1, now ATP 4-02.11"
+  },
+  {
+   "id": "fm-3-97-61",
+   "subject": "Mountains & cold",
+   "number": "FM 3-97.61",
+   "title": "Military Mountaineering (2002)",
+   "in_library": {
+    "zim": "*_en_survival-guides",
+    "path": "Militaria-Bushcraft-Survival-Survival-Guide-PDFs-8-1-2019-Update-Military-Combat-fae5cf.html"
+   },
+   "superseded_by": "TC 3-97.61"
+  }
+ ]
+}

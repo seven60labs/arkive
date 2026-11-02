@@ -1,0 +1,27 @@
+P={
+"logo":'<path d="M4 19V5a2 2 0 0 1 2-2h11l3 3v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><path d="M8 7h8M8 11h8M8 15h5"/>',
+"search":'<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>',
+"globe":'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/>',
+"med":'<rect x="3" y="3" width="18" height="18" rx="4"/><path d="M12 8v8M8 12h8"/>',
+"tool":'<path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.4-.6-.6-2.4z"/>',
+"map":'<path d="m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3z"/><path d="M9 3v15M15 6v15"/>',
+"book":'<path d="M4 4h6a3 3 0 0 1 3 3v13a2 2 0 0 0-2-2H4zM20 4h-6a3 3 0 0 0-3 3v13a2 2 0 0 1 2-2h7z"/>',
+"chat":'<path d="M21 12a8 8 0 0 1-12 7l-5 1 1-4a8 8 0 1 1 16-4z"/>',
+"video":'<rect x="3" y="6" width="13" height="12" rx="2"/><path d="m16 10 5-3v10l-5-3"/>',
+"lib":'<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>',
+"folder":'<path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>',
+"file":'<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/>',
+"pdf":'<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M8 13h1.5a1.5 1.5 0 0 1 0 3H8v-3zm0 3v2M13 13v5M13 13h1.5a1.5 1.5 0 0 1 1.5 1.5v1a1.5 1.5 0 0 1-1.5 1.5H13"/>',
+"img":'<rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="m21 17-5-5-9 8"/>',
+"zip":'<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M11 4v2M11 8v2M11 12v2M10 16h2v3h-2z"/>',
+"htm":'<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="m10 12-2 2 2 2M14 12l2 2-2 2"/>',
+"power":'<path d="M12 3v9"/><path d="M6.3 6.3a8 8 0 1 0 11.4 0"/>',
+"reboot":'<path d="M20 12a8 8 0 1 1-2.3-5.7"/><path d="M20 4v5h-5"/>',
+"lock":'<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>',
+"sun":'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
+"home":'<path d="m3 11 9-8 9 8"/><path d="M5 10v10h14V10"/>',
+"chev":'<path d="m9 6 6 6-6 6"/>',
+"act":'<path d="M3 12h4l3-8 4 16 3-8h4"/>',
+}
+def svg(n,cls=""): return f'<svg class="ico {cls}" viewBox="0 0 24 24" aria-hidden="true">{P[n]}</svg>'
+THEME_JS="<script>(function(){var r=document.documentElement,t=null;try{var q=new URLSearchParams(location.search).get('theme');if(q==='light'||q==='dark')t=q}catch(e){}if(!t){var m=document.cookie.match(/(?:^|; )fbtheme=(light|dark)/);if(m)t=m[1]}if(!t)try{t=localStorage.getItem('theme')}catch(e){}if(t!=='light'&&t!=='dark')t=(window.matchMedia&&matchMedia('(prefers-color-scheme: light)').matches)?'light':'dark';function sv(v){try{localStorage.setItem('theme',v)}catch(e){}document.cookie='fbtheme='+v+'; Path=/; Max-Age=31536000; SameSite=Lax'}if(t==='light')r.classList.add('light');sv(t);window.fbt=function(){return r.classList.contains('light')?'light':'dark'};window.tt=function(){r.classList.toggle('light');sv(fbt())};document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href]');if(!a||a.host===location.host||a.hostname!==location.hostname)return;var u=new URL(a.href);u.searchParams.set('theme',fbt());a.href=u.href},true)})()</script>"  # one theme for :80 and :8080: ?theme= on cross-port links, first-party fbtheme cookie (host-wide, all ports), localStorage per origin; runs in <head> before first paint

@@ -1,0 +1,1 @@
+minitools ALL=(root) NOPASSWD: /usr/local/sbin/mini-power poweroff, /usr/local/sbin/mini-power reboot, /usr/local/sbin/mini-power dry-run *

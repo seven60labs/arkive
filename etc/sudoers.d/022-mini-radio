@@ -1,0 +1,1 @@
+minitools ALL=(root) NOPASSWD: /usr/local/sbin/mini-radio status, /usr/local/sbin/mini-radio wifi on, /usr/local/sbin/mini-radio wifi off, /usr/local/sbin/mini-radio bt on, /usr/local/sbin/mini-radio bt off, /usr/local/sbin/mini-radio ssid *, /usr/local/sbin/mini-admin-passwd --stdin

@@ -1,0 +1,12 @@
+[Unit]
+Description=ARKive web: file browser + admin panel (:8080)
+After=network-online.target
+[Service]
+Environment=TZ=America/Los_Angeles
+User=minitools
+SupplementaryGroups=audio bluetooth
+ExecStart=/usr/bin/python3 /opt/mini-web/app.py
+Restart=always
+RestartSec=5
+[Install]
+WantedBy=multi-user.target

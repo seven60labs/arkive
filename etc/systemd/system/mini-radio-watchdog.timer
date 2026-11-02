@@ -1,0 +1,8 @@
+[Unit]
+Description=Check every 20 s that the Pi stays reachable
+[Timer]
+OnBootSec=60
+OnUnitActiveSec=20
+AccuracySec=2
+[Install]
+WantedBy=timers.target

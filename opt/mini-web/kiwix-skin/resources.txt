@@ -1,0 +1,1 @@
+/skin/viewer.js application/javascript /opt/mini-web/kiwix-skin/viewer.js

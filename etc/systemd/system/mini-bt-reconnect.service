@@ -1,0 +1,9 @@
+[Unit]
+Description=Reconnect last Bluetooth speaker for mini player
+After=bluetooth.service bluealsa.service
+Wants=bluetooth.service
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/mini-bt-reconnect
+[Install]
+WantedBy=multi-user.target

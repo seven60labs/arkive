@@ -1,0 +1,6 @@
+#!/bin/sh
+# Reconnect the last Bluetooth speaker used by the mini player (best effort, a few tries).
+F=/var/lib/mini-player/last-speaker; [ -s "$F" ] || exit 0; MAC=$(cat "$F")
+echo "$MAC" | grep -Eq '^([0-9A-F]{2}:){5}[0-9A-F]{2}$' || exit 0
+bluetoothctl power on >/dev/null 2>&1
+for i in 1 2 3 4 5 6; do bluetoothctl connect "$MAC" | grep -q "Connection successful" && exit 0; sleep 10; done; exit 0

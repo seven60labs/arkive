@@ -1,0 +1,15 @@
+[Unit]
+Description=ARKive kiwix-serve (port 80)
+After=local-fs.target
+[Service]
+EnvironmentFile=-/etc/arkive/arkive.env
+AmbientCapabilities=CAP_NET_BIND_SERVICE
+User=arkive
+ExecStartPre=-/usr/bin/python3 /opt/mini-web/build_home.py
+ExecStart=/usr/bin/kiwix-serve --library --monitorLibrary --skipInvalid --port 80 --customIndex /srv/archive/home.html --threads 4 /srv/archive/library.xml
+Restart=on-failure
+RestartSec=3
+MemoryMax=1500M
+Nice=5
+[Install]
+WantedBy=multi-user.target

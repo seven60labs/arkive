@@ -1,0 +1,10 @@
+[Unit]
+Description=ARKive: Wi-Fi AP on, Bluetooth off at boot
+After=NetworkManager.service bluetooth.service mini-ap-firewall.service
+Requires=mini-ap-firewall.service
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/local/sbin/mini-radio boot
+[Install]
+WantedBy=multi-user.target

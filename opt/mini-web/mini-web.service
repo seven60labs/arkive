@@ -1,0 +1,11 @@
+[Unit]
+Description=Mini archive web: file browser + admin panel (:8080)
+After=network-online.target
+[Service]
+User=minitools
+Environment=MINI_POWER_DRY_RUN=1
+ExecStart=/usr/bin/python3 /opt/mini-web/app.py
+Restart=always
+RestartSec=5
+[Install]
+WantedBy=multi-user.target

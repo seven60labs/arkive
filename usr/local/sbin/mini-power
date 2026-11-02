@@ -1,0 +1,8 @@
+#!/bin/sh
+# Narrow power helper for the mini-tools page. Only these verbs are accepted.
+case "$1" in
+  poweroff) exec /usr/bin/systemctl poweroff ;;
+  reboot)   exec /usr/bin/systemctl reboot ;;
+  dry-run)  echo "would run: /usr/bin/systemctl ${2:-poweroff}"; exit 0 ;;
+  *) echo "usage: mini-power poweroff|reboot|dry-run [verb]" >&2; exit 2 ;;
+esac

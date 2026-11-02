@@ -1,0 +1,10 @@
+[Unit]
+Description=ARKive: isolate Wi-Fi AP clients from LAN (nftables)
+Before=NetworkManager.service network-pre.target
+Wants=network-pre.target
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/sbin/nft -f /etc/mini-radio/mini-ap.nft
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,97 @@
+#!/usr/bin/env python3
+"""mini-radio: narrow root helper for the Wi-Fi access point and Bluetooth radio.
+usage: mini-radio status | wifi on|off | bt on|off | ssid NAME|--random | ensure | boot"""
+import json, os, re, subprocess, sys, time
+CON = "mini-ap"; FLAG = "/run/mini-radio/wifi-off"
+def run(*a, t=30): r = subprocess.run(list(a), capture_output=True, text=True, timeout=t); return r.returncode, (r.stdout + r.stderr).strip()
+def rd(p, d=""):
+    try: return open(p).read().strip()
+    except OSError: return d
+def rfk(kind):
+    for d in os.listdir("/sys/class/rfkill"):
+        if rd(f"/sys/class/rfkill/{d}/type") == kind: return rd(f"/sys/class/rfkill/{d}/soft") == "1"
+    return None
+def eth():
+    car = rd("/sys/class/net/eth0/carrier", "0") == "1"
+    ip = re.findall(r"inet (\S+)", run("ip", "-4", "-o", "addr", "show", "dev", "eth0")[1])
+    return {"carrier": car, "ip": ip[0].split("/")[0] if ip else "", "ok": car and bool(ip)}
+def ap_active(): return CON in run("nmcli", "-t", "-f", "NAME", "con", "show", "--active")[1].splitlines()
+def ap_conf():
+    c, o = run("nmcli", "-t", "-g", "802-11-wireless.ssid,ipv4.addresses", "con", "show", CON)
+    l = o.splitlines() if c == 0 else []
+    return (l[0] if l else ""), (l[1].split(",")[0].split("/")[0].strip() if len(l) > 1 else "")
+def clients():
+    out = []; c, o = run("iw", "dev", "wlan0", "station", "dump")
+    macs = re.findall(r"Station ([0-9a-f:]{17})", o) if c == 0 else []
+    leases = {}
+    for f in ("/var/lib/NetworkManager/dnsmasq-wlan0.leases",):
+        for l in rd(f).splitlines():
+            p = l.split()
+            if len(p) >= 4: leases[p[1].lower()] = (p[2], p[3] if p[3] != "*" else "")
+    for m in macs: ip, name = leases.get(m, ("", "")); out.append({"mac": m, "ip": ip, "name": name})
+    return out
+def status():
+    ssid, ip = ap_conf(); bpow = None
+    if rfk("bluetooth") is False:
+        bpow = "Powered: yes" in run("bluetoothctl", "show", t=10)[1]
+    return {"eth": eth(), "wifi": {"blocked": rfk("wlan"), "ap": ap_active(), "ssid": ssid, "ip": ip, "clients": clients() if ap_active() else [],
+            "reg": (re.search(r"country (\w\w)", run("iw", "reg", "get")[1]) or [0, "?"])[1]},
+            "bt": {"blocked": rfk("bluetooth"), "powered": bool(bpow)}}
+def wifi_on():
+    try: os.remove(FLAG)
+    except OSError: pass
+    run("rfkill", "unblock", "wifi"); run("iw", "reg", "set", "US"); run("nmcli", "radio", "wifi", "on")
+    for _ in range(10):
+        if "unavailable" not in run("nmcli", "-t", "-f", "DEVICE,STATE", "dev")[1].split("wlan0:")[-1].splitlines()[0]: break
+        time.sleep(1)
+    for i in range(3):
+        c, o = run("nmcli", "con", "up", CON, t=60)
+        if c == 0: break
+        time.sleep(3)
+    alias(); return c == 0, o
+def alias():
+    """10.42.0.2 = captive-portal alias (every unknown DNS name points here; HTTP is redirected to http://archive.lan/)"""
+    if ap_active() and "10.42.0.2/" not in run("ip", "-4", "-o", "addr", "show", "dev", "wlan0")[1]:
+        run("ip", "addr", "add", "10.42.0.2/32", "dev", "wlan0")
+def reroll():
+    import secrets, string; al = string.ascii_letters + string.digits
+    s = "".join(secrets.choice(al) for _ in range(10))
+    c, o = run("nmcli", "con", "modify", CON, "802-11-wireless.ssid", s); return s if c == 0 else None
+def main(a):
+    if not a: sys.exit(__doc__)
+    if a[0] == "status": print(json.dumps(status())); return
+    if a == ["wifi", "on"]: ok, o = wifi_on(); print("Wi-Fi access point on." if ok else "Failed: " + o[-300:]); sys.exit(0 if ok else 1)
+    if a == ["wifi", "off"]:
+        if not eth()["ok"]: print("Refused: ethernet (eth0) has no link or no IP address, so turning Wi-Fi off would make the Pi unreachable."); sys.exit(2)
+        os.makedirs(os.path.dirname(FLAG), exist_ok=True); open(FLAG, "w").close()
+        run("nmcli", "con", "down", CON); run("nmcli", "radio", "wifi", "off"); run("rfkill", "block", "wifi")
+        print("Wi-Fi off until next boot, or until ethernet drops (then the access point comes back by itself)."); return
+    if a == ["bt", "on"]:
+        run("rfkill", "unblock", "bluetooth"); time.sleep(2)
+        for _ in range(5):
+            if run("bluetoothctl", "power", "on", t=10)[0] == 0: break
+            time.sleep(1)
+        run("systemctl", "start", "--no-block", "mini-bt-reconnect.service"); print("Bluetooth on; reconnecting the last speaker if there is one."); return
+    if a == ["bt", "off"]:
+        run("bluetoothctl", "power", "off", t=10); run("rfkill", "block", "bluetooth"); print("Bluetooth off."); return
+    if a[0] == "ssid" and len(a) == 2:
+        s = a[1]
+        if s == "--random":
+            import secrets, string; al = string.ascii_letters + string.digits
+            s = "".join(secrets.choice(al) for _ in range(10))
+        if not (1 <= len(s.encode()) <= 32) or not re.fullmatch(r"[\w .()+,&'@#!-]+", s): print("Invalid SSID (1-32 characters: letters, digits, space . ( ) + , & ' @ # ! - _)"); sys.exit(2)
+        c, o = run("nmcli", "con", "modify", CON, "802-11-wireless.ssid", s)
+        if c: print("Failed: " + o); sys.exit(1)
+        if ap_active(): run("nmcli", "con", "up", CON, t=60)
+        print(f"SSID set to {s}."); return
+    if a == ["ensure"]:
+        alias()
+        if not os.path.exists(FLAG) and not ap_active():   # AP should be up (not switched off in the panel): bring it back
+            ok, o = wifi_on(); print("access point was down: re-enabled" if ok else "AP start failed: " + o); return
+        if not eth()["ok"] and not ap_active():
+            ok, o = wifi_on(); print("ethernet down: access point re-enabled" if ok else "ethernet down: AP start failed: " + o)
+        return
+    if a == ["boot"]:
+        run("rfkill", "block", "bluetooth"); s = reroll(); ok, o = wifi_on(); print(f"boot: bluetooth blocked; new SSID {s}; AP", "up" if ok else "failed: " + o); return
+    sys.exit(__doc__)
+main(sys.argv[1:])

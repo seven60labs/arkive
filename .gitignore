@@ -1,0 +1,19 @@
+# secrets / local config
+.env
+*password*
+*.key
+*.pem
+# large binaries & content
+*.zim
+*.img
+*.raw
+*.iso
+bin/pmtiles
+*.pmtiles
+*.mbtiles
+data/
+# python / logs / backups
+venv/
+__pycache__
+*.log
+*.bak

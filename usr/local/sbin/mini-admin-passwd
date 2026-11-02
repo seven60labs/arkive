@@ -1,0 +1,22 @@
+#!/usr/bin/env python3
+"""mini-admin-passwd: set the ARKive admin-panel password.
+usage: sudo mini-admin-passwd            (prompts twice)
+       echo NEWPASS | sudo mini-admin-passwd --stdin   (used by the admin panel)
+Writes /etc/mini-web/admin.json = {"user","salt","iter","hash"} (PBKDF2-HMAC-SHA256), readable by group minitools."""
+import getpass, grp, hashlib, json, os, secrets, sys
+CONF = "/etc/mini-web/admin.json"; ITER = 600_000
+if os.geteuid() != 0: sys.exit("run as root")
+if "--stdin" in sys.argv[1:]: pw = sys.stdin.readline().rstrip("\n")
+else:
+    pw = getpass.getpass("New admin password: ")
+    if pw != getpass.getpass("Again: "): sys.exit("passwords do not match")
+if not pw: sys.exit("empty password")
+salt = secrets.token_bytes(16)
+c = {"user": "admin", "salt": salt.hex(), "iter": ITER, "hash": hashlib.pbkdf2_hmac("sha256", pw.encode(), salt, ITER).hex()}
+os.makedirs(os.path.dirname(CONF), mode=0o750, exist_ok=True)
+tmp = CONF + ".tmp"
+fd = os.open(tmp, os.O_WRONLY | os.O_CREAT | os.O_TRUNC, 0o640)
+with os.fdopen(fd, "w") as f: json.dump(c, f)
+try: os.chown(tmp, 0, grp.getgrnam("minitools").gr_gid); os.chown(os.path.dirname(CONF), 0, grp.getgrnam("minitools").gr_gid)
+except KeyError: pass
+os.replace(tmp, CONF); print("admin password updated")

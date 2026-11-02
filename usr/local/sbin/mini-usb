@@ -1,0 +1,281 @@
+#!/usr/bin/env python3
+"""mini-usb: narrow root helper for the admin USB Tools page.
+Whitelisted actions only. Every write target is re-validated here; the system/repository drive can never be written.
+  list | mount PART | umount PART | fsck PART | smart DISK | badblocks DISK
+  format DISK FS LABEL CONFIRM | flash IMAGE DISK CONFIRM | clone DISK CONFIRM [with-personal] | jobs | cancel JOBID
+CONFIRM must equal the target device name (e.g. sdb)."""
+import json, os, re, sys, subprocess, time, secrets, signal, hashlib, shutil
+os.environ["PATH"] = "/usr/sbin:/usr/bin:/sbin:/bin"
+STATE = "/run/mini-usb"; MEDIA = "/media/usb"; IMAGES = "/srv/archive/files/images"; PROT = "/etc/mini-usb/protected.json"
+ALLOW_LOOP = os.path.exists("/etc/mini-usb/allow-loop-testing")
+FS = {"exfat": ["mkfs.exfat", "-L"], "fat32": ["mkfs.vfat", "-F", "32", "-n"], "ext4": ["mkfs.ext4", "-F", "-L"], "ntfs": ["mkfs.ntfs", "-Q", "-F", "-L"]}
+def die(m, c=1): print(json.dumps({"ok": False, "error": m})); sys.exit(c)
+def ok(**k): print(json.dumps({"ok": True, **k})); sys.exit(0)
+def run(*a, **k): return subprocess.run(a, capture_output=True, text=True, **k)
+def lsblk():
+    r = run("lsblk", "-J", "-b", "-o", "NAME,PATH,MODEL,SERIAL,SIZE,TYPE,TRAN,RM,HOTPLUG,FSTYPE,LABEL,UUID,PARTUUID,MOUNTPOINTS,PKNAME,RO")
+    return json.loads(r.stdout)["blockdevices"]
+def flat(devs, parent=None):
+    for d in devs:
+        d["parent"] = parent; yield d
+        yield from flat(d.get("children") or [], d)
+def disk_of(path):
+    """whole-disk name backing a mounted path"""
+    src = run("findmnt", "-n", "-o", "SOURCE", "--target", path).stdout.strip()
+    if not src.startswith("/dev/"): return None
+    pk = run("lsblk", "-n", "-o", "PKNAME", src).stdout.strip()
+    return pk or os.path.basename(src)
+def protected():
+    """set of whole-disk names that must never be written, plus why"""
+    why = {}
+    for p in ("/", "/boot/firmware", "/boot", "/srv/archive", "/srv"):
+        d = disk_of(p)
+        if d: why.setdefault(d, []).append(f"backs {p}")
+    try: saved = json.load(open(PROT))
+    except Exception: saved = {"serials": [], "uuids": []}
+    swaps = run("swapon", "--noheadings", "--raw", "--show=NAME").stdout.split()
+    for d in flat(lsblk()):
+        disk = d["parent"]["name"] if d["parent"] else d["name"]
+        mps = [m for m in (d.get("mountpoints") or []) if m]
+        for m in mps:
+            if m == "/" or m.startswith("/boot") or m.startswith("/srv") or m == "[SWAP]": why.setdefault(disk, []).append(f"{d['name']} mounted at {m}")
+        if d.get("serial") and d["serial"] in saved["serials"]: why.setdefault(disk, []).append("serial of system drive")
+        if d.get("uuid") and d["uuid"] in saved["uuids"]: why.setdefault(disk, []).append("UUID of system filesystem")
+        if d["path"] in swaps: why.setdefault(disk, []).append("active swap")
+        if d["type"] in ("loop",) and d.get("children") is None and not mps and not ALLOW_LOOP: pass
+    return why
+def disk_info(name):
+    for d in lsblk():
+        if d["name"] == name: return d
+    return None
+def valid_target(name, confirm=None):
+    if not re.fullmatch(r"(sd[a-z]{1,2}|mmcblk\d+|nvme\d+n\d+|loop\d+)", name or ""): die("bad device name")
+    d = disk_info(name)
+    if not d or d["type"] not in ("disk", "loop"): die(f"{name} is not a whole disk")
+    if d["type"] == "loop" and not ALLOW_LOOP: die("loop devices are only allowed in testing mode")
+    if d["type"] == "loop" and not run("losetup", "-n", "-O", "BACK-FILE", d["path"]).stdout.strip().startswith("/var/tmp/mini-usb-test/"): die("only test loop images may be targets")
+    pw = protected()
+    if name in pw: die(f"{name} is PROTECTED ({'; '.join(pw[name])}). Refusing.")
+    if d["type"] == "disk" and not (d.get("rm") or d.get("hotplug") or d.get("tran") == "usb" or name.startswith("mmcblk")): die(f"{name} is not removable/USB/microSD")
+    if confirm is not None and confirm != name: die(f"confirmation must be exactly '{name}'")
+    for c in flat(d.get("children") or []):
+        for m in (c.get("mountpoints") or []):
+            if m and not m.startswith(MEDIA + "/"): die(f"{c['name']} is mounted at {m}; refusing")
+    return d
+def release(d):
+    for c in flat(d.get("children") or []):
+        for m in (c.get("mountpoints") or []):
+            if m: run("umount", m)
+def valid_part(name):
+    if not re.fullmatch(r"(sd[a-z]{1,2}\d+|mmcblk\d+p\d+|nvme\d+n\d+p\d+|loop\d+p?\d*)", name or ""): die("bad partition name")
+    for d in flat(lsblk()):
+        if d["name"] == name: return d
+    die("no such device")
+# ---------- background jobs ----------
+def job_start(kind, target, fn):
+    os.makedirs(STATE, exist_ok=True); os.chmod(STATE, 0o755)
+    for f in os.listdir(STATE):
+        if f.endswith(".json"):
+            j = json.load(open(f"{STATE}/{f}"))
+            if j["state"] == "running" and (j["target"] == target or kind in ("flash", "clone") and j["kind"] in ("flash", "clone")):
+                if os.path.exists(f"/proc/{j['pid']}"): die(f"job {j['id']} ({j['kind']} {j['target']}) is already running")
+    jid = time.strftime("%H%M%S-") + secrets.token_hex(2)
+    if os.fork(): time.sleep(0.3); ok(job=jid)
+    os.setsid()
+    if os.fork(): os._exit(0)
+    sys.stdout = open(f"{STATE}/{jid}.log", "a"); sys.stderr = sys.stdout
+    j = {"id": jid, "kind": kind, "target": target, "state": "running", "pct": 0, "msg": "starting", "pid": os.getpid(), "start": time.time()}
+    def upd(**k):
+        j.update(k); tmp = f"{STATE}/{jid}.json.tmp"; json.dump(j, open(tmp, "w")); os.chmod(tmp, 0o644); os.replace(tmp, f"{STATE}/{jid}.json")
+    upd()
+    try: fn(upd); upd(state="done", pct=100, end=time.time())
+    except Exception as e: upd(state="failed", msg=str(e)[:300], end=time.time())
+    os._exit(0)
+def sh(upd, *a):
+    print("$", " ".join(a), flush=True); r = subprocess.run(a, stdout=sys.stdout, stderr=subprocess.STDOUT)
+    if r.returncode: raise RuntimeError(f"{a[0]} failed ({r.returncode})")
+def partpath(disk, n): return f"/dev/{disk}{'p' if disk[-1].isdigit() else ''}{n}"
+# ---------- actions ----------
+def a_list():
+    pw = protected(); out = []
+    for d in lsblk():
+        if d["type"] not in ("disk", "loop") or d["name"].startswith(("zram", "mmcblk0boot", "mmcblk0rpmb")) or re.search(r"mmcblk\d+(boot|rpmb)", d["name"]): continue
+        if d["type"] == "loop" and not (ALLOW_LOOP and run("losetup", "-n", "-O", "BACK-FILE", d["path"]).stdout.strip().startswith("/var/tmp/mini-usb-test/")) and d["name"] not in pw: continue
+        d["protected"] = pw.get(d["name"], [])
+        d["sdslot"] = d["name"].startswith("mmcblk")
+        d["removable"] = bool(d.get("rm") or d.get("hotplug") or d.get("tran") == "usb" or d["sdslot"]) or d["type"] == "loop"
+        for c in flat(d.get("children") or []): c.pop("parent", None)
+        d.pop("parent", None); out.append(d)
+    if not any(x["name"].startswith("mmcblk") for x in out):
+        out.append({"name": "mmcblk0", "sdslot": True, "empty": True, "protected": [], "removable": False, "size": 0, "type": "disk", "children": []})
+    ok(disks=out, fs=[k for k, v in FS.items() if shutil.which(v[0])], images=sorted(f for f in os.listdir(IMAGES) if re.search(r"\.(iso|img|img\.xz)$", f)) if os.path.isdir(IMAGES) else [])
+def a_mount(part):
+    p = valid_part(part); disk = p["parent"]["name"] if p["parent"] else p["name"]
+    if (p.get("mountpoints") or [None])[0]: die(f"already mounted at {p['mountpoints'][0]}")
+    if disk in protected(): die("protected drive: browse it from 'Repository drive' instead")
+    mp = f"{MEDIA}/{part}"; os.makedirs(mp, exist_ok=True)
+    opts = "ro,nosuid,nodev,noexec"
+    if p.get("fstype") in ("vfat", "exfat", "ntfs", "ntfs3"): opts += ",uid=minitools,gid=minitools,umask=022"
+    r = run("mount", "-o", opts, p["path"], mp)
+    if r.returncode: os.rmdir(mp); die("mount failed: " + r.stderr.strip()[:200])
+    ok(mountpoint=mp)
+def a_umount(part):
+    valid_part(part); mp = f"{MEDIA}/{part}"
+    r = run("umount", mp)
+    if r.returncode: die("umount failed: " + r.stderr.strip()[:200])
+    try: os.rmdir(mp)
+    except OSError: pass
+    ok()
+def a_fsck(part):
+    p = valid_part(part); fs = p.get("fstype")
+    m = [x for x in (p.get("mountpoints") or []) if x]
+    if m and not m[0].startswith(MEDIA): die("mounted read-write system filesystem; fsck skipped")
+    if m: run("umount", m[0])
+    cmd = {"ext4": ["e2fsck", "-n", "-f"], "ext3": ["e2fsck", "-n", "-f"], "ext2": ["e2fsck", "-n", "-f"], "vfat": ["fsck.vfat", "-n", "-v"],
+           "exfat": ["fsck.exfat", "-n"], "ntfs": ["ntfsfix", "-n"]}.get(fs)
+    if not cmd: die(f"no read-only checker for filesystem '{fs}'")
+    r = run(*cmd, p["path"], timeout=3600)
+    if m: a_mount_quiet(part)
+    ok(rc=r.returncode, output=(r.stdout + r.stderr)[-6000:], clean=r.returncode == 0)
+def a_mount_quiet(part):
+    try: subprocess.run([sys.argv[0], "mount", part], capture_output=True)
+    except Exception: pass
+def a_smart(disk):
+    d = disk_info(disk) or die("no such disk")
+    outs = []
+    for extra in ([], ["-d", "sat"]):
+        r = run("smartctl", "-H", "-i", "-A", *extra, d["path"], timeout=60); outs.append(r.stdout)
+        if "SMART overall-health" in r.stdout or "SMART Health Status" in r.stdout: break
+    o = outs[-1]; h = re.search(r"(SMART overall-health self-assessment test result|SMART Health Status):\s*(\S+)", o)
+    ok(health=h.group(2) if h else "not supported by this device/bridge", output=o[-6000:])
+def a_badblocks(disk):
+    d = disk_info(disk) or die("no such disk")
+    if disk in protected(): die("protected drive: badblocks not run on the system SSD")
+    def fn(upd):
+        p = subprocess.Popen(["badblocks", "-sv", "-b", "4096", d["path"]], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        buf = b""; bad = 0
+        while True:
+            c = p.stdout.read(64)
+            if not c: break
+            buf += c; sys.stdout.write(c.decode(errors="replace")); sys.stdout.flush()
+            m = re.findall(rb"(\d+\.\d+)% done", buf[-400:])
+            if m: upd(pct=float(m[-1]), msg=f"read-only scan {float(m[-1]):.1f}%")
+            mb = re.findall(rb"\((\d+)/(\d+)/(\d+) errors\)", buf[-400:])
+            if mb: bad = sum(int(x) for x in mb[-1])
+            buf = buf[-2000:]
+        p.wait()
+        if p.returncode: raise RuntimeError("badblocks exited %d" % p.returncode)
+        upd(msg=f"finished: {bad} bad blocks / errors")
+    job_start("badblocks", disk, fn)
+def a_format(disk, fs, label, confirm):
+    d = valid_target(disk, confirm)
+    if fs not in FS or not shutil.which(FS[fs][0]): die("unsupported filesystem")
+    label = re.sub(r"[^A-Za-z0-9_-]", "", label or "")[: (11 if fs == "fat32" else 15)] or "USB"
+    if fs == "fat32": label = label.upper()
+    def fn(upd):
+        release(d); upd(msg="wiping signatures", pct=10); sh(upd, "wipefs", "-a", d["path"])
+        upd(msg="partitioning", pct=30)
+        ptype = {"exfat": "07", "fat32": "0c", "ext4": "83", "ntfs": "07"}[fs]
+        p = subprocess.run(["sfdisk", "-q", d["path"]], input=f"label: dos\n,,{ptype}\n", text=True, stdout=sys.stdout, stderr=subprocess.STDOUT)
+        if p.returncode: raise RuntimeError("sfdisk failed")
+        run("partprobe", d["path"]); run("udevadm", "settle"); time.sleep(1)
+        part = partpath(disk, 1); upd(msg=f"creating {fs}", pct=60); sh(upd, *FS[fs], label, part)
+        run("udevadm", "settle"); upd(msg=f"formatted {fs} label {label}")
+    job_start("format", disk, fn)
+def a_flash(image, disk, confirm):
+    d = valid_target(disk, confirm)
+    img = os.path.realpath(os.path.join(IMAGES, os.path.basename(image)))
+    if not img.startswith(IMAGES + "/") or not os.path.isfile(img): die("image not found in images folder")
+    xz = img.endswith(".xz")
+    if xz:
+        r = run("xz", "--robot", "--list", img); m = re.search(r"^file\s+\d+\s+\d+\s+\d+\s+(\d+)", r.stdout, re.M)
+        size = int(m.group(1)) if m else 0
+    else: size = os.path.getsize(img)
+    if not size or size > int(d["size"]): die(f"image ({size} bytes) does not fit on {disk} ({d['size']} bytes)")
+    def fn(upd):
+        release(d); run("wipefs", "-a", d["path"])
+        src = subprocess.Popen(["xz", "-dc", img], stdout=subprocess.PIPE).stdout if xz else open(img, "rb")
+        h = hashlib.sha256(); done = 0; t0 = time.time()
+        fd = os.open(d["path"], os.O_WRONLY | os.O_SYNC if False else os.O_WRONLY)
+        while True:
+            b = src.read(4 << 20)
+            if not b: break
+            os.write(fd, b); h.update(b); done += len(b)
+            if done % (64 << 20) < (4 << 20):
+                os.fsync(fd); upd(pct=round(done * 80 / size, 1), msg=f"writing {done >> 20} / {size >> 20} MiB ({done / max(1, time.time() - t0) / 1e6:.1f} MB/s)")
+        os.fsync(fd); os.close(fd)
+        if done != size: raise RuntimeError(f"wrote {done} of {size} bytes")
+        upd(pct=80, msg="verifying (reading back)")
+        with open("/proc/sys/vm/drop_caches", "w") as f: f.write("1")
+        v = hashlib.sha256(); left = size
+        with open(d["path"], "rb", buffering=0) as f:
+            while left:
+                b = f.read(min(4 << 20, left)); 
+                if not b: break
+                v.update(b); left -= len(b)
+                if left % (64 << 20) < (4 << 20): upd(pct=round(80 + (size - left) * 20 / size, 1), msg=f"verifying {(size-left) >> 20} / {size >> 20} MiB")
+        if v.hexdigest() != h.hexdigest(): raise RuntimeError("VERIFY FAILED: data read back differs from image")
+        run("partprobe", d["path"]); upd(msg=f"written and verified ({size >> 20} MiB, sha256 {h.hexdigest()[:16]}…)")
+    job_start("flash", disk, fn)
+def a_clone(disk, confirm, personal="no"):
+    d = valid_target(disk, confirm)
+    src = disk_of("/")
+    if not src or src == disk: die("source and target are the same device")
+    used = shutil.disk_usage("/").used; boot = 600 << 20; need = int(used * 1.05) + boot
+    if int(d["size"]) < need: die(f"target too small: need at least {need/1e9:.1f} GB (used data + boot + 5%), target is {int(d['size'])/1e9:.1f} GB")
+    def fn(upd):
+        release(d); newid = secrets.token_hex(4)
+        sd = run("sfdisk", "-d", f"/dev/{src}").stdout
+        b = re.search(r"/dev/\S+1 : start=\s*(\d+), size=\s*(\d+), type=(\w+)", sd)
+        oldid = re.search(r"label-id: 0x(\w+)", sd).group(1)
+        upd(msg="partitioning target (same layout, root fills disk)", pct=1); sh(upd, "wipefs", "-a", d["path"])
+        p = subprocess.run(["sfdisk", "-q", d["path"]], input=f"label: dos\nlabel-id: 0x{newid}\nstart={b.group(1)}, size={b.group(2)}, type={b.group(3)}\nstart={int(b.group(1))+int(b.group(2))}, type=83\n", text=True, stdout=sys.stdout, stderr=subprocess.STDOUT)
+        if p.returncode: raise RuntimeError("sfdisk failed")
+        run("partprobe", d["path"]); run("udevadm", "settle"); time.sleep(1)
+        p1, p2 = partpath(disk, 1), partpath(disk, 2)
+        upd(msg="creating filesystems", pct=2); sh(upd, "mkfs.vfat", "-F", "32", "-n", "bootfs", p1); sh(upd, "mkfs.ext4", "-F", "-q", "-L", "rootfs", p2)
+        mnt = "/mnt/mini-clone"; os.makedirs(f"{mnt}/root", exist_ok=True); sh(upd, "mount", p2, f"{mnt}/root")
+        try:
+            os.makedirs(f"{mnt}/root/boot/firmware", exist_ok=True); sh(upd, "mount", p1, f"{mnt}/root/boot/firmware")
+            upd(msg="copying boot partition", pct=3); sh(upd, "rsync", "-rtD", "--delete", "/boot/firmware/", f"{mnt}/root/boot/firmware/")
+            upd(msg="copying root + /srv/archive (rsync)", pct=4)
+            ex = ["/proc/*", "/sys/*", "/dev/*", "/run/*", "/tmp/*", "/mnt/*", "/media/*", "/var/tmp/*", "/lost+found", "/srv/archive/incoming/*", "/swapfile", "/var/swap"] + ([] if personal == "with-personal" else ["/srv/personal/*"])
+            r = subprocess.Popen(["rsync", "-aHAXx", "--numeric-ids", "--info=progress2", "--no-inc-recursive", *sum((["--exclude", e] for e in ex), []), "/", f"{mnt}/root/"],
+                                 stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+            buf = b""
+            while True:
+                c = r.stdout.read(256)
+                if not c: break
+                buf = (buf + c)[-1000:]
+                m = re.findall(rb"([\d,]+)\s+(\d+)%\s+(\S+/s)", buf)
+                if m: upd(pct=4 + int(m[-1][1]) * 0.94, msg=f"rsync {int(m[-1][0].replace(b',', b''))/1e9:.1f} GB copied, {m[-1][1].decode()}% at {m[-1][2].decode()}")
+            r.wait()
+            if r.returncode not in (0, 24): raise RuntimeError(f"rsync failed ({r.returncode})")
+            upd(msg="fixing fstab and cmdline.txt PARTUUIDs", pct=99)
+            for f in (f"{mnt}/root/etc/fstab", f"{mnt}/root/boot/firmware/cmdline.txt"):
+                s = open(f).read().replace(f"PARTUUID={oldid}-", f"PARTUUID={newid}-"); open(f, "w").write(s)
+            for x in ("/etc/mini-usb/allow-loop-testing",):
+                try: os.remove(mnt + "/root" + x)
+                except OSError: pass
+            sh(upd, "sync")
+        finally:
+            run("umount", f"{mnt}/root/boot/firmware"); run("umount", f"{mnt}/root")
+        upd(msg=f"clone complete: new disk id {newid}; bootable copy of /{src}")
+    job_start("clone", disk, fn)
+def a_jobs():
+    js = []
+    if os.path.isdir(STATE):
+        for f in sorted(os.listdir(STATE)):
+            if f.endswith(".json"): js.append(json.load(open(f"{STATE}/{f}")))
+    ok(jobs=js)
+def a_cancel(jid):
+    if not re.fullmatch(r"\d{6}-[0-9a-f]{4}", jid or ""): die("bad job id")
+    j = json.load(open(f"{STATE}/{jid}.json"))
+    if j["kind"] != "badblocks": die("only read-only scans can be cancelled; writes run to completion")
+    os.killpg(j["pid"], signal.SIGTERM); ok()
+A = {"list": (a_list, 0), "mount": (a_mount, 1), "umount": (a_umount, 1), "fsck": (a_fsck, 1), "smart": (a_smart, 1), "badblocks": (a_badblocks, 1),
+     "format": (a_format, 4), "flash": (a_flash, 3), "clone": (a_clone, (2, 3)), "jobs": (a_jobs, 0), "cancel": (a_cancel, 1)}
+if __name__ == "__main__":
+    if os.geteuid() != 0: die("must run as root (via sudo)")
+    if len(sys.argv) < 2 or sys.argv[1] not in A or len(sys.argv) - 2 not in (A[sys.argv[1]][1] if isinstance(A[sys.argv[1]][1], tuple) else (A[sys.argv[1]][1],)): die("usage: " + __doc__.split("\n")[2].strip())
+    A[sys.argv[1]][0](*sys.argv[2:])

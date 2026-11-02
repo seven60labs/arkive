@@ -1,0 +1,13 @@
+[Unit]
+Description=ARKive Pi-side music player (mpv -> Bluetooth via BlueALSA)
+After=bluealsa.service sound.target
+[Service]
+User=minitools
+SupplementaryGroups=audio bluetooth
+RuntimeDirectory=mini-player
+ExecStart=/usr/bin/mpv --idle=yes --no-video --no-terminal --input-ipc-server=/run/mini-player/mpv.sock --ao=alsa --audio-device=alsa/bluealsa --volume=70 --keep-open=no
+Restart=always
+RestartSec=3
+Nice=-2
+[Install]
+WantedBy=multi-user.target

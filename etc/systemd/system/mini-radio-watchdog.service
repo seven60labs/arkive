@@ -1,0 +1,5 @@
+[Unit]
+Description=ARKive: re-enable Wi-Fi AP if ethernet is down
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/mini-radio ensure

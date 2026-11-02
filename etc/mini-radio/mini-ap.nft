@@ -1,0 +1,14 @@
+# Mini archive Wi-Fi AP isolation: hotspot clients may talk to the Pi only, never routed to the LAN/ethernet.
+table inet mini_ap
+delete table inet mini_ap
+table inet mini_ap {
+  chain ap_forward {
+    type filter hook forward priority -10; policy accept;
+    iifname "wlan0" counter drop
+    oifname "wlan0" counter drop
+  }
+  chain ap_prerouting {
+    type nat hook prerouting priority dstnat; policy accept;
+    iifname "wlan0" ip daddr 10.42.0.2 tcp dport 80 redirect to :8081
+  }
+}

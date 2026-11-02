@@ -1,0 +1,11 @@
+[Unit]
+Description=ARKive photo thumbnailer (low priority)
+[Service]
+User=minitools
+Nice=19
+IOSchedulingClass=idle
+ExecStart=/usr/bin/python3 /opt/mini-web/thumbs.py
+Restart=always
+RestartSec=10
+[Install]
+WantedBy=multi-user.target

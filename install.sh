@@ -63,7 +63,10 @@ systemctl daemon-reload
 systemctl enable mini-bt-reconnect.service
 # start the library, panel and firewall now (no reboot needed to try it); the radio units only switch at boot,
 # because mini-radio-boot turns wlan0 into the hotspot and would drop a Wi-Fi uplink used during setup
-systemctl enable --now mini-ap-firewall.service mini-kiwix.service mini-web.service mini-player.service mini-thumbs.service
+U="mini-ap-firewall.service mini-kiwix.service mini-web.service mini-player.service mini-thumbs.service"
+systemctl enable $U
+# restart (not only --now) so re-running install.sh after a pull applies new code, home page and arkive.env
+systemctl restart $U
 if [ "${ARKIVE_ZERO:-0}" != 1 ]; then systemctl enable mini-radio-boot.service mini-radio-watchdog.timer; fi
 echo "ARKive installed: library http://$(hostname -I | cut -d' ' -f1)/ and panel :8080 are running now."
 echo "Reboot to bring up the open hotspot, then join the '$AP_SSID' Wi-Fi and open http://$ARKIVE_HOST/"

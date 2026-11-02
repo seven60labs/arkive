@@ -1,4 +1,4 @@
-<p align="center"><img src="docs/logo-horizontal.png" alt="ARKive — a digital ark for an offline future" width="600"></p>
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/logo-horizontal-dark.png"><img src="docs/logo-horizontal.png" alt="ARKive — a digital ark for an offline future" width="600"></picture></p>
 
 # ARKive
 

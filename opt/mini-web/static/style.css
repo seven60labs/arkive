@@ -74,12 +74,11 @@ h1{font-weight:700;letter-spacing:0}
 h2{color:var(--mut);font-weight:600}
 .top{border-bottom:1px solid var(--line);margin-bottom:6px}
 .brand{gap:10px;text-decoration:none!important}
-.brand .gear{width:34px;height:34px;border-radius:6px;flex:none;background:#FEFDF9}
-.brand .wm{height:34px;width:auto;display:block;border-radius:6px;background:#FEFDF9;padding:2px 6px}
+.brand .gear{width:34px;height:34px;flex:none}
+.brand .wm{height:34px;width:auto}
 .brand .adm{font-size:.72em;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--on-acc);background:var(--acc);padding:2px 9px;border-radius:999px}
 .hero{padding:18px 0 14px}
-.hero .poster{display:block;margin:0 auto 10px;width:min(560px,94%);max-width:100%;height:auto;aspect-ratio:800/201;object-fit:contain;border-radius:var(--r);background:#FEFDF9;padding:10px 16px}
-:root.light .hero .poster{padding:0;background:none}
+.hero .poster{margin:0 auto 10px;width:min(560px,94%);max-width:100%;height:auto;aspect-ratio:800/192}
 .hero p .dot{color:var(--ok)}
 .search input:focus{border-color:var(--acc);box-shadow:0 0 0 3px color-mix(in srgb,var(--acc) 25%,transparent)}
 .searching{margin:10px 0 0;color:var(--mut);font-size:.9em}
@@ -88,9 +87,16 @@ h2{color:var(--mut);font-weight:600}
 .upbox .upst{min-height:1.5em}
 .ok,.on{color:var(--ok)}
 .login-card{text-align:center}
-.login-card .gear{width:84px;height:84px;border-radius:12px;margin:4px auto 6px;display:block;background:#FEFDF9}
+.login-card .gear{width:84px;height:84px;margin:4px auto 6px;display:block}
 .login-card form{margin:0 auto;text-align:left}
 input:focus,select:focus{outline:none;border-color:var(--acc)}
 .foot{border-top:1px solid var(--line);padding-top:12px}
 @media (max-width:560px){.brand .wm{height:28px}.brand .gear{width:28px;height:28px}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+/* logo variants: transparent art with a #FEFDF9 outline; lettering charcoal (light) / off-white (dark).
+   The theme class is set in <head> before paint, so the wrong variant never flashes. */
+.only-d{display:none!important}
+:root:not(.light) .only-l{display:none!important}
+:root:not(.light) .brand .only-d{display:block!important}
+:root:not(.light) .hero .only-d{display:block!important}
+.brand .only-l,.hero .only-l{display:block}

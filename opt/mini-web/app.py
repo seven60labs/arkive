@@ -28,7 +28,7 @@ def page(title, body, admin=False, head=""):
     nav = (f'<a class="btn" href="/admin/">{svg("act")}Status</a><a class="btn" href="/admin/usb">{svg("tool")}USB</a><a class="btn" href="/admin/photos">{svg("img")}Photos</a><a class="btn" href="/admin/music">{svg("video")}Music</a><a class="btn" href="/admin/settings">{svg("gear")}Settings</a>' if admin else "")
     return (f'<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
             f'<title>{esc(title)} · ARKive</title><link rel="stylesheet" href="/static/style.css?v={CSS_V}">{BRAND_HEAD}{head}{THEME_JS}</head><body><div class="wrap">'
-            f'<div class="top"><a class="brand" href="{"/admin/" if admin else "/"}"><img class="gear" src="/static/gear-96.webp" alt="" width="34" height="34"><img class="wm" src="/static/wordmark-360.webp" alt="ARKive" width="90" height="34">{'<span class="adm">Admin</span>' if admin else ""}</a><span class="sp"></span>{nav}'
+            f'<div class="top"><a class="brand" href="{"/admin/" if admin else "/"}"><img class="gear" src="/static/gear-96.webp" alt="" width="34" height="34"><img class="wm only-l" src="/static/wordmark-360.webp" alt="ARKive" width="99" height="34"><img class="wm only-d" src="/static/wordmark-360-dark.webp" alt="ARKive" width="99" height="34">{'<span class="adm">Admin</span>' if admin else ""}</a><span class="sp"></span>{nav}'
             f'<button class="iconbtn" onclick="tt()" title="Light/dark">{svg("sun")}</button></div>{body}'
             f'<div class="foot"><a id="home" href="/">Archive home</a></div>'
             "<script>document.getElementById('home').href=location.protocol+'//'+location.hostname+'/'</script></div></body></html>")

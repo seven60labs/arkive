@@ -27,7 +27,16 @@
    "number": "ATP 3-50.3",
    "title": "Multi-Service TTP for Survival, Evasion, and Recovery",
    "apd": 1027265,
-   "note": "APD PDF is CAC-only (distribution-restricted); FM 21-76-1 (1999) in the Survival Guides library covers the same ground"
+   "note": "All APD/ALSA editions after 1999 (FM 3-50.3 2007, ATP 3-50.3 2012/2023) are distribution-restricted (2012: Statement D, DoD and contractors only); the public 1999 FM 21-76-1 is included instead"
+  },
+  {
+   "id": "fm-21-76-1",
+   "subject": "Survival",
+   "number": "FM 21-76-1",
+   "title": "Survival, Evasion, and Recovery: Multiservice Procedures (June 1999; MCRP 3-02H, NWP 3-50.3, AFTTP(I) 3-2.26)",
+   "archive": "Fm21-76-1",
+   "superseded_by": "FM 3-50.3 (2003, 2007), now ATP 3-50.3 (2023); later editions are distribution-restricted",
+   "note": "Last public-release edition of the multi-service SERE manual. Cover: 'Approved for public release; distribution is unlimited.' Also present in the Survival Guides library."
   },
   {
    "id": "fm-3-05-70",
@@ -36,7 +45,7 @@
    "title": "Survival (May 2002)",
    "archive": "fm-3-05.70-survival-2002",
    "superseded_by": "ATP 3-50.21 (2018)",
-   "skip": "archive.org copy carries a 'Distribution authorized to U.S. Government agencies' restriction; current ATP 3-50.21 (public release) included instead"
+   "skip": "May 2002 edition (archive.org and irp.fas.org copies) is marked 'Distribution authorized to U.S. Government agencies and their contractors only'; no public edition exists. Public line: FM 21-76 (1992, in library) and ATP 3-50.21 (2018, included)"
   },
   {
    "id": "atp-4-02-11",
@@ -82,7 +91,8 @@
    "number": "TC 3-25.26",
    "title": "Map Reading and Land Navigation",
    "apd": 103749,
-   "supersedes": "FM 3-25.26 (2005)"
+   "supersedes": "FM 3-25.26 (2005)",
+   "note": "TC 3-25.26 (2013) is marked 'Distribution authorized to U.S. government agencies and their contractors only'; FM 3-25.26 (2001) is the newest public-release edition"
   },
   {
    "id": "fm-3-25-26",
@@ -129,7 +139,7 @@
    "title": "Engineer Field Data (1999, w/ Change 3)",
    "archive": "fm-5-34-engineer-field-data-w-change-3-1999",
    "superseded_by": "rescinded; content moved to ATP 3-34.x / GTA series (historical edition)",
-   "skip": "archive.org copy carries 'Distribution authorized to US Government agencies only' (restricted)"
+   "skip": "1999 edition restricted ('US Government agencies only'); older 1965/1969 C2/1976 editions on archive.org carry no 'Approved for public release' statement (pre-date distribution statements), so not added"
   },
   {
    "id": "fm-5-125",

@@ -104,3 +104,15 @@ def rename_dir(base, thumbs, rel, new):
             os.makedirs(os.path.dirname(td), exist_ok=True); os.rename(ts, td)
     return True, nrel
 def imports_json(): return list(IMPORTS.values())
+
+
+def arkive_host():
+    """Hostname shown/linked for the device: $ARKIVE_HOST, else ARKIVE_HOST= in /etc/arkive/arkive.env, else arkive.lan."""
+    h = os.environ.get("ARKIVE_HOST")
+    if not h:
+        try:
+            for line in open("/etc/arkive/arkive.env"):
+                k, _, v = line.partition("=")
+                if k.strip() == "ARKIVE_HOST": h = v.split("#")[0].strip().strip("\x27\""); break
+        except OSError: pass
+    return h or "arkive.lan"

@@ -8,6 +8,7 @@ import icons
 icons.P.setdefault("wifi", '<path d="M2 8.5a15 15 0 0 1 20 0M5 12a10 10 0 0 1 14 0M8.5 15.5a5 5 0 0 1 7 0"/><circle cx="12" cy="19" r="1"/>')
 icons.P.setdefault("gear", '<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1 7 17M17 7l2.1-2.1"/>')
 import usbui, gallery, music, common, manage
+HOST = common.arkive_host()  # ARKIVE_HOST (env or /etc/arkive/arkive.env)
 ROOT = "/srv/archive/manuals"; ALLOWED = ("/srv/archive/manuals", "/srv/archive/files")
 A = "/srv/archive"; CONF = "/etc/mini-web/admin.json"; HERE = os.path.dirname(os.path.abspath(__file__))
 DRY = os.environ.get("MINI_POWER_DRY_RUN") == "1"
@@ -275,7 +276,7 @@ class H(BaseHTTPRequestHandler):
                 f'<p style="margin:6px 0">State: {on("broadcasting") if wifi_up else "<span class=err>off</span>"} · open network, no password · '
                 f'Pi address <b>{esc(w["ip"])}</b> · country {esc(w["reg"])}</p>'
                 + (f'<p class="warn" style="margin:6px 0">{esc(why)}</p>' if wifi_up and why else "")
-                + f'<p class="mut" style="margin:6px 0">On a phone: join <b>{esc(w["ssid"])}</b>, then open <b>http://arkive.lan</b> (archive) or <b>http://arkive.lan:8080/admin/</b> (this panel). '
+                + f'<p class="mut" style="margin:6px 0">On a phone: join <b>{esc(w["ssid"])}</b>, then open <b>http://{HOST}</b> (archive) or <b>http://{HOST}:8080/admin/</b> (this panel). '
                 'Wi-Fi always comes back on at boot, and turns itself back on within about 20 seconds if ethernet drops while it is off. Hotspot clients can reach this Pi only, never your home network.</p>'
                 f'<b>Connected clients ({len(w["clients"])})</b><ul style="margin:4px 0 10px;padding-left:20px">{cl}</ul>'
                 '<form method="post" action="/admin/radios">{CSRF}<button name="a" value="ssid_random">Reroll now</button> '
@@ -451,7 +452,7 @@ class Captive(BaseHTTPRequestHandler):
     timeout = 20
     def log_message(self, *a): pass
     def do_GET(self):
-        self.send_response(302); self.send_header("Location", "http://arkive.lan/"); self.send_header("Content-Length", "0"); self.send_header("Cache-Control", "no-store"); self.end_headers()
+        self.send_response(302); self.send_header("Location", f"http://{HOST}/"); self.send_header("Content-Length", "0"); self.send_header("Cache-Control", "no-store"); self.end_headers()
     do_HEAD = do_POST = do_GET
 if __name__ == "__main__":
     c = ThreadingHTTPServer(("", 8081), Captive); c.daemon_threads = True; threading.Thread(target=c.serve_forever, daemon=True).start()

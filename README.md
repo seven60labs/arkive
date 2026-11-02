@@ -69,7 +69,7 @@ terrain archive (see https://mapterhorn.com) with `pmtiles extract … --maxzoom
 
 | setting | where | default |
 |---|---|---|
-| hostname clients use | `ARKIVE_HOST` in `/etc/arkive/arkive.env` (+ `mini-archive.conf`) | `arkive.lan` |
+| hostname clients use | `ARKIVE_HOST` (env or `/etc/arkive/arkive.env`; read by `app.py` and `build_home.py`; must resolve via `mini-archive.conf`) | `arkive.lan` |
 | hotspot SSID | `AP_SSID`, or `sudo mini-radio ssid NAME` / admin panel | `ARKive` (re-rolled to a random name at boot by `mini-radio-boot`; disable `reroll.conf` to keep it fixed) |
 | hotspot address | `AP_ADDR` | `10.42.0.1/24` |
 | admin password | `sudo mini-admin-passwd` → `/etc/mini-web/admin.json` (PBKDF2 hash, never commit) | set at install |

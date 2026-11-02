@@ -5,7 +5,8 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from icons import svg, THEME_JS
 HERE = os.path.dirname(os.path.abspath(__file__)); OUT = "/srv/archive/home.html"
 # Fallback host for links to the :8080 panel (JS rewrites them to the current hostname anyway).
-HOST = os.environ.get("ARKIVE_HOST", "arkive.lan")
+from common import arkive_host
+HOST = arkive_host()
 CSS = open(os.path.join(HERE, "static/style.css")).read()  # same shared stylesheet, inlined (kiwix serves a single file)
 books = []; search_ids = []
 for b in ET.parse("/srv/archive/library.xml").getroot().iter("book"):
@@ -44,7 +45,7 @@ for name, ic, rx in CATS:
 # Featured Internet Archive tile: the five IA ZIMs match no CATS rule; reuse the catlist mechanism.
 # Book count = PDFs counted in the ZIMs with python-libzim on 2026-10-30 (589+520+587+545+644).
 IA_BOOKS = 2885
-ia = sorted([b for b in books if b[0].startswith("arkive_en_internet-archive-part")], key=lambda b: b[0])
+ia = sorted([b for b in books if re.search(r"_en_internet-archive-part", b[0])], key=lambda b: b[0])
 if ia:
     cid = "cat-internet-archive"
     items = "".join(f'<li><a href="/content/{esc(b[0])}">{esc(b[1])}</a> <small>{hs(b[3])}</small></li>' for b in ia)
@@ -52,7 +53,7 @@ if ia:
     tiles = (f'<a class="tile cat" href="#{cid}" data-cat="{cid}">{svg("lib")}<span><b>Internet Archive</b>'
              f'<small>{esc(f"{IA_BOOKS:,} public-domain books in {len(ia)} parts")}</small></span></a>') + tiles
 for b in books:
-    if b[0].startswith("arkive_en_survivorlibrary"):
+    if re.search(r"_en_survivorlibrary", b[0]):
         tiles = (f'<a class="tile" href="/content/{esc(b[0])}">{svg("book")}<span><b>Survivor Library</b>'
                  f'<small>{esc("11,802 old-tech books, by category")}</small></span></a>') + tiles
         break

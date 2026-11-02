@@ -28,7 +28,7 @@ layers:[{id:"bg",type:"background",paint:{"background-color":"#0b1a30"}},
 {id:"fpf",type:"fill",source:"fp",paint:{"fill-color":"#7fbf6a","fill-opacity":["case",["boolean",["feature-state","h"],false],0.35,0.08]}},
 {id:"fpl",type:"line",source:"fp",paint:{"line-color":"#7fbf6a","line-width":1.2}}]};
 var map=new maplibregl.Map({container:"tmap",style:style,center:[-98.5,39],zoom:3.6,maxBounds:[[-140,15],[-50,58]],attributionControl:false,maxPitch:80});
-window.fbxMap=map;map.addControl(new maplibregl.NavigationControl({visualizePitch:true}));map.addControl(new maplibregl.ScaleControl({unit:"imperial"}));
+window.arkMap=map;map.addControl(new maplibregl.NavigationControl({visualizePitch:true}));map.addControl(new maplibregl.ScaleControl({unit:"imperial"}));
 map.on("error",function(e){console.warn(e&&e.error)});
 function vis(id,on){map.setLayoutProperty(id,"visibility",on?"visible":"none")}
 document.getElementById("t3d").onchange=function(){if(this.checked){map.setTerrain({source:"dem3",exaggeration:1.4});if(map.getPitch()<30)map.easeTo({pitch:60})}else{map.setTerrain(null);map.easeTo({pitch:0})}};

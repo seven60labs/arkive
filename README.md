@@ -47,7 +47,7 @@ user-facing branding is ARKive.
 ## Install
 
 1. Flash Raspberry Pi OS Lite (64-bit; Bookworm or Trixie, tested on Trixie / Debian 13) and boot with ethernet or a temporary Wi-Fi connection.
-2. `git clone` this repo onto the Pi, then:
+2. Install git (`sudo apt install -y git`; Raspberry Pi OS Lite does not ship it), `git clone` this repo onto the Pi, then:
    ```sh
    sudo install -D -m 0644 config/arkive.env.example /etc/arkive/arkive.env && sudoedit /etc/arkive/arkive.env
    sudo ./install.sh        # installs packages, code, units; prompts for the admin password;
@@ -93,7 +93,10 @@ No ZIM files or other content are included.
 - **Official Manuals** (`:8080/official/`): public-domain US Government manuals (US Army ATP/TC/TB, USGS, NOAA/NWS),
   grouped by subject. The PDFs are **not** in this repo; fetch them on the device with
 
-      sudo -u arkive python3 tools/fetch_manuals.py --dest /srv/archive/manuals/official   # ARKIVE_USER owns /srv/archive
+      sudo -u arkive python3 /usr/local/lib/arkive/tools/fetch_manuals.py --dest /srv/archive/manuals/official
+
+  (install.sh copies the script and `manuals/catalog.json` to `/usr/local/lib/arkive/`, because the arkive user
+  usually cannot read a clone in your home directory; re-run install.sh after editing the catalog)
 
   It reads `manuals/catalog.json` and writes `manifest.json` (title, number, edition, source URL, sha256, licence,
   superseded notes). Only public-release sources are used: APD PDFs behind CAC login and anything marked

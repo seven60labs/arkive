@@ -108,7 +108,7 @@ def imports_json(): return list(IMPORTS.values())
 
 def arkive_host():
     """Hostname shown/linked for the device: $ARKIVE_HOST, else ARKIVE_HOST= in /etc/arkive/arkive.env, else arkive.lan."""
-    h = os.environ.get("ARKIVE_HOST")
+    h = os.environ.get("ARKIVE_HOST", "").split("#")[0].strip().strip("\x27\"")  # tolerate trailing comments
     if not h:
         try:
             for line in open("/etc/arkive/arkive.env"):

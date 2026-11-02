@@ -14,6 +14,9 @@ id minitools >/dev/null 2>&1 || useradd --system --create-home --home-dir /var/l
 usermod -aG audio,bluetooth minitools
 # code + config (file names keep the internal "mini-*" prefix)
 cp -r opt/mini-web /opt/
+# fetch tool + catalog in a system path the arkive user can read (the clone may be in a 0700 home)
+install -D -m 0755 tools/fetch_manuals.py /usr/local/lib/arkive/tools/fetch_manuals.py
+install -D -m 0644 manuals/catalog.json /usr/local/lib/arkive/manuals/catalog.json
 install -m 0755 usr/local/sbin/mini-* /usr/local/sbin/
 # stale drop-ins from an older install would silently override the units below: move any we do not ship aside
 STALE=/var/backups/arkive-stale-dropins-$(date +%Y%m%d-%H%M%S)
@@ -33,7 +36,13 @@ sed "s/arkive\.lan/$ARKIVE_HOST/g" etc/NetworkManager/dnsmasq-shared.d/mini-arch
 install -m 0440 etc/sudoers.d/02*-mini-* /etc/sudoers.d/ && visudo -c >/dev/null
 [ -d etc/mini-usb ] && cp -n etc/mini-usb/* /etc/mini-usb/ 2>/dev/null || true
 # data layout
-install -d -o "$ARKIVE_USER" -g "$ARKIVE_USER" /srv/archive /srv/archive/zim /srv/archive/files /srv/archive/files/maps /srv/archive/manuals /srv/archive/incoming
+# Library dirs may be symlinks onto exFAT/NTFS/FAT data disks, which cannot hold
+# Unix owners: create them, try to chown, and only warn if the filesystem refuses.
+for d in /srv/archive /srv/archive/zim /srv/archive/files /srv/archive/files/maps /srv/archive/manuals /srv/archive/incoming; do
+  mkdir -p "$d"
+  chown "$ARKIVE_USER:$ARKIVE_USER" "$d" 2>/dev/null || echo "WARNING: $d is on a filesystem without Unix ownership ($(stat -f -c %T "$d")); keeping mount-option ownership" >&2
+  sudo -u "$ARKIVE_USER" test -w "$d" || echo "WARNING: $ARKIVE_USER cannot write $d (fine for a read-only library; use uid=/gid= mount options to allow fetches/uploads)" >&2
+done
 install -d -o minitools -g "$ARKIVE_USER" -m 0775 /srv/archive/generated   # Stay Alive / Official Manuals pages (written by mini-web)
 install -d -m 0750 -o minitools -g minitools /srv/personal /srv/personal/music /srv/personal/photos /srv/personal/.thumbs
 install -d -m 0755 -o minitools -g minitools /srv/personal/.trash /var/lib/mini-player

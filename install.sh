@@ -1,5 +1,5 @@
 #!/bin/sh
-# ARKive installer: run as root on a fresh Raspberry Pi OS (Bookworm) image, from a checkout of this repo.
+# ARKive installer: run as root on Raspberry Pi OS Lite 64-bit (Bookworm or Trixie), from a checkout of this repo.
 set -eu
 cd "$(dirname "$0")"
 [ "$(id -u)" = 0 ] || { echo "run as root" >&2; exit 1; }
@@ -15,6 +15,16 @@ usermod -aG audio,bluetooth minitools
 # code + config (file names keep the internal "mini-*" prefix)
 cp -r opt/mini-web /opt/
 install -m 0755 usr/local/sbin/mini-* /usr/local/sbin/
+# stale drop-ins from an older install would silently override the units below: move any we do not ship aside
+STALE=/var/backups/arkive-stale-dropins-$(date +%Y%m%d-%H%M%S)
+for d in /etc/systemd/system/mini-*.service.d /etc/systemd/system/mini-*.timer.d; do
+  [ -d "$d" ] || continue
+  for f in "$d"/*; do
+    [ -e "$f" ] || continue
+    [ -e "etc/systemd/system/$(basename "$d")/$(basename "$f")" ] && continue
+    install -d "$STALE/$(basename "$d")" && mv "$f" "$STALE/$(basename "$d")/" && echo "WARNING: moved stale override $f to $STALE/" >&2
+  done
+done
 cp -r etc/systemd/system/. /etc/systemd/system/
 sed -i "s/^User=arkive$/User=$ARKIVE_USER/" /etc/systemd/system/mini-kiwix.service
 install -d /etc/mini-radio /etc/NetworkManager/dnsmasq-shared.d
@@ -24,6 +34,7 @@ install -m 0440 etc/sudoers.d/02*-mini-* /etc/sudoers.d/ && visudo -c >/dev/null
 [ -d etc/mini-usb ] && cp -n etc/mini-usb/* /etc/mini-usb/ 2>/dev/null || true
 # data layout
 install -d -o "$ARKIVE_USER" -g "$ARKIVE_USER" /srv/archive /srv/archive/zim /srv/archive/files /srv/archive/files/maps /srv/archive/manuals /srv/archive/incoming
+install -d -o minitools -g "$ARKIVE_USER" -m 0775 /srv/archive/generated   # Stay Alive / Official Manuals pages (written by mini-web)
 install -d -m 0750 -o minitools -g minitools /srv/personal /srv/personal/music /srv/personal/photos /srv/personal/.thumbs
 install -d -m 0755 -o minitools -g minitools /srv/personal/.trash /var/lib/mini-player
 [ -f /srv/archive/library.xml ] || sudo -u "$ARKIVE_USER" sh -c 'cd /srv/archive && for z in zim/*.zim; do [ -e "$z" ] && kiwix-manage library.xml add "$z"; done; true'
@@ -40,6 +51,10 @@ json.dump({"serials": s, "uuids": [x for x in u if x], "note": "system card; nev
 P
 [ -f /etc/mini-web/admin.json ] || { echo "Set the admin-panel password:"; /usr/local/sbin/mini-admin-passwd; }
 systemctl daemon-reload
-systemctl enable mini-ap-firewall.service mini-kiwix.service mini-web.service mini-player.service mini-thumbs.service mini-bt-reconnect.service
+systemctl enable mini-bt-reconnect.service
+# start the library, panel and firewall now (no reboot needed to try it); the radio units only switch at boot,
+# because mini-radio-boot turns wlan0 into the hotspot and would drop a Wi-Fi uplink used during setup
+systemctl enable --now mini-ap-firewall.service mini-kiwix.service mini-web.service mini-player.service mini-thumbs.service
 if [ "${ARKIVE_ZERO:-0}" != 1 ]; then systemctl enable mini-radio-boot.service mini-radio-watchdog.timer; fi
-echo "ARKive installed. Reboot, then join the '$AP_SSID' Wi-Fi and open http://$ARKIVE_HOST/"
+echo "ARKive installed: library http://$(hostname -I | cut -d' ' -f1)/ and panel :8080 are running now."
+echo "Reboot to bring up the open hotspot, then join the '$AP_SSID' Wi-Fi and open http://$ARKIVE_HOST/"

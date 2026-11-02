@@ -46,15 +46,16 @@ user-facing branding is ARKive.
 
 ## Install
 
-1. Flash Raspberry Pi OS Lite (64-bit, Bookworm) and boot with ethernet or a temporary Wi-Fi connection.
+1. Flash Raspberry Pi OS Lite (64-bit; Bookworm or Trixie, tested on Trixie / Debian 13) and boot with ethernet or a temporary Wi-Fi connection.
 2. `git clone` this repo onto the Pi, then:
    ```sh
    sudo install -D -m 0644 config/arkive.env.example /etc/arkive/arkive.env && sudoedit /etc/arkive/arkive.env
-   sudo ./install.sh        # installs packages, code, units; prompts for the admin password
+   sudo ./install.sh        # installs packages, code, units; prompts for the admin password;
+                            # starts the library (:80) and panel (:8080) right away
    ```
 3. Copy ZIM files into `/srv/archive/zim/` and register them:
    `cd /srv/archive && kiwix-manage library.xml add zim/*.zim` (download ZIMs from https://download.kiwix.org/zim/).
-4. Reboot. Join the hotspot and open `http://arkive.lan/` (library) or `http://arkive.lan:8080/admin/`.
+4. Reboot (only needed for the hotspot: it comes up at boot). Join the hotspot and open `http://arkive.lan/` (library) or `http://arkive.lan:8080/admin/`.
 
 Reset the admin password any time with `sudo mini-admin-passwd`.
 
@@ -92,7 +93,7 @@ No ZIM files or other content are included.
 - **Official Manuals** (`:8080/official/`): public-domain US Government manuals (US Army ATP/TC/TB, USGS, NOAA/NWS),
   grouped by subject. The PDFs are **not** in this repo; fetch them on the device with
 
-      python3 tools/fetch_manuals.py --dest /srv/archive/manuals/official
+      sudo -u arkive python3 tools/fetch_manuals.py --dest /srv/archive/manuals/official   # ARKIVE_USER owns /srv/archive
 
   It reads `manuals/catalog.json` and writes `manifest.json` (title, number, edition, source URL, sha256, licence,
   superseded notes). Only public-release sources are used: APD PDFs behind CAC login and anything marked

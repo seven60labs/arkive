@@ -4,6 +4,8 @@
 #   pdf:  <id from manuals/catalog.json>   page: <PDF page number for #page=>   (Official Manuals collection)
 #   zim:  <ZIM name WITHOUT the _YYYY-MM date>   path: <article path inside the ZIM>
 #   app:  <path on the ARKive :8080 panel>   (e.g. terrain)
+#   file: <path under /srv/archive/manuals, served by the :8080 file browser>  (hidden if missing)
+#   subgroups: [{title, links}] inside a section, rendered under its main list
 # 'label' is what the reader sees; 'source' overrides the automatic source label.
 #   'stop' = the STOP letters at the top of the page; 'plan' = the priority buttons under P (each jumps to a
 #   section id; a button whose section has nothing installed is hidden, except a section with 'message'/'points',
@@ -94,6 +96,8 @@ sections:
     title: Navigation & signalling
     blurb: Know where you are, get found
     links:
+      - {zim: arkive_en_emergency-radio, path: index.html, label: "Emergency radio guide (FRS/GMRS, MURS, marine, NOAA, ham, CB, 3-3-3)", source: "ARKive"}
+      - {zim: arkive_en_emergency-radio, path: cheatsheet.html, label: "Emergency radio cheat sheet (printable, one page)", source: "ARKive"}
       - {pdf: atp-3-50-21, page: 153, label: "Movement and navigation without a map or compass"}
       - {pdf: fm-3-25-26, page: 110, label: "Using a compass"}
       - {pdf: fm-21-76-1, page: 31, label: "Signalling for rescue (radio, mirror, panels, ground-to-air)"}
@@ -108,6 +112,18 @@ sections:
       - {zim: maps_en_all, path: index.html, label: "World map (OpenStreetMap)"}
       - {zim: "*_en_nps-maps", path: index, label: "National Park Service maps"}
       - {zim: wikivoyage_en_all_maxi, path: "", label: "Wikivoyage travel guide"}
+    subgroups:
+      - title: Radio manuals
+        links:
+          - {file: radio/yaesu/FT-60R_E_Operating_Manual.pdf, label: "FT-60R (Yaesu) manual", source: "Yaesu"}
+          - {file: radio/yaesu/FT-65R_E_Operating_Manual.pdf, label: "FT-65R (Yaesu) manual", source: "Yaesu"}
+          - {file: radio/yaesu/FT-70DR_DE_Operating_Manual.pdf, label: "FT-70DR (Yaesu) manual", source: "Yaesu"}
+          - {file: radio/yaesu/VX-6R_E_Operating_Manual.pdf, label: "VX-6R (Yaesu) manual", source: "Yaesu"}
+          - {file: radio/baofeng/BaoFeng_UV-5R_Manual.pdf, label: "UV-5R (Baofeng) manual", source: "BTECH / BaoFengTech"}
+          - {file: radio/baofeng/BAOFENG_UV-9R_User_Manual_EN.pdf, label: "UV-9R (Baofeng) manual", source: "Baofeng official download area"}
+          - {file: radio/radioddity/Radioddity_DB20-G_User_Manual_V3.0.pdf, label: "DB20-G (Radioddity) manual", source: "Radioddity"}
+          - {file: radio/tyt/TYT_TH-UV88_User_Manual.pdf, label: "TH-UV88 (TYT) manual", source: "BuyTwoWayRadios"}
+          - {file: radio/BTECH_UV-5X3_manual.pdf, label: "UV-5X3 (BTECH) manual", source: "BTECH"}
   - id: food
     title: Food
     blurb: Forage, preserve and can safely

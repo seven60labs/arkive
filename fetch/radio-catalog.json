@@ -1,0 +1,101 @@
+{
+ "about": "Official radio manuals for ARKive (radios named in r/HamRadio 'Portable Radio Recommendations', 2024-09-30). Fetched by fetch_radio.py into manuals/radio/<maker>/. PDFs are never committed to git.",
+ "items": [
+  {
+   "id": "yaesu-ft-60r",
+   "maker": "yaesu",
+   "model": "FT-60R",
+   "title": "FT-60R/E Operating Manual",
+   "url": "https://www.yaesu.com/Files/4CB43DCB-1018-01AF-FA59D5B2EDAF2F37/FT-60R_E_OM_USA_EXP_EU_ENG_EH017M209.pdf",
+   "file": "FT-60R_E_Operating_Manual.pdf",
+   "source": "Yaesu (yaesu.com)",
+   "subject": "Radio",
+   "sha256": "40bf4b132cea2b1605b7b74b220f40c906cf2c4e32f934800d59ac58989ad63f",
+   "bytes": 2028954
+  },
+  {
+   "id": "yaesu-ft-65r",
+   "maker": "yaesu",
+   "model": "FT-65R",
+   "title": "FT-65R/E Operating Manual",
+   "url": "https://www.yaesu.com/Files/4CB43DCB-1018-01AF-FA59D5B2EDAF2F37/FT-65R_E_OM_ENG_EH066M105_1710C-FC.pdf",
+   "file": "FT-65R_E_Operating_Manual.pdf",
+   "source": "Yaesu (yaesu.com)",
+   "subject": "Radio",
+   "sha256": "94204c00fb6b9aeb58d7e4633061b9811d5827a5cb2071365e398a6e44510243",
+   "bytes": 7712445
+  },
+  {
+   "id": "yaesu-ft-70dr",
+   "maker": "yaesu",
+   "model": "FT-70DR",
+   "title": "FT-70DR/DE Operating Manual",
+   "url": "https://www.yaesu.com/Files/DFDF4D53-1B78-7375-E6C7A6E4B192BE13/FT-70DR_DE_OM_ENG_EH051M202_1809R-CY-1.pdf",
+   "file": "FT-70DR_DE_Operating_Manual.pdf",
+   "source": "Yaesu (yaesu.com)",
+   "subject": "Radio",
+   "sha256": "e35a69a04ca56ba1d719474d6749f95512a61f4308e3ca0a4fada93c963c236a",
+   "bytes": 12296509
+  },
+  {
+   "id": "yaesu-vx-6r",
+   "maker": "yaesu",
+   "model": "VX-6R",
+   "title": "VX-6R/E Operating Manual",
+   "url": "https://www.yaesu.com/Files/4CB43DCB-1018-01AF-FA59D5B2EDAF2F37/VX-6R_E_EH021M217_2101E-QS.pdf",
+   "file": "VX-6R_E_Operating_Manual.pdf",
+   "source": "Yaesu (yaesu.com)",
+   "subject": "Radio",
+   "sha256": "927ec307e25f76739398b0fbe539315fea35782a8098fab838581c0d7a36c7cc",
+   "bytes": 1993148
+  },
+  {
+   "id": "baofeng-uv-5r",
+   "maker": "baofeng",
+   "model": "UV-5R",
+   "title": "UV-5R User Manual",
+   "url": "https://baofengtech.com/wp-content/uploads/2020/10/BaoFeng_UV-5R_Manual.pdf",
+   "file": "BaoFeng_UV-5R_Manual.pdf",
+   "source": "BTECH / BaoFengTech (official US distributor)",
+   "subject": "Radio",
+   "sha256": "d5a39e41e546d1cbc97b6f508a73f024c7fb50116ff42f7e8545d142d2b8b3f2",
+   "bytes": 3754473
+  },
+  {
+   "id": "baofeng-uv-9r",
+   "maker": "baofeng",
+   "model": "UV-9R",
+   "title": "UV-9R User Manual (2023-10-19)",
+   "url": "https://baofeng.s3.amazonaws.com/BAOFENG_UV_9R_User_Manual_20231019_EN.pdf",
+   "file": "BAOFENG_UV-9R_User_Manual_EN.pdf",
+   "source": "Baofeng official download area (baofengradio.com/pages/download)",
+   "subject": "Radio",
+   "sha256": "6efa57585872c557bf7e79d88088439a1840934da8035230f80116763c5f586f",
+   "bytes": 13148951
+  },
+  {
+   "id": "radioddity-db20-g",
+   "maker": "radioddity",
+   "model": "DB20-G",
+   "title": "DB20-G User Manual V3.0",
+   "url": "https://radioddity.s3.amazonaws.com/Radioddity_DB20-G_User_Manual_V3.0_20220310.pdf",
+   "file": "Radioddity_DB20-G_User_Manual_V3.0.pdf",
+   "source": "Radioddity (radioddity.com/pages/radioddity-download)",
+   "subject": "Radio",
+   "sha256": "5e14f68c678a434d62d3c2311bec26c7e3e73ceaf7395d2cdcb825b2ade088f2",
+   "bytes": 1563423
+  },
+  {
+   "id": "tyt-th-uv88",
+   "maker": "tyt",
+   "model": "TH-UV88",
+   "title": "TH-UV88 User Manual",
+   "url": "https://www.buytwowayradios.com/mwdownloads/download/link/id/1334",
+   "file": "TYT_TH-UV88_User_Manual.pdf",
+   "source": "BuyTwoWayRadios (authorised TYT dealer)",
+   "subject": "Radio",
+   "sha256": "572730bef1550dfccbd5cf0440353a3468de25579965861ad7d8138432c415f9",
+   "bytes": 3948306
+  }
+ ]
+}

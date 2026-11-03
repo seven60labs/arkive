@@ -110,6 +110,7 @@ def stayalive_ids():
     except OSError: return {}
     out = {}
     for m in re.finditer(r'<section class="sa-sec[^"]*" id="([^"]+)"><h2>([^<]+)</h2>', s): out[m.group(1)] = html.unescape(m.group(2))
+    for m in re.finditer(r'<span id="([^"]+)" class="sa-anchor"></span>', s): out.setdefault(m.group(1), m.group(1).replace("-", " ").title())
     return out
 
 def build():

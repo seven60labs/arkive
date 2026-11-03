@@ -1,0 +1,2 @@
+# name	kind	source	notes
+arkive_en_emergency-radio	build	content/emergency-radio/install.sh	In-house, MIT; built from source with zimwriterfs and registered in library.xml (85 KB, fits ARKive:zero)

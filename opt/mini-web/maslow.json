@@ -353,6 +353,58 @@
      "title": "Radio",
      "items": [
       {
+       "zim": "arkive_en_emergency-radio",
+       "path": "index.html",
+       "label": "Emergency radio guide",
+       "note": "ARKive \u00b7 FRS/GMRS, MURS, marine, NOAA, ham, CB, 3-3-3"
+      },
+      {
+       "zim": "arkive_en_emergency-radio",
+       "path": "cheatsheet.html",
+       "label": "Emergency radio cheat sheet",
+       "note": "ARKive \u00b7 printable one page"
+      },
+      {
+       "file": "radio/yaesu/FT-60R_E_Operating_Manual.pdf",
+       "label": "FT-60R manual",
+       "note": "Yaesu"
+      },
+      {
+       "file": "radio/yaesu/FT-65R_E_Operating_Manual.pdf",
+       "label": "FT-65R manual",
+       "note": "Yaesu"
+      },
+      {
+       "file": "radio/yaesu/FT-70DR_DE_Operating_Manual.pdf",
+       "label": "FT-70DR manual",
+       "note": "Yaesu"
+      },
+      {
+       "file": "radio/yaesu/VX-6R_E_Operating_Manual.pdf",
+       "label": "VX-6R manual",
+       "note": "Yaesu"
+      },
+      {
+       "file": "radio/baofeng/BaoFeng_UV-5R_Manual.pdf",
+       "label": "UV-5R manual",
+       "note": "BTECH / BaoFengTech"
+      },
+      {
+       "file": "radio/baofeng/BAOFENG_UV-9R_User_Manual_EN.pdf",
+       "label": "UV-9R manual",
+       "note": "Baofeng official download area"
+      },
+      {
+       "file": "radio/radioddity/Radioddity_DB20-G_User_Manual_V3.0.pdf",
+       "label": "DB20-G manual",
+       "note": "Radioddity"
+      },
+      {
+       "file": "radio/tyt/TYT_TH-UV88_User_Manual.pdf",
+       "label": "TH-UV88 manual",
+       "note": "BuyTwoWayRadios"
+      },
+      {
        "file": "radio/BTECH_UV-5X3_manual.pdf",
        "label": "BTECH UV-5X3 handheld radio manual"
       },

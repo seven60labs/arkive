@@ -83,6 +83,10 @@ def resolve(l):
         if not b: return None
         p = f"/content/{b[0]}/" + urllib.parse.quote(l.get("path", ""), safe="/:")
         return (("K", p), l.get("source") or b[1], "zim") if alive(p) else None
+    if "file" in l:
+        rel = l["file"].lstrip("/")
+        if not os.path.isfile(os.path.join(A, "manuals", rel)): return None
+        return "/" + urllib.parse.quote(rel), l.get("source", "ARKive files"), "pdf" if rel.lower().endswith(".pdf") else "file"
     if "app" in l:
         return "/" + l["app"].lstrip("/"), l.get("source", "ARKive"), "app"
     return None
@@ -95,7 +99,7 @@ def link_html(l):
     if isinstance(href, tuple):  # kiwix (:80) - absolute, rewritten to the current hostname by the one-line script
         href = f"http://{HOST}{href[1]}"; cls = ' class="kx"'
     else: cls = ""
-    tag = {"pdf": "PDF", "zim": "Library", "app": "Map"}[kind]
+    tag = {"pdf": "PDF", "zim": "Library", "app": "Map", "file": "File"}[kind]
     return (f'<li><a{cls} href="{esc(href)}"><span class="sa-l">{esc(l["label"])}</span>'
             f'<span class="sa-s"><i>{tag}</i> {esc(src)}</span></a></li>')
 
@@ -108,6 +112,9 @@ def section(s, cls="sa-sec"):
     if not items and not (msg or pts): return "", None
     blurb = f'<p class="mut">{esc(s["blurb"])}</p>' if s.get("blurb") else ""
     lst = f'<ul class="sa-list">{items}</ul>' if items else ""
+    for g in s.get("subgroups", []):
+        gi = "".join(link_html(l) for l in g.get("links", []))
+        if gi: lst += f'<h3 class="sa-h3">{esc(g["title"])}</h3><ul class="sa-list">{gi}</ul>'; items = items or gi
     extra = f'<span id="{esc(s["also_anchor"])}" class="sa-anchor"></span>' if s.get("also_anchor") else ""
     return f'<section class="{cls}" id="{esc(s["id"])}"><h2>{esc(s["title"])}</h2>{extra}{blurb}{msg}{pts}{lst}</section>', (s["id"], s["title"])
 

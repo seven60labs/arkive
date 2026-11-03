@@ -101,9 +101,41 @@ def link_html(l):
 
 def section(s, cls="sa-sec"):
     items = "".join(link_html(l) for l in s.get("links", []))
-    if not items: return "", None
+    # 'message' / 'points' (e.g. Mindset) always show; links under them hide like everywhere else
+    msg = f'<p class="sa-msg">{esc(s["message"])}</p>' if s.get("message") else ""
+    pts = "".join(f'<li><b>{esc(p["title"])}</b> {esc(p["text"])}</li>' for p in s.get("points", []))
+    pts = f'<ul class="sa-pts">{pts}</ul>' if pts else ""
+    if not items and not (msg or pts): return "", None
     blurb = f'<p class="mut">{esc(s["blurb"])}</p>' if s.get("blurb") else ""
-    return f'<section class="{cls}" id="{esc(s["id"])}"><h2>{esc(s["title"])}</h2>{blurb}<ul class="sa-list">{items}</ul></section>', (s["id"], s["title"])
+    lst = f'<ul class="sa-list">{items}</ul>' if items else ""
+    return f'<section class="{cls}" id="{esc(s["id"])}"><h2>{esc(s["title"])}</h2>{blurb}{msg}{pts}{lst}</section>', (s["id"], s["title"])
+
+# Small original line icons for the Plan buttons (24x24, stroke = currentColor)
+PLAN_ICONS = {
+    "mind": '<path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/>',
+    "aid": '<rect x="4" y="4" width="16" height="16" rx="3"/><path d="M12 8.5v7M8.5 12h7"/>',
+    "shelter": '<path d="M2.5 20h19M5 20l7-14 7 14M10 20l2-4.5 2 4.5"/>',
+    "fire": '<path d="M12 3c.6 3 5 5.2 5 10a5 5 0 0 1-10 0c0-2.6 1.6-3.8 2.2-5.6 1 1 1.6 2.2 1.6 3.6 1.4-1.6 1.6-4.6 1.2-8z"/>',
+    "water": '<path d="M12 3.5c3 4.3 6 7.6 6 10.8a6 6 0 0 1-12 0c0-3.2 3-6.5 6-10.8z"/>',
+    "compass": '<circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/>',
+    "food": '<path d="M3.5 12h17a8.5 8.5 0 0 1-17 0zM9 8.5c0-1.6 1.6-1.9 1.6-3.5M13.5 8.5c0-1.6 1.6-1.9 1.6-3.5"/>',
+}
+def plan_icon(k):
+    return (f'<svg class="sa-pi" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" '
+            f'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{PLAN_ICONS.get(k, PLAN_ICONS["mind"])}</svg>')
+
+def stop_block(d, shown):
+    """STOP spelled out; under P the priority buttons (only for sections that rendered)."""
+    rows = ""
+    for s in d.get("stop", []):
+        extra = ""
+        if s.get("letter") == "P":
+            btns = "".join(f'<a class="sa-pb" href="#{esc(p["id"])}"><span class="sa-pn">{i}</span>{plan_icon(p.get("icon",""))}<span class="sa-pl">{esc(p["label"])}</span></a>'
+                           for i, p in enumerate([p for p in d.get("plan", []) if p["id"] in shown], 1))
+            if btns: extra = f'<nav class="sa-plan" aria-label="Priorities, in order">{btns}</nav>'
+        rows += (f'<div class="sa-stop-row"><span class="sa-let" aria-hidden="true">{esc(s["letter"])}</span>'
+                 f'<div><h2>{esc(s["word"])}</h2><p>{esc(s["text"])}</p>{extra}</div></div>')
+    return f'<section class="sa-stop" id="stop" aria-label="S.T.O.P.">{rows}</section>' if rows else ""
 
 def build():
     try: urllib.request.urlopen(KIWIX + "/", timeout=30).read(64)
@@ -118,8 +150,9 @@ def build():
     mp = "".join(link_html(l) for l in d.get("maps", []))
     if mp: secs += f'<section class="sa-sec" id="maps"><h2>Maps</h2><ul class="sa-list">{mp}</ul></section>'; nav.append(("maps", "Maps"))
     chips = "".join(f'<a href="#{esc(i)}">{esc(t)}</a>' for i, t in nav)
-    body = (f'<div class="sa"><h1>Stay Alive</h1><p class="mut">Pick what you need right now. Official manuals first, then the best articles in this library. Everything here works offline.</p>'
-            f'<nav class="sa-nav" aria-label="Topics">{chips}</nav>{secs}'
+    stop = stop_block(d, {i for i, _ in nav})
+    body = (f'<div class="sa"><h1>Stay Alive</h1><p class="mut">First, S.T.O.P. Then work down the list in order. Official manuals first, then the best articles in this library. Everything here works offline.</p>'
+            f'{stop}<nav class="sa-nav" aria-label="Topics">{chips}</nav>{secs}'
             f'<p class="mut sa-note">Not medical or professional advice; in an emergency, call for help if you can. PDF links open at the right page.</p></div>'
             "<script>document.querySelectorAll('a.kx').forEach(function(a){var u=new URL(a.href);u.hostname=location.hostname;a.href=u.href})</script>")
     write("stayalive.html", body)

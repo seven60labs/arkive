@@ -5,7 +5,37 @@
 #   zim:  <ZIM name WITHOUT the _YYYY-MM date>   path: <article path inside the ZIM>
 #   app:  <path on the ARKive :8080 panel>   (e.g. terrain)
 # 'label' is what the reader sees; 'source' overrides the automatic source label.
+#   'stop' = the STOP letters at the top of the page; 'plan' = the priority buttons under P (each jumps to a
+#   section id; a button whose section has nothing installed is hidden, except a section with 'message'/'points',
+#   which always shows). Sections are listed in that same priority order.
+# After editing: python3 build_stayalive.py --export-json  (writes stayalive.json for ARKive:zero)
+stop:
+  - {letter: S, word: Stop, text: "Stop moving and sit down if you can. Take a few slow breaths. Panic makes people rush and make mistakes; a few calm minutes now costs you nothing."}
+  - {letter: T, word: Think, text: "What do you have with you: in your pockets, your bag, your vehicle? What do you already know how to do? Does anyone know where you are? A clear head is your best tool."}
+  - {letter: O, word: Observe, text: "Look around. Where could you find shelter, water and firewood? What is the weather doing, and how much daylight is left? Watch for hazards such as fast water, steep ground, smoke or traffic. Is anyone with you hurt?"}
+  - {letter: P, word: Plan, text: "Decide what matters most and do it in order: injuries first, then staying warm and dry, then water, then getting found. Food can wait longer than you think. Pick the step below that fits right now."}
+plan:
+  - {id: mindset, label: Mindset, icon: mind}
+  - {id: first-aid, label: First aid, icon: aid}
+  - {id: shelter, label: Shelter, icon: shelter}
+  - {id: fire, label: Fire, icon: fire}
+  - {id: water, label: Water, icon: water}
+  - {id: navigation, label: "Signal & navigation", icon: compass}
+  - {id: food, label: Food, icon: food}
 sections:
+  - id: mindset
+    title: Mindset
+    blurb: Calm first; everything else goes better after it
+    message: "If you are reading this, you are already doing great. You stopped, you are thinking, and you are looking for answers. That is exactly what people who come through hard situations do."
+    points:
+      - {title: Breathe, text: "Breathe in slowly for a count of four, hold for four, and breathe out for four. Do it a few times. It steadies your heart and clears your thinking."}
+      - {title: Stay put, text: "If you are lost or stranded, staying where you are is usually the safest choice. It saves energy and makes you easier to find, especially if someone knows your plans."}
+      - {title: Keep hope, text: "Most people in trouble are found or find their own way out. Set small goals, one hour at a time, and notice each one you reach. Hope is a survival skill, and you can practise it."}
+    links:
+      - {pdf: atp-3-50-21, page: 14, label: "Psychology of survival (stress, fear and the will to live)"}
+      - {pdf: fm-21-76-1, page: 98, label: "Psychology of survival: quick reference"}
+      - {zim: mdwiki_en_all_maxi, path: Acute_stress_reaction, label: "Acute stress reaction"}
+      - {zim: mdwiki_en_all_maxi, path: Panic_attack, label: "Panic attack"}
   - id: first-aid
     title: First aid & trauma
     blurb: Bleeding, breathing, burns, broken bones, cold & heat injuries
@@ -23,19 +53,6 @@ sections:
       - {zim: mdwiki_en_all_maxi, path: Snakebite, label: "Snake bite"}
       - {zim: wikipedia_en_all_maxi, path: First_aid, label: "First aid overview"}
       - {pdf: st-31-91b, label: "Special Forces Medical Handbook (ST 31-91B)"}
-  - id: water
-    title: Water
-    blurb: Find it, filter it, make it safe to drink
-    links:
-      - {pdf: atp-3-50-21, page: 55, label: "Finding and purifying water in the field"}
-      - {pdf: epa-disinfection, label: "Emergency disinfection of drinking water (bleach, boiling)"}
-      - {pdf: tc-4-02-3, page: 33, label: "Disinfecting water: methods and doses"}
-      - {pdf: tb-med-577, page: 43, label: "Choosing and checking a raw water source"}
-      - {zim: zimgit-water_en, path: home, label: "Water Treatment Library"}
-      - {zim: ready.gov_en_all, path: www.ready.gov/water, label: "Storing emergency water"}
-      - {zim: wikipedia_en_all_maxi, path: Portable_water_purification, label: "Portable water purification"}
-      - {zim: wikipedia_en_all_maxi, path: Solar_water_disinfection, label: "Solar disinfection (SODIS)"}
-      - {zim: appropedia_en_all_maxi, path: Slow_sand_filter, label: "Build a slow sand filter"}
   - id: shelter
     title: Shelter & warmth
     blurb: Stay dry, out of the wind, and warm
@@ -56,20 +73,19 @@ sections:
       - {zim: wikipedia_en_all_maxi, path: Bow_drill, label: "Bow drill"}
       - {zim: wikipedia_en_all_maxi, path: Ferrocerium, label: "Ferro rod (ferrocerium)"}
       - {zim: mdwiki_en_all_maxi, path: Carbon_monoxide_poisoning, label: "Carbon monoxide poisoning (indoor fires, generators)"}
-  - id: food
-    title: Food
-    blurb: Forage, preserve and can safely
+  - id: water
+    title: Water
+    blurb: Find it, filter it, make it safe to drink
     links:
-      - {pdf: atp-3-50-21, page: 71, label: "Food: plants, animals, traps, cooking"}
-      - {pdf: atp-3-50-21, page: 82, label: "Plant edibility test"}
-      - {pdf: fm-21-76-1, page: 78, label: "Survival food: quick reference"}
-      - {pdf: usda-canning, label: "USDA Complete Guide to Home Canning"}
-      - {pdf: fsis-power-outage, label: "Food safety when the power goes out"}
-      - {zim: zimgit-food-preparation_en, path: home, label: "Food Preparation Library"}
-      - {zim: wikipedia_en_all_maxi, path: Home_canning, label: "Home canning"}
-      - {zim: mdwiki_en_all_maxi, path: Botulism, label: "Botulism (bad canning)"}
-      - {zim: wikipedia_en_all_maxi, path: Food_preservation, label: "Food preservation methods"}
-      - {zim: ready.gov_en_all, path: www.ready.gov/food, label: "Emergency food supply"}
+      - {pdf: atp-3-50-21, page: 55, label: "Finding and purifying water in the field"}
+      - {pdf: epa-disinfection, label: "Emergency disinfection of drinking water (bleach, boiling)"}
+      - {pdf: tc-4-02-3, page: 33, label: "Disinfecting water: methods and doses"}
+      - {pdf: tb-med-577, page: 43, label: "Choosing and checking a raw water source"}
+      - {zim: zimgit-water_en, path: home, label: "Water Treatment Library"}
+      - {zim: ready.gov_en_all, path: www.ready.gov/water, label: "Storing emergency water"}
+      - {zim: wikipedia_en_all_maxi, path: Portable_water_purification, label: "Portable water purification"}
+      - {zim: wikipedia_en_all_maxi, path: Solar_water_disinfection, label: "Solar disinfection (SODIS)"}
+      - {zim: appropedia_en_all_maxi, path: Slow_sand_filter, label: "Build a slow sand filter"}
   - id: navigation
     title: Navigation & signalling
     blurb: Know where you are, get found
@@ -84,6 +100,20 @@ sections:
       - {zim: wikipedia_en_all_maxi, path: Distress_signal, label: "Distress signals"}
       - {zim: wikipedia_en_all_maxi, path: Signal_mirror, label: "Signal mirror"}
       - {zim: wikipedia_en_all_maxi, path: Orienteering, label: "Orienteering"}
+  - id: food
+    title: Food
+    blurb: Forage, preserve and can safely
+    links:
+      - {pdf: atp-3-50-21, page: 71, label: "Food: plants, animals, traps, cooking"}
+      - {pdf: atp-3-50-21, page: 82, label: "Plant edibility test"}
+      - {pdf: fm-21-76-1, page: 78, label: "Survival food: quick reference"}
+      - {pdf: usda-canning, label: "USDA Complete Guide to Home Canning"}
+      - {pdf: fsis-power-outage, label: "Food safety when the power goes out"}
+      - {zim: zimgit-food-preparation_en, path: home, label: "Food Preparation Library"}
+      - {zim: wikipedia_en_all_maxi, path: Home_canning, label: "Home canning"}
+      - {zim: mdwiki_en_all_maxi, path: Botulism, label: "Botulism (bad canning)"}
+      - {zim: wikipedia_en_all_maxi, path: Food_preservation, label: "Food preservation methods"}
+      - {zim: ready.gov_en_all, path: www.ready.gov/food, label: "Emergency food supply"}
   - id: hazards
     title: Hazards
     blurb: Weather, wildfire, flood, power outage, heat & cold

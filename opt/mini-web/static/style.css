@@ -119,3 +119,23 @@ a.sa-cta:hover{filter:brightness(1.08);text-decoration:none}
 .sa-s i{font-style:normal;font-size:.8em;font-weight:700;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--sand);border-radius:6px;padding:0 6px;margin-right:6px;color:var(--fg)}
 .sa-list .sup{display:block;color:var(--warn);font-size:.85em;margin-top:2px}.sa-note{margin-top:22px;font-size:.9em}
 @media (max-width:560px){a.sa-cta{font-size:1.3em}.sa h1{font-size:1.5em}}
+/* Maslow index (build_maslow.py) + its home-page button. Logo palette only; works in light and dark; no JS needed. */
+a.sa-cta.mz-cta,:root.light a.sa-cta.mz-cta{background:transparent;color:var(--fg);border:2px solid var(--acc);font-size:1.15em;min-height:56px;margin-top:-6px}
+a.sa-cta.mz-cta small{color:var(--mut);opacity:1;font-size:.68em}
+.mz-pyr{display:flex;flex-direction:column;align-items:center;gap:4px;margin:18px 0 8px}
+.mz-t{display:flex;flex-direction:column;justify-content:center;align-items:center;min-height:54px;padding:6px 12px;border-radius:6px;text-align:center;text-decoration:none;--tw:100%;width:var(--tw);max-width:100%}
+.mz-t:hover{text-decoration:none;filter:brightness(1.07)}.mz-t b{font-size:1.05em}.mz-t small{font-size:.8em;opacity:.9}
+.mz-t1{--tw:100%}.mz-t2{--tw:84%}.mz-t3{--tw:68%}.mz-t4{--tw:52%}.mz-t5{--tw:36%}
+.mz-t1{background:#0F4C4C;color:#F2EFE8}.mz-t2{background:#1F6261;color:#F2EFE8}.mz-t3{background:#3A4246;color:#F2EFE8}
+.mz-t4{background:#B8955C;color:#16191B}.mz-t5{background:#D9B77E;color:#16191B}
+:root.light .mz-t1{background:#0F4C4C;color:#FFFFFF}:root.light .mz-t2{background:#2A6A68;color:#FFFFFF}:root.light .mz-t3{background:#3A3F43;color:#FFFFFF}
+:root.light .mz-t4{background:#C9A56A;color:#22262A}:root.light .mz-t5{background:#E8D3A9;color:#22262A}
+.mz-lvl{scroll-margin-top:10px;margin-top:30px}.mz-lvl>h2{display:flex;align-items:center;gap:10px;color:var(--fg);text-transform:none;letter-spacing:0;font-size:1.35em;margin:0 0 2px;border-left:4px solid var(--sand);padding-left:10px}
+.mz-n{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:var(--acc);color:var(--on-acc);font-size:.75em}
+.mz-grp h3{font-size:1.02em;margin:16px 0 6px;color:var(--fg);border-left:3px solid var(--acc);padding-left:8px}
+.mz-sa{background:var(--card2);border:1px solid var(--line);border-radius:var(--r);padding:10px 14px;margin:10px 0}.mz-sa p{margin:0 0 4px}
+.mz-fold details summary{display:block;min-height:52px;padding:12px 16px;border-top:1px solid var(--line);cursor:pointer;list-style:none}
+.mz-fold details summary::-webkit-details-marker{display:none}.mz-fold details summary .sa-l::after{content:" \25BE";color:var(--mut)}
+.mz-fold details[open] summary{background:var(--card2)}.mz-fold .sa-list{border:0;border-radius:0;margin-left:14px;border-left:2px solid var(--sand)}
+.sa-list li:first-child.mz-fold details summary{border-top:0}
+@media (max-width:560px){.mz-t5{--tw:46%}.mz-t4{--tw:60%}.mz-t3{--tw:74%}.mz-t2{--tw:87%}}

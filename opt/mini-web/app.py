@@ -154,6 +154,7 @@ class H(BaseHTTPRequestHandler):
             return self.out(404, page("Not found", "<p>Not found.</p>"))
         if path in ("/stay-alive", "/stay-alive/"): return self.generated("stayalive.html", "Stay Alive")
         if path == "/official/": return self.generated("official.html", "Official Manuals")
+        if path in ("/maslow", "/maslow/"): return self.generated("maslow.html", "Maslow index")
         return self.browse(path)
     def do_POST(self):
         path = urllib.parse.urlsplit(self.path).path
@@ -463,11 +464,13 @@ class Captive(BaseHTTPRequestHandler):
         self.send_response(302); self.send_header("Location", f"http://{HOST}/"); self.send_header("Content-Length", "0"); self.send_header("Cache-Control", "no-store"); self.end_headers()
     do_HEAD = do_POST = do_GET
 def stayalive_loop():
-    """(Re)build the Stay Alive + Official Manuals pages: as soon as kiwix answers after start-up, then every 6 h."""
+    """(Re)build the Stay Alive + Official Manuals + Maslow index pages: as soon as kiwix answers after start-up, then every 6 h."""
     time.sleep(15)
     while True:
         try: rc = subprocess.run([sys.executable, os.path.join(HERE, "build_stayalive.py")], capture_output=True, timeout=1800).returncode
         except Exception: rc = 1
+        try: rc = max(rc, subprocess.run([sys.executable, os.path.join(HERE, "build_maslow.py")], capture_output=True, timeout=1800).returncode)  # after Stay Alive: it links into it
+        except Exception: rc = max(rc, 1)
         time.sleep(60 if rc == 75 else 6 * 3600)
 if __name__ == "__main__":
     threading.Thread(target=stayalive_loop, daemon=True).start()

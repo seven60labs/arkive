@@ -123,6 +123,7 @@ sections:
           - {file: radio/baofeng/BAOFENG_UV-9R_User_Manual_EN.pdf, label: "UV-9R (Baofeng) manual", source: "Baofeng official download area"}
           - {file: radio/radioddity/Radioddity_DB20-G_User_Manual_V3.0.pdf, label: "DB20-G (Radioddity) manual", source: "Radioddity"}
           - {file: radio/tyt/TYT_TH-UV88_User_Manual.pdf, label: "TH-UV88 (TYT) manual", source: "BuyTwoWayRadios"}
+          - {zim: arkive_en_retevis-rt85-manual, path: index.html, label: "RT85 (Retevis) manual", source: "Supplied by owner"}
           - {file: radio/BTECH_UV-5X3_manual.pdf, label: "UV-5X3 (BTECH) manual", source: "BTECH"}
   - id: food
     title: Food

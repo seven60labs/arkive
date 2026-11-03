@@ -116,7 +116,7 @@ def section(s, cls="sa-sec"):
         gi = "".join(link_html(l) for l in g.get("links", []))
         if gi: lst += f'<h3 class="sa-h3">{esc(g["title"])}</h3><ul class="sa-list">{gi}</ul>'; items = items or gi
     extra = f'<span id="{esc(s["also_anchor"])}" class="sa-anchor"></span>' if s.get("also_anchor") else ""
-    return f'<section class="{cls}" id="{esc(s["id"])}"><h2>{esc(s["title"])}</h2>{extra}{blurb}{msg}{pts}{lst}</section>', (s["id"], s["title"])
+    return f'<section class="{cls}" id="{esc(s["id"])}">{head_h2(s["id"], esc(s["title"]))}{extra}{blurb}{msg}{pts}{lst}</section>', (s["id"], s["title"])
 
 # Small original line icons for the Plan buttons (24x24, stroke = currentColor)
 PLAN_ICONS = {
@@ -135,13 +135,26 @@ def plan_icon(k):
     return (f'<svg class="sa-pi" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" '
             f'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{PLAN_ICONS.get(k, PLAN_ICONS["mind"])}</svg>')
 
+HEAD_ICON = {}  # section id -> plan icon key, filled from the 'plan' list in build()
+HEAD_NUM = {}   # section id -> priority number (1-10) from the 'plan' list
+def urg(n): return f"sa-u{(n + 1) // 2}"   # 5-step urgency colour, one per pair
+def head_h2(sid, title):
+    n = HEAD_NUM.get(sid)
+    if not n: return f"<h2>{head_icon(sid)}{title}</h2>"
+    return f'<h2 class="sa-hb {urg(n)}"><span class="sa-hn">{n}</span>{head_icon(sid)}<span class="sa-ht">{title}</span></h2>'
+def head_icon(sid):
+    k = HEAD_ICON.get(sid)
+    if not k: return ""
+    return (f'<svg class="sa-hi" viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2" '
+            f'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{PLAN_ICONS.get(k, PLAN_ICONS["mind"])}</svg>')
+
 def stop_block(d, shown):
     """STOP spelled out; under P the priority buttons (only for sections that rendered)."""
     rows = ""
     for s in d.get("stop", []):
         extra = ""
         if s.get("letter") == "P":
-            btns = "".join(f'<a class="sa-pb" href="#{esc(p["id"])}"><span class="sa-pn">{i}</span>{plan_icon(p.get("icon",""))}<span class="sa-pl">{esc(p["label"])}</span></a>'
+            btns = "".join(f'<a class="sa-pb {urg(i)}" href="#{esc(p["id"])}"><span class="sa-pn">{i}</span>{plan_icon(p.get("icon",""))}<span class="sa-pl">{esc(p["label"])}</span></a>'
                            for i, p in enumerate([p for p in d.get("plan", []) if p["id"] in shown], 1))
             if btns: extra = f'<nav class="sa-plan" aria-label="Priorities, in order">{btns}</nav>'
         rows += (f'<div class="sa-stop-row"><span class="sa-let" aria-hidden="true">{esc(s["letter"])}</span>'
@@ -154,16 +167,17 @@ def build():
         print(f"stay-alive: kiwix not reachable at {KIWIX} ({e}); try again later", file=sys.stderr); sys.exit(75)
     d = load_data(); os.makedirs(OUT, exist_ok=True)
     secs, nav = "", []
+    HEAD_ICON.update({p["id"]: p.get("icon", "") for p in d.get("plan", [])})
+    HEAD_NUM.update({p["id"]: i for i, p in enumerate(d.get("plan", []), 1)})
     for s in d.get("sections", []):
         h, n = section(s); secs += h; nav += [n] if n else []
     reb = "".join(section(s, "sa-sec sa-sub")[0] for s in d.get("rebuild", []))
-    if reb: secs += f'<section class="sa-sec" id="rebuild"><h2>Rebuild</h2><p class="mut">Power, water systems, construction, agriculture, repair</p>{reb}</section>'; nav.append(("rebuild", "Rebuild"))
+    if reb: secs += f'<section class="sa-sec" id="rebuild">{head_h2("rebuild", "Rebuild")}<p class="mut">Power, water systems, construction, agriculture, repair</p>{reb}</section>'; nav.append(("rebuild", "Rebuild"))
     mp = "".join(link_html(l) for l in d.get("maps", []))
     if mp: secs += f'<section class="sa-sec" id="maps"><h2>Maps</h2><ul class="sa-list">{mp}</ul></section>'; nav.append(("maps", "Maps"))
-    chips = "".join(f'<a href="#{esc(i)}">{esc(t)}</a>' for i, t in nav)
     stop = stop_block(d, {i for i, _ in nav})
-    body = (f'<div class="sa"><h1>Stay Alive</h1><p class="mut">First, S.T.O.P. Then work down the list in order. Official manuals first, then the best articles in this library. Everything here works offline.</p>'
-            f'{stop}<nav class="sa-nav" aria-label="Topics">{chips}</nav>{secs}'
+    body = (f'<div class="sa">'
+            f'{stop}{secs}'
             f'<p class="mut sa-note">Not medical or professional advice; in an emergency, call for help if you can. PDF links open at the right page.</p></div>'
             "<script>document.querySelectorAll('a.kx').forEach(function(a){var u=new URL(a.href);u.hostname=location.hostname;a.href=u.href})</script>")
     write("stayalive.html", body)

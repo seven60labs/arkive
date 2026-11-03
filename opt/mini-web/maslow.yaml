@@ -139,6 +139,7 @@ levels:
           - {file: radio/baofeng/BAOFENG_UV-9R_User_Manual_EN.pdf, label: "UV-9R manual", note: "Baofeng official download area"}
           - {file: radio/radioddity/Radioddity_DB20-G_User_Manual_V3.0.pdf, label: "DB20-G manual", note: "Radioddity"}
           - {file: radio/tyt/TYT_TH-UV88_User_Manual.pdf, label: "TH-UV88 manual", note: "BuyTwoWayRadios"}
+          - {zim: arkive_en_retevis-rt85-manual, path: index.html, label: "Retevis RT85 manual", note: "Supplied by owner · PDF in the library"}
           - {file: radio/BTECH_UV-5X3_manual.pdf, label: "BTECH UV-5X3 handheld radio manual"}
           - {zim: ham.stackexchange.com_en_all}
           - {zim: wikipedia_en_all_maxi, path: Amateur_radio_emergency_communications, label: "Amateur radio emergency communications", note: "Wikipedia article"}

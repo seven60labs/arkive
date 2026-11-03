@@ -445,6 +445,12 @@
        "source": "BuyTwoWayRadios"
       },
       {
+       "zim": "arkive_en_retevis-rt85-manual",
+       "path": "index.html",
+       "label": "RT85 (Retevis) manual",
+       "source": "Supplied by owner"
+      },
+      {
        "file": "radio/BTECH_UV-5X3_manual.pdf",
        "label": "UV-5X3 (BTECH) manual",
        "source": "BTECH"

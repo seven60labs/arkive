@@ -96,6 +96,34 @@
    "subject": "Radio",
    "sha256": "572730bef1550dfccbd5cf0440353a3468de25579965861ad7d8138432c415f9",
    "bytes": 3948306
+  },
+  {
+   "id": "retevis-rt85",
+   "maker": "retevis",
+   "model": "RT85",
+   "title": "RT85 User's Manual (EN/FR/DE/IT/ES)",
+   "file": "Retevis_RT85_User_Manual.pdf",
+   "source": "supplied by owner",
+   "manual_only": true,
+   "subject": "Radio",
+   "url": null,
+   "note": "Official retevis.com download is restricted; owner-supplied copy, compressed with ghostscript /ebook. Not fetched, not in git.",
+   "sha256": "ca66f08b09e39e4f831587c7f3bb2ccb4b9928b85a6981a32ff80c84d10699aa",
+   "bytes": 5002623
+  },
+  {
+   "id": "retevis-rt85-en",
+   "maker": "retevis",
+   "model": "RT85",
+   "title": "RT85 User's Manual (English extract, pp. 1-18, 79-80)",
+   "file": "Retevis_RT85_User_Manual_EN.pdf",
+   "source": "supplied by owner",
+   "manual_only": true,
+   "subject": "Radio",
+   "url": null,
+   "note": "Official retevis.com download is restricted; owner-supplied copy, compressed with ghostscript /ebook. Not fetched, not in git.",
+   "sha256": "564617c5b7bc944e3951efd9f7a39e1dfbbe29dfa0b0fd2e14a0195b414eeb75",
+   "bytes": 1510312
   }
  ]
 }

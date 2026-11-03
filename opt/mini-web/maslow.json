@@ -664,12 +664,6 @@
       },
       {
        "zim": "wikisource_en_all_nopic",
-       "path": "The_Koran_(Rodwell)",
-       "label": "The Qur'an (Rodwell translation)",
-       "note": "Wikisource"
-      },
-      {
-       "zim": "wikisource_en_all_nopic",
        "path": "The_Bhagavad_Gita_(Arnold_translation)",
        "label": "The Bhagavad Gita (Arnold translation)",
        "note": "Wikisource"
@@ -685,13 +679,6 @@
       },
       {
        "zim": "hermeneutics.stackexchange.com_en_all"
-      },
-      {
-       "zim": "judaism.stackexchange.com_en_all",
-       "label": "Mi Yodeya (Judaism Q&A)"
-      },
-      {
-       "zim": "islam.stackexchange.com_en_all"
       },
       {
        "zim": "hinduism.stackexchange.com_en_all"

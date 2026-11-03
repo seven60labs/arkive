@@ -225,13 +225,10 @@ levels:
       - title: Religious texts and traditions
         items:
           - {zim: wikisource_en_all_nopic, path: "Bible_(King_James)", label: "The Bible (King James Version)", note: "Wikisource"}
-          - {zim: wikisource_en_all_nopic, path: "The_Koran_(Rodwell)", label: "The Qur'an (Rodwell translation)", note: "Wikisource"}
           - {zim: wikisource_en_all_nopic, path: "The_Bhagavad_Gita_(Arnold_translation)", label: "The Bhagavad Gita (Arnold translation)", note: "Wikisource"}
           - {zim: wikisource_en_all_nopic, path: "Portal:Religion", label: "Religion portal (more scripture and texts)", note: "Wikisource"}
           - {zim: christianity.stackexchange.com_en_all}
           - {zim: hermeneutics.stackexchange.com_en_all}
-          - {zim: judaism.stackexchange.com_en_all, label: "Mi Yodeya (Judaism Q&A)"}
-          - {zim: islam.stackexchange.com_en_all}
           - {zim: hinduism.stackexchange.com_en_all}
           - {zim: buddhism.stackexchange.com_en_all}
           - {zim: mythology.stackexchange.com_en_all}

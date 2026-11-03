@@ -67,12 +67,6 @@
       },
       {
        "zim": "grimgrains_en_all"
-      },
-      {
-       "zim": "vegetarianism.stackexchange.com_en_all"
-      },
-      {
-       "zim": "coffee.stackexchange.com_en_all"
       }
      ]
     },
@@ -85,9 +79,6 @@
       {
        "zim": "canadian-prepper_en_winterprepping",
        "label": "Canadian Prepper: winter prepping (videos)"
-      },
-      {
-       "zim": "outdoors.stackexchange.com_en_all"
       }
      ]
     },
@@ -164,12 +155,6 @@
        "label": "CDC Travelers' Health"
       },
       {
-       "zim": "medicalsciences.stackexchange.com_en_all"
-      },
-      {
-       "zim": "fitness.stackexchange.com_en_all"
-      },
-      {
        "zim": "gutenberg_en_lcc-r",
        "label": "Project Gutenberg: Medicine (LCC R)"
       }
@@ -240,9 +225,6 @@
       {
        "zim": "ted_mul_natural-disaster",
        "label": "TED: natural disasters (talks)"
-      },
-      {
-       "zim": "earthscience.stackexchange.com_en_all"
       }
      ]
     },
@@ -273,18 +255,6 @@
       },
       {
        "zim": "wikivoyage_en_all_maxi"
-      },
-      {
-       "zim": "openstreetmap-wiki_en_all_nopic"
-      },
-      {
-       "zim": "gis.stackexchange.com_en_all"
-      },
-      {
-       "zim": "travel.stackexchange.com_en_all"
-      },
-      {
-       "zim": "expatriates.stackexchange.com_en_all"
       }
      ]
     },
@@ -300,35 +270,6 @@
       },
       {
        "zim": "privacydefence.org_en_opsecbible"
-      },
-      {
-       "zim": "security.stackexchange.com_en_all"
-      },
-      {
-       "zim": "crypto.stackexchange.com_en_all"
-      },
-      {
-       "zim": "tor.stackexchange.com_en_all"
-      },
-      {
-       "zim": "martialarts.stackexchange.com_en_all"
-      },
-      {
-       "zim": "law.stackexchange.com_en_all"
-      },
-      {
-       "zim": "consumerrights.wiki_en_all_maxi"
-      },
-      {
-       "zim": "money.stackexchange.com_en_all"
-      },
-      {
-       "zim": "bogleheads_en_all_maxi",
-       "label": "Bogleheads (personal finance)"
-      },
-      {
-       "zim": "gutenberg_en_lcc-k",
-       "label": "Project Gutenberg: Law (LCC K)"
       },
       {
        "zim": "gutenberg_en_lcc-u",
@@ -376,9 +317,6 @@
       },
       {
        "zim": "bicycles.stackexchange.com_en_all"
-      },
-      {
-       "zim": "lifehacks.stackexchange.com_en_all"
       }
      ]
     },
@@ -408,9 +346,6 @@
       {
        "zim": "solar.lowtechmagazine.com_mul_all",
        "label": "Low-tech Magazine (solar edition)"
-      },
-      {
-       "zim": "sustainability.stackexchange.com_en_all"
       }
      ]
     },
@@ -452,23 +387,6 @@
       {
        "zim": "scoutwiki.org_en_all_maxi",
        "label": "ScoutWiki"
-      },
-      {
-       "zim": "libretexts.org_en_socialsci"
-      },
-      {
-       "zim": "psychology.stackexchange.com_en_all"
-      },
-      {
-       "zim": "politics.stackexchange.com_en_all"
-      },
-      {
-       "zim": "gutenberg_en_lcc-h",
-       "label": "Project Gutenberg: Social sciences (LCC H)"
-      },
-      {
-       "zim": "gutenberg_en_lcc-j",
-       "label": "Project Gutenberg: Political science (LCC J)"
       }
      ]
     },
@@ -495,12 +413,6 @@
        "path": "Child_care",
        "label": "Child care",
        "note": "Wikipedia article"
-      },
-      {
-       "zim": "genealogy.stackexchange.com_en_all"
-      },
-      {
-       "zim": "pets.stackexchange.com_en_all"
       }
      ]
     },
@@ -526,44 +438,8 @@
        "zim": "languagelearning.stackexchange.com_en_all"
       },
       {
-       "zim": "linguistics.stackexchange.com_en_all"
-      },
-      {
-       "zim": "conlang.stackexchange.com_en_all"
-      },
-      {
-       "zim": "writing.stackexchange.com_en_all"
-      },
-      {
        "zim": "gutenberg_en_lcc-pe",
        "label": "Project Gutenberg: English language (LCC PE)"
-      }
-     ]
-    },
-    {
-     "title": "Games and play together",
-     "items": [
-      {
-       "zim": "boardgames.stackexchange.com_en_all"
-      },
-      {
-       "zim": "chess.stackexchange.com_en_all"
-      },
-      {
-       "zim": "rpg.stackexchange.com_en_all"
-      },
-      {
-       "zim": "puzzling.stackexchange.com_en_all"
-      },
-      {
-       "zim": "poker.stackexchange.com_en_all"
-      },
-      {
-       "zim": "sports.stackexchange.com_en_all"
-      },
-      {
-       "zim": "bricks.stackexchange.com_en_all",
-       "label": "Bricks (LEGO) Q&A"
       }
      ]
     }
@@ -590,9 +466,6 @@
        "label": "wikiHow"
       },
       {
-       "zim": "wikibooks_en_all_maxi"
-      },
-      {
        "zim": "cd3wdproject.org_en_all"
       },
       {
@@ -617,55 +490,6 @@
       },
       {
        "zim": "electronics.stackexchange.com_en_all"
-      },
-      {
-       "zim": "arduino.stackexchange.com_en_all"
-      },
-      {
-       "zim": "robotics.stackexchange.com_en_all"
-      },
-      {
-       "zim": "3dprinting.stackexchange.com_en_all"
-      },
-      {
-       "zim": "drones.stackexchange.com_en_all"
-      },
-      {
-       "zim": "aviation.stackexchange.com_en_all"
-      },
-      {
-       "zim": "homebrew.stackexchange.com_en_all"
-      },
-      {
-       "zim": "alcohol.stackexchange.com_en_all"
-      },
-      {
-       "zim": "photo.stackexchange.com_en_all"
-      },
-      {
-       "zim": "video.stackexchange.com_en_all"
-      },
-      {
-       "zim": "sound.stackexchange.com_en_all"
-      },
-      {
-       "zim": "100r.co_en_all",
-       "label": "Hundred Rabbits (off-grid sailing and small tech)"
-      },
-      {
-       "zim": "workplace.stackexchange.com_en_all"
-      },
-      {
-       "zim": "freelancing.stackexchange.com_en_all"
-      },
-      {
-       "zim": "pm.stackexchange.com_en_all"
-      },
-      {
-       "zim": "libretexts.org_en_biz"
-      },
-      {
-       "zim": "economics.stackexchange.com_en_all"
       }
      ]
     },
@@ -704,12 +528,6 @@
       },
       {
        "zim": "diy.stackexchange.com_en_all"
-      },
-      {
-       "zim": "engineering.stackexchange.com_en_all"
-      },
-      {
-       "zim": "libretexts.org_en_eng"
       }
      ]
     },
@@ -749,72 +567,8 @@
        "label": "TED-Ed (lessons)"
       },
       {
-       "zim": "matheducators.stackexchange.com_en_all"
-      },
-      {
-       "zim": "cseducators.stackexchange.com_en_all"
-      },
-      {
-       "zim": "academia.stackexchange.com_en_all"
-      },
-      {
        "zim": "gutenberg_en_lcc-l",
        "label": "Project Gutenberg: Education (LCC L)"
-      },
-      {
-       "zim": "gutenberg_en_lcc-z",
-       "label": "Project Gutenberg: Books and libraries (LCC Z)"
-      }
-     ]
-    },
-    {
-     "title": "Computing",
-     "items": [
-      {
-       "match": "^freecodecamp_",
-       "label": "freeCodeCamp"
-      },
-      {
-       "zim": "stackoverflow.com_en_all"
-      },
-      {
-       "zim": "superuser.com_en_all"
-      },
-      {
-       "zim": "serverfault.com_en_all"
-      },
-      {
-       "zim": "askubuntu.com_en_all"
-      },
-      {
-       "zim": "unix.stackexchange.com_en_all"
-      },
-      {
-       "zim": "archlinux_en_all_maxi"
-      },
-      {
-       "zim": "www.mankier.com_en_all"
-      },
-      {
-       "zim": "raspberrypi.stackexchange.com_en_all"
-      },
-      {
-       "zim": "openwrt.org_en_all"
-      },
-      {
-       "zim": "networkengineering.stackexchange.com_en_all"
-      },
-      {
-       "match": "^(android|apple|elementaryos|hardwarerecs|softwarerecs|webapps|iot|retrocomputing)\\.stackexchange",
-       "label": "Devices and everyday computing Q&A"
-      },
-      {
-       "match": "^(softwareengineering|codereview|codegolf|dba|devops|webmasters|sqa|ux|gamedev|reverseengineering|langdev|datascience|ai|genai|opensource|emacs|vi|tex|cs|mathematica)\\.stackexchange",
-       "label": "Programming and software Q&A"
-      },
-      {
-       "match": "^devdocs_",
-       "label": "DevDocs programming references"
       }
      ]
     }
@@ -838,12 +592,6 @@
       {
        "zim": "gutenberg_en_lcc-b",
        "label": "Project Gutenberg: Philosophy, psychology, religion (LCC B)"
-      },
-      {
-       "zim": "skeptics.stackexchange.com_en_all"
-      },
-      {
-       "zim": "wikiquote_en_all_nopic"
       }
      ]
     },
@@ -934,20 +682,10 @@
        "label": "Project Gutenberg: other languages and literatures (LCC P)"
       },
       {
-       "zim": "gutenberg_en_lcc-a",
-       "label": "Project Gutenberg: General works (LCC A)"
-      },
-      {
        "zim": "wikisource_en_all_nopic"
       },
       {
        "zim": "literature.stackexchange.com_en_all"
-      },
-      {
-       "zim": "scifi.stackexchange.com_en_all"
-      },
-      {
-       "zim": "ebooks.stackexchange.com_en_all"
       }
      ]
     },
@@ -971,17 +709,10 @@
        "label": "Project Gutenberg: Archaeology, genealogy, biography (LCC C)"
       },
       {
-       "zim": "gutenberg_en_lcc-g",
-       "label": "Project Gutenberg: Geography, anthropology, recreation (LCC G)"
-      },
-      {
        "zim": "libretexts.org_en_human"
       },
       {
        "zim": "history.stackexchange.com_en_all"
-      },
-      {
-       "zim": "hsm.stackexchange.com_en_all"
       }
      ]
     },
@@ -1000,37 +731,18 @@
        "zim": "music.stackexchange.com_en_all"
       },
       {
-       "zim": "musicfans.stackexchange.com_en_all"
-      },
-      {
-       "zim": "graphicdesign.stackexchange.com_en_all"
-      },
-      {
-       "zim": "blender.stackexchange.com_en_all"
-      },
-      {
        "zim": "ted_mul_ted-conference",
        "label": "TED talks"
       },
       {
        "zim": "ted_mul_ted-fellows",
        "label": "TED Fellows talks"
-      },
-      {
-       "zim": "movies.stackexchange.com_en_all"
-      },
-      {
-       "zim": "worldbuilding.stackexchange.com_en_all"
       }
      ]
     },
     {
      "title": "Science",
      "items": [
-      {
-       "zim": "wikipedia_en_all_maxi",
-       "label": "Wikipedia (the whole encyclopedia)"
-      },
       {
        "zim": "gutenberg_en_lcc-q",
        "label": "Project Gutenberg: Science (LCC Q)"
@@ -1049,13 +761,6 @@
       },
       {
        "zim": "wikispecies_en_all_nopic"
-      },
-      {
-       "zim": "proofwiki.org_en_all_maxi"
-      },
-      {
-       "match": "^(physics|chemistry|biology|astronomy|space|math|bioacoustics|bioinformatics|mattermodeling|quantumcomputing|stats|scicomp|or|quant|dsp|cstheory|proofassistants|computergraphics)\\.stackexchange|^mathoverflow",
-       "label": "Science and maths Q&A"
       }
      ]
     }

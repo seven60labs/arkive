@@ -35,13 +35,10 @@ levels:
           - {zim: foss.cooking_en_all}
           - {zim: based.cooking_en_all, label: "based.cooking recipes"}
           - {zim: grimgrains_en_all}
-          - {zim: vegetarianism.stackexchange.com_en_all}
-          - {zim: coffee.stackexchange.com_en_all}
       - title: Shelter and warmth
         items:
           - {pdf: tc-21-3}
           - {zim: canadian-prepper_en_winterprepping, label: "Canadian Prepper: winter prepping (videos)"}
-          - {zim: outdoors.stackexchange.com_en_all}
       - title: Fire
         items:
           - {zim: wikipedia_en_all_maxi, path: Fire_making, label: "Fire making", note: "Wikipedia article"}
@@ -65,8 +62,6 @@ levels:
           - {zim: arkive_en_medical}
           - {zim: libretexts.org_en_med}
           - {zim: wwwnc.cdc.gov_en_all, label: "CDC Travelers' Health"}
-          - {zim: medicalsciences.stackexchange.com_en_all}
-          - {zim: fitness.stackexchange.com_en_all}
           - {zim: gutenberg_en_lcc-r, label: "Project Gutenberg: Medicine (LCC R)"}
       - title: Survival manuals
         items:
@@ -93,7 +88,6 @@ levels:
           - {zim: ready.gov_en_all}
           - {zim: zimgit-post-disaster_en}
           - {zim: ted_mul_natural-disaster, label: "TED: natural disasters (talks)"}
-          - {zim: earthscience.stackexchange.com_en_all}
       - title: Navigation and maps
         items:
           - {app: terrain, label: "Terrain and elevation map", note: "ARKive 3D relief map"}
@@ -103,24 +97,11 @@ levels:
           - {pdf: fm-3-25-26}
           - {pdf: usgs-topo-symbols}
           - {zim: wikivoyage_en_all_maxi}
-          - {zim: openstreetmap-wiki_en_all_nopic}
-          - {zim: gis.stackexchange.com_en_all}
-          - {zim: travel.stackexchange.com_en_all}
-          - {zim: expatriates.stackexchange.com_en_all}
       - title: Security
         items:
           - {zim: armypubs_en_all, label: "Army Publishing Directorate (field manuals)"}
           - {zim: arkive_en_firearm-manuals}
           - {zim: privacydefence.org_en_opsecbible}
-          - {zim: security.stackexchange.com_en_all}
-          - {zim: crypto.stackexchange.com_en_all}
-          - {zim: tor.stackexchange.com_en_all}
-          - {zim: martialarts.stackexchange.com_en_all}
-          - {zim: law.stackexchange.com_en_all}
-          - {zim: consumerrights.wiki_en_all_maxi}
-          - {zim: money.stackexchange.com_en_all}
-          - {zim: bogleheads_en_all_maxi, label: "Bogleheads (personal finance)"}
-          - {zim: gutenberg_en_lcc-k, label: "Project Gutenberg: Law (LCC K)"}
           - {zim: gutenberg_en_lcc-u, label: "Project Gutenberg: Military science (LCC U)"}
       - title: Preparedness
         items:
@@ -136,7 +117,6 @@ levels:
           - {zim: arkive_en_ford-transit-2024-workshop-manual}
           - {file: 2024Transit/cover.html, label: "Ford Transit 2024 workshop manual (files)"}
           - {zim: bicycles.stackexchange.com_en_all}
-          - {zim: lifehacks.stackexchange.com_en_all}
       - title: Tools, rope and rigging
         items:
           - {pdf: fm-5-125}
@@ -147,7 +127,6 @@ levels:
           - {pdf: atp-3-34-45}
           - {zim: energypedia_en_all_maxi}
           - {zim: solar.lowtechmagazine.com_mul_all, label: "Low-tech Magazine (solar edition)"}
-          - {zim: sustainability.stackexchange.com_en_all}
       - title: Radio
         items:
           - {file: radio/BTECH_UV-5X3_manual.pdf, label: "BTECH UV-5X3 handheld radio manual"}
@@ -164,19 +143,12 @@ levels:
           - {zim: communitybuilding.stackexchange.com_en_all}
           - {zim: interpersonal.stackexchange.com_en_all}
           - {zim: scoutwiki.org_en_all_maxi, label: "ScoutWiki"}
-          - {zim: libretexts.org_en_socialsci}
-          - {zim: psychology.stackexchange.com_en_all}
-          - {zim: politics.stackexchange.com_en_all}
-          - {zim: gutenberg_en_lcc-h, label: "Project Gutenberg: Social sciences (LCC H)"}
-          - {zim: gutenberg_en_lcc-j, label: "Project Gutenberg: Political science (LCC J)"}
       - title: Family and childcare
         items:
           - {zim: parenting.stackexchange.com_en_all}
           - {zim: mdwiki_en_all_maxi, path: Childbirth, label: "Childbirth", note: "MDWiki article"}
           - {zim: mdwiki_en_all_maxi, path: Breastfeeding, label: "Breastfeeding", note: "MDWiki article"}
           - {zim: wikipedia_en_all_maxi, path: Child_care, label: "Child care", note: "Wikipedia article"}
-          - {zim: genealogy.stackexchange.com_en_all}
-          - {zim: pets.stackexchange.com_en_all}
       - title: Communication and language
         items:
           - {zim: wiktionary_en_all_nopic}
@@ -185,20 +157,7 @@ levels:
           - {zim: ell.stackexchange.com_en_all}
           - {zim: spanish.stackexchange.com_mul_all}
           - {zim: languagelearning.stackexchange.com_en_all}
-          - {zim: linguistics.stackexchange.com_en_all}
-          - {zim: conlang.stackexchange.com_en_all}
-          - {zim: writing.stackexchange.com_en_all}
           - {zim: gutenberg_en_lcc-pe, label: "Project Gutenberg: English language (LCC PE)"}
-      - title: Games and play together
-        items:
-          - {zim: boardgames.stackexchange.com_en_all}
-          - {zim: chess.stackexchange.com_en_all}
-          - {zim: rpg.stackexchange.com_en_all}
-          - {zim: puzzling.stackexchange.com_en_all}
-          - {zim: poker.stackexchange.com_en_all}
-          - {zim: sports.stackexchange.com_en_all}
-          - {zim: bricks.stackexchange.com_en_all, label: "Bricks (LEGO) Q&A"}
-
   - id: esteem
     n: 4
     title: Esteem
@@ -209,7 +168,6 @@ levels:
           - {zim: arkive_en_survivorlibrary}
           - {match: "^arkive_en_internet-archive-part", label: "Internet Archive books"}
           - {zim: wikihow_en_maxi, label: "wikiHow"}
-          - {zim: wikibooks_en_all_maxi}
           - {zim: cd3wdproject.org_en_all}
           - {zim: arkive_en_gov-reference}
           - {zim: libretexts.org_en_workforce}
@@ -218,22 +176,6 @@ levels:
           - {zim: woodworking.stackexchange.com_en_all}
           - {zim: crafts.stackexchange.com_en_all}
           - {zim: electronics.stackexchange.com_en_all}
-          - {zim: arduino.stackexchange.com_en_all}
-          - {zim: robotics.stackexchange.com_en_all}
-          - {zim: 3dprinting.stackexchange.com_en_all}
-          - {zim: drones.stackexchange.com_en_all}
-          - {zim: aviation.stackexchange.com_en_all}
-          - {zim: homebrew.stackexchange.com_en_all}
-          - {zim: alcohol.stackexchange.com_en_all}
-          - {zim: photo.stackexchange.com_en_all}
-          - {zim: video.stackexchange.com_en_all}
-          - {zim: sound.stackexchange.com_en_all}
-          - {zim: 100r.co_en_all, label: "Hundred Rabbits (off-grid sailing and small tech)"}
-          - {zim: workplace.stackexchange.com_en_all}
-          - {zim: freelancing.stackexchange.com_en_all}
-          - {zim: pm.stackexchange.com_en_all}
-          - {zim: libretexts.org_en_biz}
-          - {zim: economics.stackexchange.com_en_all}
       - title: Farming and animals
         items:
           - {zim: gardenology.org_en_all}
@@ -246,8 +188,6 @@ levels:
           - {zim: appropedia_en_all_maxi}
           - {zim: osewiki_en_all, label: "Open Source Ecology wiki"}
           - {zim: diy.stackexchange.com_en_all}
-          - {zim: engineering.stackexchange.com_en_all}
-          - {zim: libretexts.org_en_eng}
       - title: Education
         items:
           - {zim: khanacademy_en_all}
@@ -260,28 +200,7 @@ levels:
           - {zim: phet_en_all}
           - {zim: crashcourse_en_all, label: "CrashCourse (videos)"}
           - {zim: ted_mul_ted-ed, label: "TED-Ed (lessons)"}
-          - {zim: matheducators.stackexchange.com_en_all}
-          - {zim: cseducators.stackexchange.com_en_all}
-          - {zim: academia.stackexchange.com_en_all}
           - {zim: gutenberg_en_lcc-l, label: "Project Gutenberg: Education (LCC L)"}
-          - {zim: gutenberg_en_lcc-z, label: "Project Gutenberg: Books and libraries (LCC Z)"}
-      - title: Computing
-        items:
-          - {match: "^freecodecamp_", label: "freeCodeCamp"}
-          - {zim: stackoverflow.com_en_all}
-          - {zim: superuser.com_en_all}
-          - {zim: serverfault.com_en_all}
-          - {zim: askubuntu.com_en_all}
-          - {zim: unix.stackexchange.com_en_all}
-          - {zim: archlinux_en_all_maxi}
-          - {zim: www.mankier.com_en_all}
-          - {zim: raspberrypi.stackexchange.com_en_all}
-          - {zim: openwrt.org_en_all}
-          - {zim: networkengineering.stackexchange.com_en_all}
-          - {match: "^(android|apple|elementaryos|hardwarerecs|softwarerecs|webapps|iot|retrocomputing)\\.stackexchange", label: "Devices and everyday computing Q&A"}
-          - {match: "^(softwareengineering|codereview|codegolf|dba|devops|webmasters|sqa|ux|gamedev|reverseengineering|langdev|datascience|ai|genai|opensource|emacs|vi|tex|cs|mathematica)\\.stackexchange", label: "Programming and software Q&A"}
-          - {match: "^devdocs_", label: "DevDocs programming references"}
-
   - id: self-actualization
     n: 5
     title: Self-actualization
@@ -292,8 +211,6 @@ levels:
           - {zim: internet-encyclopedia-philosophy_en_all}
           - {zim: philosophy.stackexchange.com_en_all}
           - {zim: gutenberg_en_lcc-b, label: "Project Gutenberg: Philosophy, psychology, religion (LCC B)"}
-          - {zim: skeptics.stackexchange.com_en_all}
-          - {zim: wikiquote_en_all_nopic}
       - title: Religious texts and traditions
         items:
           - {zim: wikisource_en_all_nopic, path: "Bible_(King_James)", label: "The Bible (King James Version)", note: "Wikisource"}
@@ -317,41 +234,28 @@ levels:
           - {zim: gutenberg_en_lcc-pt, label: "Project Gutenberg: German, Dutch, Scandinavian literature (LCC PT)"}
           - {zim: gutenberg_en_lcc-pa, label: "Project Gutenberg: Greek and Latin classics (LCC PA)"}
           - {match: "^gutenberg_en_lcc-p[bcdfghjklm]?$", label: "Project Gutenberg: other languages and literatures (LCC P)"}
-          - {zim: gutenberg_en_lcc-a, label: "Project Gutenberg: General works (LCC A)"}
           - {zim: wikisource_en_all_nopic}
           - {zim: literature.stackexchange.com_en_all}
-          - {zim: scifi.stackexchange.com_en_all}
-          - {zim: ebooks.stackexchange.com_en_all}
       - title: History
         items:
           - {zim: gutenberg_en_lcc-d, label: "Project Gutenberg: World history (LCC D)"}
           - {zim: gutenberg_en_lcc-e, label: "Project Gutenberg: American history (LCC E)"}
           - {zim: gutenberg_en_lcc-f, label: "Project Gutenberg: Local American history (LCC F)"}
           - {zim: gutenberg_en_lcc-c, label: "Project Gutenberg: Archaeology, genealogy, biography (LCC C)"}
-          - {zim: gutenberg_en_lcc-g, label: "Project Gutenberg: Geography, anthropology, recreation (LCC G)"}
           - {zim: libretexts.org_en_human}
           - {zim: history.stackexchange.com_en_all}
-          - {zim: hsm.stackexchange.com_en_all}
       - title: Art and music
         items:
           - {zim: gutenberg_en_lcc-n, label: "Project Gutenberg: Fine arts (LCC N)"}
           - {zim: gutenberg_en_lcc-m, label: "Project Gutenberg: Music (LCC M)"}
           - {zim: music.stackexchange.com_en_all}
-          - {zim: musicfans.stackexchange.com_en_all}
-          - {zim: graphicdesign.stackexchange.com_en_all}
-          - {zim: blender.stackexchange.com_en_all}
           - {zim: ted_mul_ted-conference, label: "TED talks"}
           - {zim: ted_mul_ted-fellows, label: "TED Fellows talks"}
-          - {zim: movies.stackexchange.com_en_all}
-          - {zim: worldbuilding.stackexchange.com_en_all}
       - title: Science
         items:
-          - {zim: wikipedia_en_all_maxi, label: "Wikipedia (the whole encyclopedia)"}
           - {zim: gutenberg_en_lcc-q, label: "Project Gutenberg: Science (LCC Q)"}
           - {zim: libretexts.org_en_phys}
           - {zim: libretexts.org_en_chem}
           - {zim: libretexts.org_en_bio}
           - {zim: libretexts.org_en_geo}
           - {zim: wikispecies_en_all_nopic}
-          - {zim: proofwiki.org_en_all_maxi}
-          - {match: "^(physics|chemistry|biology|astronomy|space|math|bioacoustics|bioinformatics|mattermodeling|quantumcomputing|stats|scicomp|or|quant|dsp|cstheory|proofassistants|computergraphics)\\.stackexchange|^mathoverflow", label: "Science and maths Q&A"}

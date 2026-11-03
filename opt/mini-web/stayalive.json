@@ -56,6 +56,21 @@
    "id": "food",
    "label": "Food",
    "icon": "food"
+  },
+  {
+   "id": "hazards",
+   "label": "Hazards",
+   "icon": "hazard"
+  },
+  {
+   "id": "sanitation",
+   "label": "Sanitation & hygiene",
+   "icon": "wash"
+  },
+  {
+   "id": "rebuild",
+   "label": "Rebuild",
+   "icon": "wrench"
   }
  ],
  "sections": [
@@ -299,6 +314,7 @@
   },
   {
    "id": "navigation",
+   "also_anchor": "maps",
    "title": "Navigation & signalling",
    "blurb": "Know where you are, get found",
    "links": [
@@ -350,6 +366,26 @@
      "zim": "wikipedia_en_all_maxi",
      "path": "Orienteering",
      "label": "Orienteering"
+    },
+    {
+     "app": "terrain",
+     "label": "Terrain & elevation map",
+     "source": "ARKive"
+    },
+    {
+     "zim": "maps_en_all",
+     "path": "index.html",
+     "label": "World map (OpenStreetMap)"
+    },
+    {
+     "zim": "*_en_nps-maps",
+     "path": "index",
+     "label": "National Park Service maps"
+    },
+    {
+     "zim": "wikivoyage_en_all_maxi",
+     "path": "",
+     "label": "Wikivoyage travel guide"
     }
    ]
   },
@@ -644,28 +680,6 @@
      "label": "Small engines"
     }
    ]
-  }
- ],
- "maps": [
-  {
-   "app": "terrain",
-   "label": "Terrain & elevation map",
-   "source": "ARKive"
-  },
-  {
-   "zim": "maps_en_all",
-   "path": "index.html",
-   "label": "World map (OpenStreetMap)"
-  },
-  {
-   "zim": "*_en_nps-maps",
-   "path": "index",
-   "label": "National Park Service maps"
-  },
-  {
-   "zim": "wikivoyage_en_all_maxi",
-   "path": "",
-   "label": "Wikivoyage travel guide"
   }
  ]
 }

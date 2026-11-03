@@ -108,7 +108,8 @@ def section(s, cls="sa-sec"):
     if not items and not (msg or pts): return "", None
     blurb = f'<p class="mut">{esc(s["blurb"])}</p>' if s.get("blurb") else ""
     lst = f'<ul class="sa-list">{items}</ul>' if items else ""
-    return f'<section class="{cls}" id="{esc(s["id"])}"><h2>{esc(s["title"])}</h2>{blurb}{msg}{pts}{lst}</section>', (s["id"], s["title"])
+    extra = f'<span id="{esc(s["also_anchor"])}" class="sa-anchor"></span>' if s.get("also_anchor") else ""
+    return f'<section class="{cls}" id="{esc(s["id"])}"><h2>{esc(s["title"])}</h2>{extra}{blurb}{msg}{pts}{lst}</section>', (s["id"], s["title"])
 
 # Small original line icons for the Plan buttons (24x24, stroke = currentColor)
 PLAN_ICONS = {
@@ -118,6 +119,9 @@ PLAN_ICONS = {
     "fire": '<path d="M12 3c.6 3 5 5.2 5 10a5 5 0 0 1-10 0c0-2.6 1.6-3.8 2.2-5.6 1 1 1.6 2.2 1.6 3.6 1.4-1.6 1.6-4.6 1.2-8z"/>',
     "water": '<path d="M12 3.5c3 4.3 6 7.6 6 10.8a6 6 0 0 1-12 0c0-3.2 3-6.5 6-10.8z"/>',
     "compass": '<circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/>',
+    "hazard": '<path d="M12 3.5 2.5 20h19z"/><path d="M12 10v4.5M12 17.4v.1"/>',
+    "wash": '<path d="M8.5 21h7a1 1 0 0 0 1-1v-7.5a2 2 0 0 0-2-2h-5a2 2 0 0 0-2 2V20a1 1 0 0 0 1 1zM10.5 10.5V7.5h3v3M12 7.5V4.5h3.5M18.5 6.5v.1M20 9.5v.1"/>',
+    "wrench": '<path d="M14.7 6.3a4 4 0 0 0-5.2 5.2L3.8 17.2a1.6 1.6 0 0 0 0 2.3l.7.7a1.6 1.6 0 0 0 2.3 0l5.7-5.7a4 4 0 0 0 5.2-5.2l-2.6 2.6-2.3-.4-.4-2.3z"/>',
     "food": '<path d="M3.5 12h17a8.5 8.5 0 0 1-17 0zM9 8.5c0-1.6 1.6-1.9 1.6-3.5M13.5 8.5c0-1.6 1.6-1.9 1.6-3.5"/>',
 }
 def plan_icon(k):

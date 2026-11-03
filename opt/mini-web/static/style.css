@@ -151,11 +151,13 @@ a.sa-cta.sa-stopcta{justify-content:flex-start;gap:16px}.sa-stopcta .sa-ct{flex:
 .sa-stop-row>div{flex:1;min-width:0}
 .sa-stop h2{margin:2px 0 2px;font-size:1.15em;color:var(--fg);text-transform:none;letter-spacing:0;border:0;padding:0}
 .sa-stop p{margin:0}
-.sa-plan{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(150px,100%),1fr));gap:8px;margin:12px 0 4px}
+.sa-plan{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:12px 0 4px}
 a.sa-pb,:root.light a.sa-pb{position:relative;display:flex;align-items:center;gap:10px;min-height:56px;padding:8px 12px;border:1px solid var(--line);border-left:4px solid var(--sand);border-radius:10px;background:var(--card2);color:var(--fg);font-weight:600;text-decoration:none}
 a.sa-pb:hover{border-color:var(--acc);text-decoration:none}
 .sa-pb .sa-pi{flex:none;color:var(--acc)}
 .sa-pn{flex:none;display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;border:1px solid var(--mut);color:var(--mut);font-size:.78em;font-weight:700}
 .sa-msg{font-size:1.12em;font-weight:600;background:var(--card2);border-left:4px solid var(--acc);border-radius:8px;padding:12px 14px;margin:8px 0 10px;color:var(--fg)}
 .sa-pts{margin:0 0 10px;padding-left:20px}.sa-pts li{margin:6px 0}.sa-pts b{color:var(--fg)}
-@media (max-width:560px){.sa-plan{grid-template-columns:minmax(0,1fr) minmax(0,1fr);margin-left:-52px}a.sa-pb,:root.light a.sa-pb{gap:7px;padding:8px 9px;font-size:.95em}.sa-pb .sa-pi{width:22px;height:22px}.stop-sign{width:52px;height:52px}.sa-let{width:38px;height:38px}}
+@media (max-width:560px){.sa-plan{margin-left:-52px}a.sa-pb,:root.light a.sa-pb{gap:7px;padding:8px 9px;font-size:.95em}.sa-pb .sa-pi{width:22px;height:22px}.stop-sign{width:52px;height:52px}.sa-let{width:38px;height:38px}}
+@media (min-width:900px){.sa-plan{grid-template-columns:repeat(5,minmax(0,1fr))}a.sa-pb,:root.light a.sa-pb{flex-direction:column;align-items:flex-start;gap:6px;min-height:92px}}
+.sa-anchor{display:block;position:relative;top:-10px}

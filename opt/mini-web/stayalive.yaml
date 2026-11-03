@@ -22,6 +22,9 @@ plan:
   - {id: water, label: Water, icon: water}
   - {id: navigation, label: "Signal & navigation", icon: compass}
   - {id: food, label: Food, icon: food}
+  - {id: hazards, label: Hazards, icon: hazard}
+  - {id: sanitation, label: "Sanitation & hygiene", icon: wash}
+  - {id: rebuild, label: Rebuild, icon: wrench}
 sections:
   - id: mindset
     title: Mindset
@@ -87,6 +90,7 @@ sections:
       - {zim: wikipedia_en_all_maxi, path: Solar_water_disinfection, label: "Solar disinfection (SODIS)"}
       - {zim: appropedia_en_all_maxi, path: Slow_sand_filter, label: "Build a slow sand filter"}
   - id: navigation
+    also_anchor: maps   # old Maps section folded in here; #maps still lands on Navigation
     title: Navigation & signalling
     blurb: Know where you are, get found
     links:
@@ -100,6 +104,10 @@ sections:
       - {zim: wikipedia_en_all_maxi, path: Distress_signal, label: "Distress signals"}
       - {zim: wikipedia_en_all_maxi, path: Signal_mirror, label: "Signal mirror"}
       - {zim: wikipedia_en_all_maxi, path: Orienteering, label: "Orienteering"}
+      - {app: terrain, label: "Terrain & elevation map", source: "ARKive"}
+      - {zim: maps_en_all, path: index.html, label: "World map (OpenStreetMap)"}
+      - {zim: "*_en_nps-maps", path: index, label: "National Park Service maps"}
+      - {zim: wikivoyage_en_all_maxi, path: "", label: "Wikivoyage travel guide"}
   - id: food
     title: Food
     blurb: Forage, preserve and can safely
@@ -177,8 +185,3 @@ rebuild:
     links:
       - {zim: ifixit_en_all, path: home/home, label: "iFixit repair guides"}
       - {zim: wikipedia_en_all_maxi, path: Small_engine, label: "Small engines"}
-maps:
-  - {app: terrain, label: "Terrain & elevation map", source: "ARKive"}
-  - {zim: maps_en_all, path: index.html, label: "World map (OpenStreetMap)"}
-  - {zim: "*_en_nps-maps", path: index, label: "National Park Service maps"}
-  - {zim: wikivoyage_en_all_maxi, path: "", label: "Wikivoyage travel guide"}

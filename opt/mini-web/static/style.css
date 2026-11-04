@@ -2,7 +2,7 @@
 /* Palette from the ARKive logo: deep teal, warm sand, charcoal, off-white. Dark theme by default
    (or per prefers-color-scheme / the light-dark toggle). All text pairs meet WCAG AA. */
 :root{--bg:#16191B;--card:#1D2124;--card2:#24292D;--fg:#F2EFE8;--mut:#A9AFB4;--line:#33393E;--acc:#4A9E9B;--acc2:#7CC0BD;--on-acc:#0E1112;--sand:#D9B77E;--ok:#6FBF8F;--warn:#D9B77E;--bad:#E57A6E;--r:10px}
-:root.light{--bg:#FEFDF9;--card:#FFFFFF;--card2:#F4F1EA;--fg:#22262A;--mut:#5B6166;--line:#E2DDD2;--acc:#0F4C4C;--acc2:#0F4C4C;--on-acc:#FFFFFF;--sand:#D9B77E;--ok:#2E7D4F;--warn:#8A6420;--bad:#B3392F}
+:root.light{--bg:#FFFFFF;--card:#FFFFFF;--card2:#FFFFFF;--fg:#22262A;--mut:#5B6166;--line:#E2DDD2;--acc:#0F4C4C;--acc2:#0F4C4C;--on-acc:#FFFFFF;--sand:#D9B77E;--ok:#2E7D4F;--warn:#8A6420;--bad:#B3392F}
 *{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
 a{color:var(--acc2);text-decoration:none}a:hover{text-decoration:underline}
@@ -93,7 +93,7 @@ input:focus,select:focus{outline:none;border-color:var(--acc)}
 .foot{border-top:1px solid var(--line);padding-top:12px}
 @media (max-width:560px){.brand .wm{height:28px}.brand .gear{width:28px;height:28px}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
-/* logo variants: transparent art with a #FEFDF9 outline; lettering charcoal (light) / off-white (dark).
+/* logo variants: transparent art with a #FFFFFF outline; lettering charcoal (light) / off-white (dark).
    The theme class is set in <head> before paint, so the wrong variant never flashes. */
 .only-d{display:none!important}
 :root:not(.light) .only-l{display:none!important}
@@ -142,8 +142,8 @@ a.sa-cta.mz-cta small{color:var(--mut);opacity:1;font-size:.68em}
 /* STOP: home button stop sign + Stay Alive STOP block and priority buttons (build_stayalive.py). Original SVG, no JS. */
 a.sa-cta.sa-stopcta{justify-content:flex-start;gap:16px}.sa-stopcta .sa-ct{flex:1}
 .stop-sign{flex:none;width:60px;height:60px}
-.stop-sign .so{fill:#9C4038}.stop-sign .si{fill:none;stroke:#F2EFE8;stroke-width:1.6}
-.stop-sign text{fill:#FAF7F0;font:800 12.5px/1 system-ui,-apple-system,"Segoe UI",sans-serif;letter-spacing:.04em}
+.stop-sign .so{fill:#9C4038}.stop-sign .si{fill:none;stroke:#FFFFFF;stroke-width:1.6}
+.stop-sign text{fill:#FFFFFF;font:800 12.5px/1 system-ui,-apple-system,"Segoe UI",sans-serif;letter-spacing:.04em}
 :root.light .stop-sign .so{fill:#9C4038}
 .sa-stop{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:6px 16px;margin:14px 0 6px}
 .sa-stop-row{display:flex;gap:14px;align-items:flex-start;padding:12px 0;border-top:1px solid var(--line)}.sa-stop-row:first-child{border-top:0}
@@ -173,3 +173,7 @@ a.sa-pb[class*=sa-u],:root.light a.sa-pb[class*=sa-u]{border-left:6px solid var(
 .sa-pb[class*=sa-u] .sa-pi{color:var(--u)}
 :root:not(.light) .sa-pb[class*=sa-u] .sa-pi{color:var(--fg)}
 .sa-pb[class*=sa-u] .sa-pn{border-color:var(--u)}
+/* white-theme: STOP letters as red octagon stop signs (same red as .stop-sign); light-mode hovers neutral grey, not cream */
+.sa-let{position:relative;border-radius:0;background:#FFFFFF;color:#FFFFFF;clip-path:polygon(29.3% 0,70.7% 0,100% 29.3%,100% 70.7%,70.7% 100%,29.3% 100%,0 70.7%,0 29.3%);z-index:0}
+.sa-let::before{content:"";position:absolute;inset:2px;background:#9C4038;clip-path:inherit;z-index:-1}
+:root.light .list li a:hover,:root.light .sa-list li a:hover,:root.light .trk.sel{background:#F2F3F4}

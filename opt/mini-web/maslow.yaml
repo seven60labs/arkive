@@ -63,6 +63,11 @@ levels:
           - {zim: libretexts.org_en_med}
           - {zim: wwwnc.cdc.gov_en_all, label: "CDC Travelers' Health"}
           - {zim: gutenberg_en_lcc-r, label: "Project Gutenberg: Medicine (LCC R)"}
+      - title: Health and fitness
+        items:
+          - {zim: arkive_en_fitness-guide, path: index.html, label: "Fitness guide", note: "ARKive · no-equipment strength, stretching, yoga, weekly plans"}
+          - {zim: arkive_en_fitness-guide, path: breathing.html, label: "Breathing and meditation", note: "ARKive · box breathing, body scan, mindfulness"}
+          - {zim: arkive_en_fitness-guide, path: cheatsheet.html, label: "Fitness cheat sheet", note: "ARKive · printable one page"}
       - title: Survival manuals
         items:
           - {pdf: atp-3-50-21}

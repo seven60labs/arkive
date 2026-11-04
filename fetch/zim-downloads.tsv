@@ -1,3 +1,4 @@
 # name	kind	source	notes
 arkive_en_emergency-radio	build	content/emergency-radio/install.sh	In-house, MIT; built from source with zimwriterfs and registered in library.xml (85 KB, fits ARKive:zero)
+arkive_en_fitness-guide	build	content/fitness-guide/install.sh	In-house, MIT; built from source with zimwriterfs and registered in library.xml (fits ARKive:zero)
 arkive_en_retevis-rt85-manual	build	content/retevis-rt85-manual/build-zim.sh	Needs the owner-supplied PDF in manuals/radio/retevis/ (manual_only, not fetched)

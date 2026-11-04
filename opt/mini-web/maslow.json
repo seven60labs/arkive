@@ -161,6 +161,29 @@
      ]
     },
     {
+     "title": "Health and fitness",
+     "items": [
+      {
+       "zim": "arkive_en_fitness-guide",
+       "path": "index.html",
+       "label": "Fitness guide",
+       "note": "ARKive \u00b7 no-equipment strength, stretching, yoga, weekly plans"
+      },
+      {
+       "zim": "arkive_en_fitness-guide",
+       "path": "breathing.html",
+       "label": "Breathing and meditation",
+       "note": "ARKive \u00b7 box breathing, body scan, mindfulness"
+      },
+      {
+       "zim": "arkive_en_fitness-guide",
+       "path": "cheatsheet.html",
+       "label": "Fitness cheat sheet",
+       "note": "ARKive \u00b7 printable one page"
+      }
+     ]
+    },
+    {
      "title": "Survival manuals",
      "items": [
       {

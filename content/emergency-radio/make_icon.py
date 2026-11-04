@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Write a 48x48 PNG illustration (teal tile, sand radio-wave arcs) with the stdlib only. Usage: make_icon.py out.png"""
 import sys, zlib, struct, math
-W = H = 48; TEAL = (15, 76, 76); SAND = (217, 183, 126); OFF = (250, 247, 240)
+W = H = 48; TEAL = (15, 76, 76); SAND = (217, 183, 126); OFF = (255, 255, 255)
 px = []
 for y in range(H):
     row = []

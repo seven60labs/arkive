@@ -8,7 +8,7 @@ cd "$(dirname "$0")"
 export DEBIAN_FRONTEND=noninteractive
 apt-get update
 apt-get -y install kiwix-tools python3 python3-pil mpv bluez bluez-alsa-utils libasound2-plugin-bluez \
-  jpegoptim libheif-examples curl nftables iw rfkill exfatprogs ntfs-3g dosfstools smartmontools avahi-daemon
+  jpegoptim libheif-examples zim-tools curl nftables iw rfkill exfatprogs ntfs-3g dosfstools smartmontools avahi-daemon
 id "$ARKIVE_USER" >/dev/null 2>&1 || useradd --system --create-home --shell /usr/sbin/nologin "$ARKIVE_USER"
 id minitools >/dev/null 2>&1 || useradd --system --create-home --home-dir /var/lib/minitools --shell /usr/sbin/nologin minitools
 usermod -aG audio,bluetooth minitools
@@ -59,6 +59,11 @@ s = subprocess.run(["lsblk", "-dno", "SERIAL", "/dev/mmcblk0"], capture_output=T
 json.dump({"serials": s, "uuids": [x for x in u if x], "note": "system card; never a write target"}, open("/etc/mini-usb/protected.json", "w"), indent=1)
 P
 [ -f /etc/mini-web/admin.json ] || { echo "Set the admin-panel password:"; /usr/local/sbin/mini-admin-passwd; }
+# in-house content ZIMs (content/*/): build + register in the kiwix library; a failed build only warns
+for d in content/*/; do
+  if [ -f "$d/install.sh" ]; then sh "$d/install.sh" || echo "WARNING: $d install failed" >&2
+  elif [ -f "$d/build-zim.sh" ]; then sh "$d/build-zim.sh" || echo "WARNING: $d build failed" >&2; fi
+done
 systemctl daemon-reload
 systemctl enable mini-bt-reconnect.service
 # start the library, panel and firewall now (no reboot needed to try it); the radio units only switch at boot,

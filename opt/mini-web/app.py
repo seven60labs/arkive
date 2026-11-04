@@ -7,7 +7,7 @@ from icons import svg, THEME_JS
 import icons
 icons.P.setdefault("wifi", '<path d="M2 8.5a15 15 0 0 1 20 0M5 12a10 10 0 0 1 14 0M8.5 15.5a5 5 0 0 1 7 0"/><circle cx="12" cy="19" r="1"/>')
 icons.P.setdefault("gear", '<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1 7 17M17 7l2.1-2.1"/>')
-import usbui, gallery, music, common, manage
+import usbui, gallery, music, common, manage, search_wrap
 HOST = common.arkive_host()  # ARKIVE_HOST (env or /etc/arkive/arkive.env)
 ROOT = "/srv/archive/manuals"; ALLOWED = ("/srv/archive/manuals", "/srv/archive/files")
 A = "/srv/archive"; GEN = f"{A}/generated"; CONF = "/etc/mini-web/admin.json"; HERE = os.path.dirname(os.path.abspath(__file__))
@@ -155,6 +155,15 @@ class H(BaseHTTPRequestHandler):
         if path in ("/stay-alive", "/stay-alive/"): return self.generated("stayalive.html", "Stay Alive")
         if path == "/official/": return self.generated("official.html", "Official Manuals")
         if path in ("/maslow", "/maslow/"): return self.generated("maslow.html", "Maslow index")
+        if path in ("/find", "/find/"):  # home-page search wrapper around kiwix /search (see search_wrap.py)
+            q = urllib.parse.parse_qs(u.query); pat = (q.get("pattern") or [""])[0].strip()
+            host = (self.headers.get("Host") or "").rsplit(":", 1)[0].strip("[]") or common.arkive_host()
+            if not pat: return self.redirect(f"http://{host}/")
+            def num(k, d, lo, hi):
+                try: return max(lo, min(hi, int((q.get(k) or [d])[0])))
+                except ValueError: return d
+            code, body, info, nd = search_wrap.render(pat, num("start", 0, 0, 100000), num("pageLength", 25, 1, 140), host)
+            return self.out(code, body, headers=[("Cache-Control", "no-store"), ("X-Search-Secs", str(info["secs"])), ("X-Search-Skipped", str(nd))])
         return self.browse(path)
     def do_POST(self):
         path = urllib.parse.urlsplit(self.path).path

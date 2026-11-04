@@ -1,0 +1,12 @@
+[Unit]
+Description=ARKive video converter (ffmpeg/x264, one job at a time, low priority)
+[Service]
+User=minitools
+Nice=19
+IOSchedulingClass=idle
+CPUWeight=20
+ExecStart=/usr/bin/python3 /opt/mini-web/vtranscode.py
+Restart=always
+RestartSec=10
+[Install]
+WantedBy=multi-user.target

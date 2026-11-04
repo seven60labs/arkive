@@ -1,0 +1,1 @@
+minitools ALL=(root) NOPASSWD: /usr/local/sbin/mini-update check, /usr/local/sbin/mini-update apply, /usr/local/sbin/mini-update rollback

@@ -8,12 +8,13 @@ cd "$(dirname "$0")"
 export DEBIAN_FRONTEND=noninteractive
 apt-get update
 apt-get -y install kiwix-tools python3 python3-pil mpv bluez bluez-alsa-utils libasound2-plugin-bluez \
-  jpegoptim libheif-examples zim-tools curl nftables iw rfkill exfatprogs ntfs-3g dosfstools smartmontools avahi-daemon
+  jpegoptim libheif-examples zim-tools ffmpeg curl nftables iw rfkill exfatprogs ntfs-3g dosfstools smartmontools avahi-daemon
 id "$ARKIVE_USER" >/dev/null 2>&1 || useradd --system --create-home --shell /usr/sbin/nologin "$ARKIVE_USER"
 id minitools >/dev/null 2>&1 || useradd --system --create-home --home-dir /var/lib/minitools --shell /usr/sbin/nologin minitools
 usermod -aG audio,bluetooth minitools
 # code + config (file names keep the internal "mini-*" prefix)
 cp -r opt/mini-web /opt/
+install -m 0644 VERSION /opt/mini-web/VERSION   # shown in the admin panel; compared by the updater
 # fetch tool + catalog in a system path the arkive user can read (the clone may be in a 0700 home)
 install -D -m 0755 tools/fetch_manuals.py /usr/local/lib/arkive/tools/fetch_manuals.py
 install -D -m 0644 manuals/catalog.json /usr/local/lib/arkive/manuals/catalog.json
@@ -34,6 +35,7 @@ install -d /etc/mini-radio /etc/NetworkManager/dnsmasq-shared.d
 install -m 0644 etc/mini-radio/mini-ap.nft /etc/mini-radio/
 sed "s/arkive\.lan/$ARKIVE_HOST/g" etc/NetworkManager/dnsmasq-shared.d/mini-archive.conf > /etc/NetworkManager/dnsmasq-shared.d/mini-archive.conf
 install -m 0440 etc/sudoers.d/02*-mini-* /etc/sudoers.d/ && visudo -c >/dev/null
+install -d -m 0755 /var/lib/arkive-update   # updater state/log (root-written, world-readable); rollbacks in ./rollback (0700)
 [ -d etc/mini-usb ] && cp -n etc/mini-usb/* /etc/mini-usb/ 2>/dev/null || true
 # data layout
 # Library dirs may be symlinks onto exFAT/NTFS/FAT data disks, which cannot hold
@@ -44,7 +46,7 @@ for d in /srv/archive /srv/archive/zim /srv/archive/files /srv/archive/files/map
   sudo -u "$ARKIVE_USER" test -w "$d" || echo "WARNING: $ARKIVE_USER cannot write $d (fine for a read-only library; use uid=/gid= mount options to allow fetches/uploads)" >&2
 done
 install -d -o minitools -g "$ARKIVE_USER" -m 0775 /srv/archive/generated   # Stay Alive / Official Manuals pages (written by mini-web)
-install -d -m 0750 -o minitools -g minitools /srv/personal /srv/personal/music /srv/personal/photos /srv/personal/.thumbs
+install -d -m 0750 -o minitools -g minitools /srv/personal /srv/personal/music /srv/personal/photos /srv/personal/.thumbs /srv/personal/videos
 install -d -m 0755 -o minitools -g minitools /srv/personal/.trash /var/lib/mini-player
 [ -f /srv/archive/library.xml ] || sudo -u "$ARKIVE_USER" sh -c 'cd /srv/archive && for z in zim/*.zim; do [ -e "$z" ] && kiwix-manage library.xml add "$z"; done; true'
 # open hotspot (no WPA by design; isolation = nftables + captive DNS)
@@ -68,7 +70,7 @@ systemctl daemon-reload
 systemctl enable mini-bt-reconnect.service
 # start the library, panel and firewall now (no reboot needed to try it); the radio units only switch at boot,
 # because mini-radio-boot turns wlan0 into the hotspot and would drop a Wi-Fi uplink used during setup
-U="mini-ap-firewall.service mini-kiwix.service mini-web.service mini-player.service mini-thumbs.service"
+U="mini-ap-firewall.service mini-kiwix.service mini-web.service mini-player.service mini-thumbs.service mini-videos.service"
 systemctl enable $U
 # restart (not only --now) so re-running install.sh after a pull applies new code, home page and arkive.env
 systemctl restart $U

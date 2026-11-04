@@ -58,11 +58,11 @@ document.querySelectorAll('form[data-up]').forEach(function(form){
     busy=false;btn.disabled=false;d.querySelector('.upw').hidden=true;
     d.querySelector('.uph').textContent=bad.length?'Finished with problems':'Upload complete';
     pf.innerHTML='';
-    var href=kind=='photos'?'/admin/photos?a='+encodeURIComponent(dest):'/admin/music?v=folders&f='+encodeURIComponent(dest);
+    var href=kind=='photos'?'/admin/photos?a='+encodeURIComponent(dest):kind=='videos'?'/admin/videos':'/admin/music?v=folders&f='+encodeURIComponent(dest);
     d.querySelector('.upsum').innerHTML='<p><b>'+ok+' uploaded</b>'+(skip?', '+skip+' skipped (already there)':'')+', <b'+(bad.length?' class="err"':'')+'>'+bad.length+' failed</b> · into <code>'+esc(dest)+'</code></p>'+
       (bad.length?'<ul class="err">'+bad.map(function(b){return '<li>'+esc(b)+'</li>'}).join('')+'</ul><p class="mut">Upload the same selection again: finished files are skipped and only the failed ones are sent.</p>':'')+
-      (kind=='photos'?'<p class="mut">Thumbnails are generated in the background over the next minute or so.</p>':'')+
-      '<a class="btn pri" href="'+href+'">Open '+(kind=='photos'?'album':'folder')+'</a>';
+      (kind=='photos'?'<p class="mut">Thumbnails are generated in the background over the next minute or so.</p>':'')+(kind=='videos'?'<p class="mut">Conversion runs in the background; see the queue below.</p>':
+      '<a class="btn pri" href="'+href+'">Open '+(kind=='photos'?'album':'folder')+'</a>');
   });
 });
 /* USB import progress */

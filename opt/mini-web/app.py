@@ -7,7 +7,7 @@ from icons import svg, THEME_JS
 import icons
 icons.P.setdefault("wifi", '<path d="M2 8.5a15 15 0 0 1 20 0M5 12a10 10 0 0 1 14 0M8.5 15.5a5 5 0 0 1 7 0"/><circle cx="12" cy="19" r="1"/>')
 icons.P.setdefault("gear", '<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1 7 17M17 7l2.1-2.1"/>')
-import usbui, gallery, music, common, manage, search_wrap
+import usbui, gallery, music, common, manage, search_wrap, videos, updater
 HOST = common.arkive_host()  # ARKIVE_HOST (env or /etc/arkive/arkive.env)
 ROOT = "/srv/archive/manuals"; ALLOWED = ("/srv/archive/manuals", "/srv/archive/files")
 A = "/srv/archive"; GEN = f"{A}/generated"; CONF = "/etc/mini-web/admin.json"; HERE = os.path.dirname(os.path.abspath(__file__))
@@ -25,12 +25,12 @@ BRAND_HEAD = ('<link rel="icon" href="/favicon.ico" sizes="48x48"><link rel="ico
               '<link rel="apple-touch-icon" href="/static/apple-touch-icon.png"><link rel="manifest" href="/static/manifest.webmanifest">'
               '<meta name="theme-color" content="#0F4C4C"><meta name="apple-mobile-web-app-title" content="ARKive">')
 def page(title, body, admin=False, head=""):
-    nav = (f'<a class="btn" href="/admin/">{svg("act")}Status</a><a class="btn" href="/admin/usb">{svg("tool")}USB</a><a class="btn" href="/admin/photos">{svg("img")}Photos</a><a class="btn" href="/admin/music">{svg("video")}Music</a><a class="btn" href="/admin/settings">{svg("gear")}Settings</a>' if admin else "")
+    nav = (f'<a class="btn" href="/admin/">{svg("act")}Status</a><a class="btn" href="/admin/usb">{svg("tool")}USB</a><a class="btn" href="/admin/photos">{svg("img")}Photos</a><a class="btn" href="/admin/music">{svg("video")}Music</a><a class="btn" href="/admin/videos">{svg("video")}Videos</a><a class="btn" href="/admin/update">{svg("reboot")}Update</a><a class="btn" href="/admin/settings">{svg("gear")}Settings</a>' if admin else "")
     return (f'<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
             f'<title>{esc(title)} · ARKive</title><link rel="stylesheet" href="/static/style.css?v={CSS_V}">{BRAND_HEAD}{head}{THEME_JS}</head><body><div class="wrap">'
             f'<div class="top"><a class="brand" href="{"/admin/" if admin else "/"}"><img class="gear" src="/static/gear-96.webp" alt="" width="34" height="34"><img class="wm only-l" src="/static/wordmark-360.webp" alt="ARKive" width="99" height="34"><img class="wm only-d" src="/static/wordmark-360-dark.webp" alt="ARKive" width="99" height="34">{'<span class="adm">Admin</span>' if admin else ""}</a><span class="sp"></span>{nav}'
             f'<button class="iconbtn" onclick="tt()" title="Light/dark">{svg("sun")}</button></div>{body}'
-            f'<div class="foot"><a id="home" href="/">Archive home</a></div>'
+            f'<div class="foot"><a id="home" href="/">Archive home</a>{" · ARKive v" + esc(updater.version()) if admin else ""}</div>'
             "<script>document.getElementById('home').href=location.protocol+'//'+location.hostname+'/'</script></div></body></html>")
 ICON = {".pdf": ("pdf", "t-pdf"), ".jpg": ("img", "t-img"), ".jpeg": ("img", "t-img"), ".png": ("img", "t-img"), ".gif": ("img", "t-img"), ".svg": ("img", "t-img"),
         ".htm": ("htm", "t-htm"), ".html": ("htm", "t-htm"), ".zip": ("zip", "t-zip"), ".7z": ("zip", "t-zip"), ".gz": ("zip", "t-zip"),
@@ -129,6 +129,16 @@ class H(BaseHTTPRequestHandler):
                 return self.sendfile(src) if src and os.path.isfile(src) else self.out(404, "not found", "text/plain")
             if path == "/admin/music/pi": return self.out(200, json.dumps(music.pi_status()), "application/json", [("Cache-Control", "no-store")])
             if path == "/admin/bt": return self.admin_page("Bluetooth", music.bt_page(), s)
+            if path == "/admin/videos": return self.admin_page("Videos", videos.page(), s)
+            if path == "/admin/videos/watch":
+                m = videos.meta(g("id"))
+                return self.admin_page(m["title"] if m else "Not found", videos.watch(m, "/admin/videos", True) if m else '<div class="card">Not found.</div>', s)
+            if path in ("/admin/videos/file", "/admin/videos/thumb"):
+                f = videos.path(g("id"), "mp4" if path.endswith("file") else "jpg")
+                return self.sendfile(f) if f else self.out(404, "not found", "text/plain")
+            if path == "/admin/videos/queue": return self.out(200, json.dumps(videos.queue_state()), "application/json", [("Cache-Control", "no-store")])
+            if path == "/admin/update": return self.admin_page("Update", updater.page(), s)
+            if path == "/admin/update/status": return self.out(200, json.dumps(updater.status()), "application/json", [("Cache-Control", "no-store")])
             if path == "/admin/import/status": return self.out(200, json.dumps(common.imports_json()), "application/json", [("Cache-Control", "no-store")])
             if path == "/admin/settings": return self.settings(s)
             if path == "/admin/trash": return self.admin_page("Trash", manage.trash_page(), s)
@@ -152,6 +162,17 @@ class H(BaseHTTPRequestHandler):
             if path == "/admin/radios/status": return self.out(200, json.dumps(radio_status()), "application/json", [("Cache-Control", "no-store")])
             if path == "/admin/power": return self.power_confirm(s, urllib.parse.parse_qs(u.query).get("action", [""])[0])
             return self.out(404, page("Not found", "<p>Not found.</p>"))
+        if path in ("/videos", "/videos/") or path.startswith("/videos/"):  # read-only library for hotspot users, only when enabled in Videos settings
+            if not videos.settings()["public"]: return self.out(404, page("Not found", '<div class="card">Not found.</div>'))
+            vq = urllib.parse.parse_qs(u.query).get("id", [""])[0]
+            if path in ("/videos", "/videos/"): return self.out(200, page("Videos", f'<h1 style="margin:4px 0">{svg("video")} Videos</h1>' + videos.grid(videos.library(), "/videos")))
+            if path == "/videos/watch":
+                m = videos.meta(vq)
+                return self.out(200 if m else 404, page(m["title"] if m else "Not found", videos.watch(m, "/videos", False) if m else '<div class="card">Not found.</div>'))
+            if path in ("/videos/file", "/videos/thumb"):
+                f = videos.path(vq, "mp4" if path.endswith("file") else "jpg")
+                return self.sendfile(f) if f else self.out(404, "not found", "text/plain")
+            return self.out(404, page("Not found", '<div class="card">Not found.</div>'))
         if path in ("/stay-alive", "/stay-alive/"): return self.generated("stayalive.html", "Stay Alive")
         if path == "/official/": return self.generated("official.html", "Official Manuals")
         if path in ("/maslow", "/maslow/"): return self.generated("maslow.html", "Maslow index")
@@ -191,6 +212,14 @@ class H(BaseHTTPRequestHandler):
             except (ValueError, OSError) as e: msg = esc(e); cls = "card err"
             return self.admin_page("Trash", f'<div class="{cls}">{msg}</div>' + manage.trash_page(), s)
         if path == "/admin/radios": return self.radios_do(s, f)
+        if path == "/admin/videos/settings": videos.save_settings(f); return self.admin_page("Videos", videos.page("Settings saved."), s)
+        if path == "/admin/videos/delete":
+            try: videos.delete(f.get("id", "")); msg = "Video deleted."
+            except ValueError as e: msg = esc(e)
+            return self.admin_page("Videos", videos.page(msg), s)
+        if path == "/admin/update":
+            r = updater.action(f.get("a", ""))
+            return self.out(200 if r["ok"] else 400, json.dumps(r), "application/json", [("Cache-Control", "no-store")])
         if path == "/admin/photos/rename":
             ok, r = common.rename_dir(gallery.PH, gallery.TH, f.get("a", ""), f.get("new", ""))
             return self.admin_page("Photos", f'<div class="card{"" if ok else " err"}">{"Renamed to <b>" + esc(r) + "</b>." if ok else r}</div>' + gallery.page(r if ok else f.get("a", "")), s)
@@ -229,6 +258,9 @@ class H(BaseHTTPRequestHandler):
         kind = g("kind")
         if kind == "photos": base, ext, kick = gallery.PH, gallery.EXT, gallery.TH + "/.kick"
         elif kind == "music": base, ext, kick = music.MU, music.EXT, None
+        elif kind == "videos":
+            base, ext, kick = videos.INC, videos.EXT, None
+            if (int(g("off") or 0) == 0) and videos.busy(): return J(409, {"err": "busy: " + videos.busy() + " Only one video at a time."})
         else: return J(400, {"err": "bad kind"})
         try: code, d = common.chunk_upload(base, ext, g("dest"), g("name"), int(g("off") or 0), int(g("total") or 0), data, kick)
         except Exception as e: code, d = 500, {"err": str(e)[:200]}

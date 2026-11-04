@@ -8,13 +8,20 @@ HERE = os.path.dirname(os.path.abspath(__file__)); OUT = "/srv/archive/home.html
 from common import arkive_host
 HOST = arkive_host()
 CSS = open(os.path.join(HERE, "static/style.css")).read()  # same shared stylesheet, inlined (kiwix serves a single file)
-books = []; search_ids = []
+books = []; search_ids = []; search_skipped = []
+# search_exclude.txt: ZIM names (no date) whose full-text index has entries that crash kiwix-serve 3.7/3.8 multi-ZIM
+# search ("basic_string::substr: __pos (which is 2) > this->size() (which is 0)"). They stay browsable and searchable
+# from their own page; they are just left out of the home page's all-collections search.
+try: EXCL = {l.split("#")[0].strip() for l in open(os.path.join(HERE, "search_exclude.txt"))} - {""}
+except OSError: EXCL = set()
 for b in ET.parse("/srv/archive/library.xml").getroot().iter("book"):
     p = b.get("path", ""); books.append((os.path.basename(p)[:-4], b.get("title") or p, b.get("tags", ""), int(b.get("size") or 0)))
     # kiwix-serve 3.7 refuses a search spanning books in different languages (HTTP 400), and a bare /search
     # selects the whole library, which includes a few multilingual ("eng,spa,...") ZIMs. So the search form
     # names every English, full-text-indexed book explicitly.
-    if b.get("language") == "eng" and "_ftindex:yes" in (b.get("tags") or "") and b.get("id"): search_ids.append(b.get("id"))
+    if b.get("language") == "eng" and "_ftindex:yes" in (b.get("tags") or "") and b.get("id"):
+        if b.get("name") in EXCL: search_skipped.append(b.get("title") or b.get("name"))
+        else: search_ids.append(b.get("id"))
 def datauri(name, mime):
     return f"data:{mime};base64," + base64.b64encode(open(os.path.join(HERE, "static", name), "rb").read()).decode()
 FAV = datauri("favicon-32.png", "image/png"); TOUCH = datauri("apple-touch-icon.png", "image/png"); LOGO = datauri("logo-800.webp", "image/webp"); LOGO_D = datauri("logo-800-dark.webp", "image/webp")
@@ -69,7 +76,7 @@ page = f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name
 <div class="hero"><img class="poster only-l" src="{LOGO}" alt="ARKive: a digital ark for an offline future" width="800" height="192"><img class="poster only-d" src="{LOGO_D}" alt="ARKive: a digital ark for an offline future" width="800" height="192"><a class="sa-cta sa-stopcta port" data-port="8080" data-path="stay-alive" href="http://{HOST}:8080/stay-alive" aria-label="Stop to Stay Alive"><svg class="stop-sign" viewBox="0 0 48 48" width="60" height="60" aria-hidden="true"><polygon class="so" points="14.1,1.5 33.9,1.5 46.5,14.1 46.5,33.9 33.9,46.5 14.1,46.5 1.5,33.9 1.5,14.1"/><polygon class="si" points="15.1,4 32.9,4 44,15.1 44,32.9 32.9,44 15.1,44 4,32.9 4,15.1"/><text x="24" y="28.6" text-anchor="middle">STOP</text></svg><span class="sa-ct">Stop to Stay Alive<small>Stop · Think · Observe · Plan</small></span><span aria-hidden="true">&rsaquo;</span></a><a class="sa-cta mz-cta port" data-port="8080" data-path="maslow" href="http://{HOST}:8080/maslow"><span>Maslow index<small>The whole archive by need, from survival to meaning</small></span><span aria-hidden="true">&rsaquo;</span></a>
 <h1 style="font-size:1.25em;margin-top:14px">Offline library</h1><p><span class="dot">●</span> {len(books)} collections · works without internet</p>
 <form class="search" id="sf" action="/search" method="get"><input name="pattern" placeholder="Search everything…" aria-label="Search" autofocus required>{HIDDEN}<button class="pri">{svg("search")}<span>Search</span></button></form>
-<p class="searching" id="sw" hidden>Searching {len(search_ids)} English collections<span class="dots"></span> the first search after a restart can take a minute while indexes load.</p></div>
+<p class="searching" id="sw" hidden>Searching {len(search_ids)} English collections<span class="dots"></span> the first search after a restart can take a minute while indexes load.</p>{f'<p class="mut" style="font-size:.85em">{len(search_skipped)} collections ({html.escape(", ".join(sorted(search_skipped)))}) are left out of this search because of a kiwix search bug; open one and use its own search box.</p>' if search_skipped else ''}</div>
 <h2>Browse</h2><div class="grid">{tiles}</div>
 <div class="cats">{lists}</div>
 <div class="foot"><a class="port" data-port="8080" data-path="admin/" href="http://{HOST}:8080/admin/">Admin</a></div>

@@ -1,0 +1,34 @@
+# ZIM names left out of the home page all-collections search (kiwix-serve 3.7.0 and 3.8.2 both hit
+# 'basic_string::substr' on result pages that include them). Found by per-book scan 2026-11-04 (gun/water, starts 1-151).
+mdwiki_en_all
+graphicdesign.stackexchange.com_en_all
+wikiversity_en_all
+philosophy.stackexchange.com_en_all
+wikem_en_all
+consumerrights.wiki_en_all
+emacs.stackexchange.com_en_all
+pets.stackexchange.com_en_all
+gis.stackexchange.com_en_all
+matheducators.stackexchange.com_en_all
+bioacoustics.stackexchange.com_en_all
+appropedia_en_all
+codegolf.stackexchange.com_en_all
+chemistry.stackexchange.com_en_all
+cs.stackexchange.com_en_all
+stats.stackexchange.com_en_all
+cseducators.stackexchange.com_en_all
+arkive_en_ford-transit-2024-workshop-manual
+woodworking.stackexchange.com_en_all
+buddhism.stackexchange.com_en_all
+wikivet.net_en_all
+arkive_en_medical
+gardening.stackexchange.com_en_all
+stackoverflow.com_en_all
+linguistics.stackexchange.com_en_all
+codereview.stackexchange.com_en_all
+wikipedia_en_medicine
+# from earlier scan (2026-11-03)
+wikisource_en_all
+wikibooks_en_all
+gardenology_en_all
+gamedev.stackexchange.com_en_all
